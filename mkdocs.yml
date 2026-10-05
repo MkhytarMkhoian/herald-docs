@@ -138,6 +138,7 @@ nav:
           - API reference: api/android/index.html
       - Flutter:
           - Overview: sdks/flutter/index.md
+          - Widgets: sdks/flutter/widgets.md
           - API reference: sdks/flutter/api.md
   - Changelog:
       - Android: changelog/android.md

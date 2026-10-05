@@ -36,5 +36,6 @@ Feature packages usually need only `herald`, plus the vendor package for each ve
 ## Example app
 
 The [example app](https://github.com/MkhytarMkhoian/herald-flutter/tree/main/example) sends every
-call to the log and to an on-screen timeline, tracks screen views from a `NavigatorObserver`, and
-tests its analytics with `herald_testing`.
+call to the log and to an on-screen timeline, and tests its analytics with `herald_testing`. It
+tracks screen views both ways: some screens with [`herald_widgets`](widgets.md), one from its own
+code.
