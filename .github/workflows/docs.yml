@@ -1,0 +1,93 @@
+# Builds the website on every pull request, and deploys it to GitHub Pages on a push to main, when
+# either SDK releases, or when run by hand.
+#
+# The site documents what Maven Central and pub.dev serve, so the code samples, the Android API
+# reference and the change logs come from each SDK's latest release tag. A release in herald or
+# herald-flutter triggers this workflow with `repository_dispatch`.
+name: Docs
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [sdk-release]
+  workflow_dispatch:
+
+concurrency:
+  group: docs-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Choose the releases
+        id: releases
+        run: |
+          android=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald)
+          flutter=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-flutter)
+          if [[ -z "$android" || -z "$flutter" ]]; then
+            echo "Both SDKs need a release tag. Android: '$android', Flutter: '$flutter'"
+            exit 1
+          fi
+          echo "android=$android" >> "$GITHUB_OUTPUT"
+          echo "flutter=$flutter" >> "$GITHUB_OUTPUT"
+          echo "Android: $android, Flutter: $flutter"
+
+      - uses: actions/checkout@v5
+        with:
+          repository: MkhytarMkhoian/herald
+          ref: ${{ steps.releases.outputs.android }}
+          path: build/herald
+
+      - uses: actions/checkout@v5
+        with:
+          repository: MkhytarMkhoian/herald-flutter
+          ref: ${{ steps.releases.outputs.flutter }}
+          path: build/herald-flutter
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - run: pip install -r requirements.txt
+
+      # Builds as the Android release's version, as its publish workflow does, so the API
+      # reference's source links point at that tag.
+      - name: Build the site
+        env:
+          ANDROID_TAG: ${{ steps.releases.outputs.android }}
+        run: GRADLE_ARGS="-Pversion=${ANDROID_TAG#v}" scripts/build_docs.sh
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
