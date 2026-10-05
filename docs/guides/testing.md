@@ -7,13 +7,13 @@ Add `herald-testing`, or `herald_testing` on Flutter:
 === "Kotlin"
 
     ```kotlin
-    testImplementation("io.github.mkhytarmkhoian:herald-testing:1.1.0")
+    testImplementation("io.github.mkhytarmkhoian:herald-testing:1.2.0")
     ```
 
 === "Groovy"
 
     ```groovy
-    testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.1.0'
+    testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.2.0'
     ```
 
 === "Dart"

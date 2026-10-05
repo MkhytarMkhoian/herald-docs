@@ -89,6 +89,23 @@ GA4 allows 25 parameters per event and 40 characters per name, and the lines mar
 your app trades one against the other. Choices like that are why this marker lives in your code,
 not in Herald's core.
 
+## A marker for list values
+
+Herald's values are single values: text, whole numbers, decimals and true/false. There is no list,
+because most vendors can't take one: Firebase and Adjust accept single values only. When a vendor
+that can, such as Mixpanel or Amplitude, should receive a list, a marker carries it:
+
+- **The marker,** for example `ListPropertiesEvent`, adds a map from name to list, such as
+  `decks` to `["animals", "movies"]`. The lists stay out of `parameters`, so vendors that can't
+  take them never see them.
+- **A tracker for that vendor** sends the parameters and the lists together. It throws if a list
+  has the same name as a parameter, so neither silently replaces the other.
+- **Its factory** goes first in that vendor's chain.
+
+Every other vendor sends the event through its generic factory, parameters only. The log provider
+prints only `parameters` too, so in tests check the lists on the event itself, in
+`FakeAnalyticsProvider.events`.
+
 ## Markers are yours, not the vendors'
 
 A marker is your concept, in your words: `RefundEvent`, not a Firebase type. Your events never

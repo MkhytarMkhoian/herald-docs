@@ -44,9 +44,9 @@ constructor call.
 
 `name = name` and `parameters = parameters` pass your event's name and parameters along. Adjust
 sends the parameters as callback parameters, AppsFlyer as extra event values and Amplitude as
-revenue properties. Leave `parameters` out to send none. On Flutter, AppsFlyer refuses a parameter
-with a key its revenue type sets itself, such as `af_revenue`, so the value you meant is never
-quietly replaced.
+revenue properties. Leave `parameters` out to send none. AppsFlyer refuses a parameter with a key
+its revenue type sets itself, such as `af_revenue`, so the value you meant is never quietly
+replaced.
 
 === "Kotlin"
 

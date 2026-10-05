@@ -33,7 +33,7 @@ whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has 
     | Herald | Firebase |
     | --- | --- |
     | an event | `logEvent(name, bundle)`: integers via `putLong`, reals via `putDouble`, text and booleans as strings |
-    | a `ScreenViewEvent` | `logEvent("screen_view")` with `screen_name`, sent by `ScreenViewFirebaseEventTrackerFactory` |
+    | a `ScreenViewEvent` | `logEvent("screen_view")` with its name as `screen_name`, sent by `ScreenViewFirebaseEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
     | a property, including a `UserProperty` | `setUserProperty(name, value)`, as text |
     | `identify` / `reset` | `setUserId(userId)` / `setUserId(null)` |
     | `setEnabled` | `setAnalyticsCollectionEnabled(enabled)` |
@@ -82,9 +82,7 @@ Consent Mode (`setConsent`) is set on `FirebaseAnalytics` directly.
 
 ## Identity
 
-To never send a user id to Firebase, pass `identificationEnabled = false` to
-`FirebaseAnalyticsService` on Android. On Flutter, register the Firebase provider without
-`identity`.
+To never send a user id to Firebase, register the Firebase provider without `identity`.
 
 ## Watch out for
 

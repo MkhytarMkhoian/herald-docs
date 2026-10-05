@@ -50,8 +50,8 @@ no generic factory at the end, so only the conversions a factory handles reach A
     | Herald | AppsFlyer |
     | --- | --- |
     | an event a factory handles | `logEvent(context, name, values)`, with each value as its own JSON type |
-    | an `AppsFlyerPurchaseEvent` | `af_purchase` with `af_revenue`, `af_currency` and optional content, quantity and order id |
-    | an `AppsFlyerSubscribeEvent` | `af_subscribe` with `af_revenue` and `af_currency` |
+    | an `AppsFlyerPurchaseEvent` | `af_purchase` with `af_revenue`, `af_currency` and optional content, quantity and order id; a parameter with one of those keys is refused and reported |
+    | an `AppsFlyerSubscribeEvent` | `af_subscribe` with `af_revenue` and `af_currency`, refusing those keys as parameters the same way |
     | an `AppsFlyerAdRevenueEvent` | `logAdRevenue(AFAdRevenueData, parameters)` |
     | `identify` / `reset` | `setCustomerUserId(userId)` / `setCustomerUserId(null)` |
     | `start` | `stop(true)`: stays silent |

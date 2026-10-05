@@ -33,7 +33,7 @@ Amplitude, or one you build yourself.
     ---
 
     Dart packages on pub.dev, over each vendor's official Flutter plugin: the core, one package
-    per vendor, a logger and a fake for your tests.
+    per vendor, optional widgets, a logger and a fake for your tests.
 
     [:octicons-arrow-right-24: Flutter SDK](sdks/flutter/index.md)
 
@@ -93,3 +93,5 @@ saving user properties. You only write your own for events that need something s
 - [Vendors](vendors/firebase.md): what each vendor receives, and what to watch out for.
 - [Moove](https://github.com/MkhytarMkhoian/Moove): a sample app that uses every module, including
   feature modules, consent, sign-in, Compose and a screen that shows every event it sent.
+- [The Flutter example app](https://github.com/MkhytarMkhoian/herald-flutter/tree/main/example):
+  screen views with and without `herald_widgets`, and a timeline of every event it sent.

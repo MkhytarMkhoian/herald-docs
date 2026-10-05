@@ -35,11 +35,11 @@ residency. Herald never changes them.
     | Herald | Mixpanel |
     | --- | --- |
     | an event | `trackMap(name, properties)`, with each value as its own JSON type |
-    | a `ScreenViewEvent` | `trackMap("screen_view")` with `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory` |
+    | a `ScreenViewEvent` | `trackMap("screen_view")` with its name as `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
     | a `UserProperty` | `people.set(name, value)`: the person's profile |
     | any other property | a super property, sent with every later event |
     | `identify` / `reset` | `identify(userId, true)` / `reset()` |
-    | `start` | `setEnableLogging(loggingEnabled)` |
+    | `start` | nothing: set Mixpanel's logging on the `MixpanelAPI` yourself, as its docs describe |
     | `flush` | `flush()` |
     | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
 
@@ -48,7 +48,7 @@ residency. Herald never changes them.
     | Herald | Mixpanel |
     | --- | --- |
     | an event | `track(name, properties:)`, with each value as its own JSON type |
-    | a `ScreenViewEvent` | `track('screen_view')` with `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a `ScreenViewEvent` | `track('screen_view')` with its name as `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
     | a `UserProperty` | `getPeople().set(name, value)`: the person's profile |
     | any other property | `registerSuperProperties`: sent with every later event |
     | `identify` / `reset` | `identify(userId)` / `reset()` |
@@ -84,9 +84,7 @@ who had already agreed. Once the user agrees, Mixpanel remembers it.
 
 ## Identity
 
-To never identify users in Mixpanel, pass `identificationEnabled = false` to
-`MixpanelAnalyticsService` on Android. On Flutter, register the Mixpanel provider without
-`identity`.
+To never identify users in Mixpanel, register the Mixpanel provider without `identity`.
 
 ## Watch out for
 

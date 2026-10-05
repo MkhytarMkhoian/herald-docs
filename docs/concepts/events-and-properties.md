@@ -60,6 +60,9 @@ The type decides what a vendor's dashboard can do with the value, not just how i
 Whole numbers and decimals stay separate because they mean different things: `3` seats, a price of
 `3.0`.
 
+There is no list value, because Firebase and Adjust can't take one. For a vendor that can, send
+lists through a [custom marker](../guides/custom-markers.md#a-marker-for-list-values).
+
 !!! note "Kotlin"
     Values are `AnalyticsValue`s: `String`, `Int`, `Long`, `Float`, `Double` or `Boolean`. Each is a
     value class, so it costs no extra object. A `Float` reaches every vendor as the decimal you
@@ -98,15 +101,9 @@ Marking an event as a screen view lets those vendors receive it that way:
     --8<-- "docs_samples/lib/concepts/vocabulary.dart:screen-view"
     ```
 
-=== "Kotlin"
-
-    `screenName` is separate from `name`. Vendors with a special screen view event put the screen
-    name in it; vendors without one log `name` like any other event.
-
-=== "Dart"
-
-    The event's `name` is the screen's name. Vendors with a special screen view event send it as
-    the screen name; vendors without one log it like any other event.
+The event's `name` is the screen's name. Vendors with a special screen view event send it as the
+screen name; vendors without one log it like any other event. To show a different name in one
+vendor's screen reports, put a factory for that event before the vendor's screen-view factory.
 
 ## Properties
 

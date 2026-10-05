@@ -29,8 +29,8 @@ number.
 | AppsFlyer | `setCustomerUserId(userId)` | `setCustomerUserId(null)`; nothing on Flutter, whose plugin can't clear it |
 | Amplitude | `setUserId(userId)` | `reset()`: clears the user and rotates the device id |
 
-If your app must not send a user id to Firebase or Mixpanel, pass `identificationEnabled = false`
-to their service on Android. On Flutter, register that vendor's provider without `identity`.
+If your app must not send a user id to a vendor, register that vendor's provider without
+`identity`.
 
 ## Every cold start
 

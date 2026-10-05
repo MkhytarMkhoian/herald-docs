@@ -33,7 +33,7 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
 | Herald | Amplitude |
 | --- | --- |
 | an event | `track(name, properties)`, with each value as its own JSON type |
-| a `ScreenViewEvent` | `[Amplitude] Screen Viewed` with `[Amplitude] Screen Name`; on Flutter, a screen view with its own `[Amplitude] Screen Name` parameter is refused and reported |
+| a `ScreenViewEvent` | `[Amplitude] Screen Viewed` with its name as `[Amplitude] Screen Name`; a screen view with its own `[Amplitude] Screen Name` parameter is refused and reported |
 | an `AmplitudeRevenueEvent` | `revenue(Revenue)`, deduplicated by `insertId` when set |
 | a property, including a `UserProperty` | `identify(Identify().set(name, value))`: a user property |
 | `identify` / `reset` | `setUserId(userId)` / `reset()`, which also rotates the device id |
