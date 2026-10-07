@@ -2,8 +2,8 @@
 
 `herald_widgets` is an optional package for tracking from the widget tree: screen views each time a
 screen becomes visible, impressions when something is really on screen, and taps in small widgets
-that have no bloc. It's the Flutter counterpart of the Android SDK's [Compose](../android/compose.md)
-helpers.
+that have no bloc. It's the Flutter counterpart of the Android SDK's
+[Compose](../android/compose.md) helpers and the iOS SDK's [SwiftUI](../ios/swiftui.md) helpers.
 
 ```bash
 flutter pub add herald_widgets

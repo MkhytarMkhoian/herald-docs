@@ -147,6 +147,7 @@ nav:
           - API reference: sdks/flutter/api.md
       - iOS:
           - Overview: sdks/ios/index.md
+          - SwiftUI: sdks/ios/swiftui.md
           - API reference: sdks/ios/api.md
   - Changelog:
       - Android: changelog/android.md
