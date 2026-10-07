@@ -1,8 +1,10 @@
 # Set up your app
 
 Your app sets Herald up in one place: on Android, usually your dependency injection setup and the
-Application class; on Flutter, `main()` and whatever shares objects in your app. That place creates the vendors, builds one `Herald` from them, starts it, and hands it to the
-rest of the app. No other code names a vendor or `Herald` itself.
+Application class; on Flutter, `main()` and whatever shares objects in your app; on iOS, the app
+delegate and whatever builds your objects. That place creates the vendors, builds one `Herald` from
+them, starts it, and hands it to the rest of the app. No other code names a vendor or `Herald`
+itself.
 
 ## Build Herald with your vendors
 
@@ -19,6 +21,12 @@ Herald sends every call to each vendor you register. A registered vendor is call
 
     ```dart
     --8<-- "docs_samples/lib/composition_root.dart:herald"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/CompositionRoot.swift:herald"
     ```
 
 Each of those functions looks like the Firebase one from the
@@ -89,6 +97,15 @@ That keeps each class honest about what it does, and easy to test with a fake.
     With a package such as get_it or Riverpod, register the one `Herald` and hand it out as each of
     the interfaces above, the same way.
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/DI/ManualSetup.swift:manual"
+    ```
+
+    With a container such as Factory or Swinject, register the one `Herald` and hand it out as
+    each of the protocols above, the same way.
+
 ## Start it
 
 Call `start()` once, when the app starts, and then apply the consent decision the user made last
@@ -115,6 +132,15 @@ Do it where the vendors' own setup guides initialise their SDKs, on every start 
     --8<-- "docs_samples/lib/composition_root.dart:start-from-main"
     ```
 
+=== "Swift"
+
+    Do it in your app delegate's `application(_:didFinishLaunchingWithOptions:)`, after the
+    vendors' own setup. Calls keep their order, so there's nothing to wait for:
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/CompositionRoot.swift:start-from-main"
+    ```
+
 If a user is signed in, call `identify(...)` between the two calls. Some vendors forget the user
 between launches, and AppsFlyer attaches the user id to the launch it sends when consent is
 applied. See [Identity](../guides/identity.md#every-cold-start).
@@ -134,10 +160,10 @@ links, so nothing is tracked before the vendors have started.
 
 ## When a vendor fails
 
-If a vendor's SDK throws, Herald catches the error and still sends to the other vendors, so
-analytics never crashes your app. The downside is that a vendor failing on every call looks just
-like one that works. That's why the example above passes an `errorReporter`: send the errors to
-the crash or logging tool you already use.
+If a vendor's SDK throws, or on iOS reports a failure, Herald catches the error and still sends to
+the other vendors, so analytics never crashes your app. The downside is that a vendor failing on
+every call looks just like one that works. That's why the example above passes an
+`errorReporter`: send the errors to the crash or logging tool you already use.
 
 === "Kotlin"
 
@@ -157,11 +183,21 @@ the crash or logging tool you already use.
     ),
     ```
 
+=== "Swift"
+
+    ```swift
+    errorReporter: { failure in
+        // e.g. "adjust failed on Track(checkout_started): ..."
+        Crashlytics.crashlytics().record(error: failure.error, userInfo: ["call": "\(failure)"])
+    }
+    ```
+
 - **The operation says what failed:** `Track(checkout_started)`, `SetProperty(plan)`, `Identify`,
   `Start`, and so on. It holds names only, never parameter values or the user id, so it's safe to
   send to another tool.
 - **Errors arrive one at a time,** after every vendor has finished, so your reporter doesn't need
-  to be thread-safe.
+  to be thread-safe. On iOS each arrives as soon as its vendor reports it, on the thread that made
+  the call.
 - **If your reporter throws,** Herald catches that too. On Flutter, a reporter that returns a
   failed `Future` is caught as well, and Herald doesn't wait for it.
 - **On Android, cancelling the caller isn't an error.** If the coroutine that called Herald is
@@ -169,8 +205,9 @@ the crash or logging tool you already use.
 
 ## Threads and order
 
-Vendors are called at the same time, so one slow vendor doesn't hold up the others, and a call
-returns when every vendor has finished. Tracking from UI code is safe on both platforms.
+On Android and Flutter, vendors are called at the same time, so one slow vendor doesn't hold up
+the others, and a call returns when every vendor has finished. Tracking from UI code is safe on
+every platform.
 
 === "Kotlin"
 
@@ -193,6 +230,16 @@ returns when every vendor has finished. Tracking from UI code is safe on both pl
     - **A call starts at once and doesn't wait for earlier ones.** Two calls you don't await, such
       as `onPressed: () => analytics.track(event)`, can reach a vendor in either order. When order
       matters, await the first call.
+
+=== "Swift"
+
+    There is no queue: Herald calls each vendor on your thread, one after another, and vendor SDKs
+    do their own work in the background.
+
+    - **Calls keep their order.** When `track` returns, every vendor has the event, so the next
+      call always reaches them after it.
+    - **Calls from different threads at the same moment** can reach a vendor in either order, as
+      on the other platforms.
 
 ## Next
 

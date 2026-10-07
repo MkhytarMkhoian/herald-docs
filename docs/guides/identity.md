@@ -15,6 +15,12 @@ then on belongs to that user, and forgets them at sign-out.
     --8<-- "docs_samples/lib/guides/identity.dart:session"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Identity.swift:session"
+    ```
+
 `Identity.userId` uses the name every vendor uses. Pass an id that doesn't change and doesn't
 reveal who the person is, such as your backend's account id, never an email address or a phone
 number.

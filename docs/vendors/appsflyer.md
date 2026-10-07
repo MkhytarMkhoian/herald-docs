@@ -9,11 +9,13 @@ user attributes.
 | --- | --- |
 | Android | `io.github.mkhytarmkhoian:herald-appsflyer` |
 | Flutter | [`herald_appsflyer`](https://pub.dev/packages/herald_appsflyer), over `appsflyer_sdk` |
+| iOS | [`herald-ios-appsflyer`](https://github.com/MkhytarMkhoian/herald-ios-appsflyer), module `HeraldAppsFlyer`, over AppsFlyer's iOS SDK |
 
 ## Setup
 
 Your app initialises AppsFlyer, with the dev key and the conversion and deep-link listeners: in
-`Application.onCreate` on Android, in `main()` on Flutter. AppsFlyer 7 also ignores `start()` until
+`Application.onCreate` on Android, in `main()` on Flutter, in the app delegate on iOS. On iOS,
+Herald uses the shared `AppsFlyerLib.shared()`, so its classes take no AppsFlyer object. AppsFlyer 7 also ignores `start()` until
 a session-ready listener is registered:
 
 === "Kotlin"
@@ -26,6 +28,12 @@ a session-ready listener is registered:
 
     ```dart
     --8<-- "docs_samples/lib/vendors/appsflyer_setup.dart:init"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Vendors/AppsFlyerSetup.swift:init"
     ```
 
 Then build the provider. It has no `properties`, because AppsFlyer keeps no user attributes, and
@@ -41,6 +49,12 @@ no generic factory at the end, so only the conversions a factory handles reach A
 
     ```dart
     --8<-- "docs_samples/lib/vendors/appsflyer_setup.dart:provider"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Vendors/AppsFlyerSetup.swift:provider"
     ```
 
 ## What reaches AppsFlyer
@@ -69,6 +83,18 @@ no generic factory at the end, so only the conversions a factory handles reach A
     | `start` | `stop(true)`: stays silent |
     | `setEnabled(true)` / `setEnabled(false)` | `stop(false)` then `start()` / `stop(true)` |
 
+=== "Swift"
+
+    | Herald | AppsFlyer |
+    | --- | --- |
+    | an event a factory handles | `logEvent(name, withValues:)`, with each value as its own type |
+    | an `AppsFlyerPurchaseEvent` | `af_purchase` with `af_revenue`, `af_currency` and optional content, quantity and order id; a parameter with one of those keys is refused and reported |
+    | an `AppsFlyerSubscribeEvent` | `af_subscribe` with `af_revenue` and `af_currency`, refusing those keys as parameters the same way |
+    | an `AppsFlyerAdRevenueEvent` | `logAdRevenue(AFAdRevenueData, additionalParameters:)` |
+    | `identify` / `reset` | `customerUserID = userId` / `customerUserID = nil` |
+    | `start` | `isStopped = true`: stays silent |
+    | `setEnabled(true)` / `setEnabled(false)` | `isStopped = false` then `start()` / `isStopped = true` |
+
 ## Your conversions
 
 Most AppsFlyer events are your own conversions under AppsFlyer's predefined names. Write a tracker
@@ -79,7 +105,7 @@ and a factory per event in the feature that owns it, as the
 For revenue, Herald's AppsFlyer module has its own types in AppsFlyer's terms, because AppsFlyer
 counts revenue only under `af_revenue`. Your factory maps your event to one and hands it to the matching tracker:
 
-| Type | Tracker | Tracker on Flutter |
+| Type | Tracker | Tracker on Flutter and iOS |
 | --- | --- | --- |
 | `AppsFlyerPurchaseEvent` | `PurchaseEventTracker` | `PurchaseAppsFlyerEventTracker` |
 | `AppsFlyerSubscribeEvent` | `SubscribeEventTracker` | `SubscribeAppsFlyerEventTracker` |

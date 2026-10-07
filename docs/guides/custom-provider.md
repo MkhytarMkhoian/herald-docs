@@ -19,8 +19,19 @@ To send events to your own collection endpoint, implement `EventTrackerService`:
     --8<-- "docs_samples/lib/guides/custom_provider.dart:backend"
     ```
 
-Register it like any vendor, with only the interfaces it implements. It's called at the same time
-as the others, and its failures are caught and reported like theirs.
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/CustomProvider.swift:backend"
+    ```
+
+Register it like any vendor, with only the interfaces it implements. It's called with the others,
+and its failures are caught and reported like theirs.
+
+On iOS, Herald calls each provider on your thread and waits for it to return, so a provider must
+return quickly. Do slow work, such as this network request, in a `Task`, and report a failure there
+with `Herald.reportFailure`. Herald still knows which provider and call it belongs to. Don't report
+from a completion handler on another queue: Herald can't tell where that report came from.
 
 ## Wrapping a provider
 
@@ -40,6 +51,12 @@ repeated events, keeping personal data on the device.
     --8<-- "docs_samples/lib/guides/custom_provider.dart:decorators"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/CustomProvider.swift:decorators"
+    ```
+
 Then register the wrapped tracker instead of the original:
 
 === "Kotlin"
@@ -52,6 +69,12 @@ Then register the wrapped tracker instead of the original:
 
     ```dart
     --8<-- "docs_samples/lib/guides/custom_provider.dart:register"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/CustomProvider.swift:register"
     ```
 
 Herald has no filtering or sampling of its own, on purpose. Wrappers can be combined, work with any
@@ -72,5 +95,6 @@ The checklist for a
 [new vendor module](https://github.com/MkhytarMkhoian/herald/blob/main/CONTRIBUTING.md#a-new-vendor-module)
 lists every piece; on Flutter, the one for a
 [new vendor package](https://github.com/MkhytarMkhoian/herald-flutter/blob/main/CONTRIBUTING.md#a-new-vendor-package)
-has the same list. They're written for vendor modules added to Herald, but work the same for one
+has the same list. On iOS, copy one of the vendor packages, such as
+[`herald-ios-mixpanel`](https://github.com/MkhytarMkhoian/herald-ios-mixpanel). They're written for vendor modules added to Herald, but work the same for one
 that lives in your app.

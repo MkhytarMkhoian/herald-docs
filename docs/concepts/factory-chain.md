@@ -30,6 +30,12 @@ own events.
     --8<-- "docs_samples/lib/concepts/factory_chain.dart:factory"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:factory"
+    ```
+
 - **`Claimed` takes one or more trackers,** the vendor calls to make. It can't be empty; use
   `Dropped` to take an event and send nothing.
 - **A factory recognises an event with a plain `when` (Kotlin) or `switch` (Dart) on its type,** so
@@ -56,6 +62,12 @@ needs something different, write your own:
     --8<-- "docs_samples/lib/concepts/factory_chain.dart:tracker"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:tracker"
+    ```
+
 A tracker has a single method. A named class is easier to test and to find than a lambda.
 
 ## One event, two vendor calls
@@ -78,6 +90,12 @@ Your event stays a normal event:
     --8<-- "docs_samples/lib/concepts/several_trackers.dart:event"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:event"
+    ```
+
 Herald's generic tracker already sends the event. For the charge, write a small tracker that calls
 Mixpanel's profile API:
 
@@ -93,6 +111,12 @@ Mixpanel's profile API:
     --8<-- "docs_samples/lib/concepts/several_trackers.dart:tracker"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:tracker"
+    ```
+
 Then the Mixpanel factory takes the event and answers with both trackers:
 
 === "Kotlin"
@@ -105,6 +129,12 @@ Then the Mixpanel factory takes the event and answers with both trackers:
 
     ```dart
     --8<-- "docs_samples/lib/concepts/several_trackers.dart:factory"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:factory"
     ```
 
 Herald runs both trackers one after the other, in that order, for this one vendor. If the first one
@@ -128,6 +158,12 @@ isn't `Declined`:
 
     ```dart
     --8<-- "docs_samples/lib/concepts/factory_chain.dart:chain"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:chain"
     ```
 
 When every factory declines, the chain declines too, and the event isn't sent to that vendor.
@@ -159,6 +195,12 @@ with the last factory in its list:
     --8<-- "docs_samples/lib/concepts/factory_chain.dart:default"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:default"
+    ```
+
 The required-mapping version looks like this:
 
 === "Kotlin"
@@ -171,6 +213,12 @@ The required-mapping version looks like this:
 
     ```dart
     --8<-- "docs_samples/lib/concepts/factory_chain.dart:strict"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:strict"
     ```
 
 !!! warning "A catch-all goes last"

@@ -4,8 +4,9 @@ On this page you send your first event and see it in your app's log. You don't n
 with any analytics service yet: you start with Herald's log module, which prints each event instead
 of sending it. At the end you add Firebase.
 
-Add the core library and the log module. The [Android SDK](../sdks/android/index.md) and
-[Flutter SDK](../sdks/flutter/index.md) pages list all the modules.
+Add the core library and the log module. The [Android SDK](../sdks/android/index.md),
+[Flutter SDK](../sdks/flutter/index.md) and [iOS SDK](../sdks/ios/index.md) pages list all the
+modules.
 
 === "Kotlin"
 
@@ -31,6 +32,16 @@ Add the core library and the log module. The [Android SDK](../sdks/android/index
     flutter pub add herald herald_log
     ```
 
+=== "Swift"
+
+    In Xcode, File → Add Package Dependencies, add
+    `https://github.com/MkhytarMkhoian/herald-ios`, and choose `HeraldCore` and `HeraldLog`. In a
+    `Package.swift`:
+
+    ```swift
+    .package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0-beta.1")
+    ```
+
 ## 1. Describe what happened
 
 An event is a small class in your app. It has a name, and parameters that describe what happened:
@@ -45,6 +56,12 @@ An event is a small class in your app. It has a name, and parameters that descri
 
     ```dart
     --8<-- "docs_samples/lib/quick_start.dart:event"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/QuickStart.swift:event"
     ```
 
 Parameters keep their type. `seats` reaches every service as the number 3, not as the text `"3"`,
@@ -68,6 +85,12 @@ user properties, and a service that handles everything else, such as start-up an
 
     ```dart
     --8<-- "docs_samples/lib/quick_start.dart:herald"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/QuickStart.swift:herald"
     ```
 
 Create Herald once for the whole app. [Set up your app](app-setup.md) shows how to share it.
@@ -105,6 +128,16 @@ app:
     --8<-- "docs_samples/lib/quick_start.dart:app"
     ```
 
+=== "Swift"
+
+    Start it in your app delegate's `application(_:didFinishLaunchingWithOptions:)`, where the
+    vendors' own guides set up their SDKs. With SwiftUI, add the delegate with
+    `@UIApplicationDelegateAdaptor`:
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/QuickStart.swift:app"
+    ```
+
 ## 3. Track the event
 
 Your classes don't use `Herald` directly. They ask for `EventTrackerService`, a small interface
@@ -123,7 +156,14 @@ in tests you pass a fake instead.
     --8<-- "docs_samples/lib/quick_start.dart:track"
     ```
 
-Call `onCheckout("pro", 3)`, and the log shows the event as a real service would receive it:
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/QuickStart.swift:track"
+    ```
+
+Call `onCheckout("pro", 3)`, or `onCheckout(plan: "pro", seats: 3)` in Swift, and the log shows
+the event as a real service would receive it:
 
 === "Kotlin"
 
@@ -143,12 +183,22 @@ Call `onCheckout("pro", 3)`, and the log shows the event as a real service would
         └─ seats = 3
     ```
 
+=== "Swift"
+
+    ```text title="Xcode console"
+    [herald] start
+    [herald] event   checkout_started
+        ├─ plan  = pro
+        └─ seats = 3
+    ```
+
 ## 4. Add Firebase
 
 First set up Firebase in your app the usual way, by following Firebase's guide for
-[Android](https://firebase.google.com/docs/analytics/get-started?platform=android) or
-[Flutter](https://firebase.google.com/docs/analytics/get-started?platform=flutter). Then add
-Herald's Firebase module:
+[Android](https://firebase.google.com/docs/analytics/get-started?platform=android),
+[Flutter](https://firebase.google.com/docs/analytics/get-started?platform=flutter) or
+[iOS](https://firebase.google.com/docs/analytics/get-started?platform=ios). Then add Herald's
+Firebase module:
 
 === "Kotlin"
 
@@ -168,6 +218,15 @@ Herald's Firebase module:
     flutter pub add herald_firebase
     ```
 
+=== "Swift"
+
+    Add `https://github.com/MkhytarMkhoian/herald-ios-firebase` the same way, and choose
+    `HeraldFirebase`:
+
+    ```swift
+    .package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0-beta.1")
+    ```
+
 The Firebase provider is built the same way as the log one. Its factories send screen views as
 GA4's own `screen_view` event, and every other event under its own name:
 
@@ -183,6 +242,12 @@ GA4's own `screen_view` event, and every other event under its own name:
     --8<-- "docs_samples/lib/composition_root.dart:firebase-provider"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/CompositionRoot.swift:firebase-provider"
+    ```
+
 Add it to Herald next to the log provider:
 
 === "Kotlin"
@@ -195,6 +260,12 @@ Add it to Herald next to the log provider:
 
     ```dart
     --8<-- "docs_samples/lib/quick_start.dart:add-firebase"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/QuickStart.swift:add-firebase"
     ```
 
 The same `CheckoutStarted` now goes to both the log and Firebase, and `CheckoutViewModel` didn't

@@ -10,6 +10,7 @@ every event:
 | --- | --- |
 | Android | `io.github.mkhytarmkhoian:herald-amplitude` |
 | Flutter | [`herald_amplitude`](https://pub.dev/packages/herald_amplitude), over `amplitude_flutter` |
+| iOS | [`herald-ios-amplitude`](https://github.com/MkhytarMkhoian/herald-ios-amplitude), module `HeraldAmplitude`, over `Amplitude-Swift` |
 
 ## Setup
 
@@ -28,6 +29,12 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
     --8<-- "docs_samples/lib/vendors/amplitude_setup.dart:provider"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Vendors/AmplitudeSetup.swift:provider"
+    ```
+
 ## What reaches Amplitude
 
 | Herald | Amplitude |
@@ -37,7 +44,7 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
 | an `AmplitudeRevenueEvent` | `revenue(Revenue)`, deduplicated by `insertId` when set |
 | a property, including a `UserProperty` | `identify(Identify().set(name, value))`: a user property |
 | `identify` / `reset` | `setUserId(userId)` / `reset()`, which also rotates the device id |
-| `start` | waits for the SDK to finish setting up, so a failed setup is reported |
+| `start` | waits for the SDK to finish setting up, so a failed setup is reported; nothing on iOS, where Amplitude is ready once created |
 | `flush` | `flush()` |
 | `setEnabled` | `optOut = !enabled` |
 
@@ -51,7 +58,7 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
 | `RequireMappedAmplitudeEventTrackerFactory`, `RequireMappedAmplitudePropertySetterFactory` | nothing: throws for anything that reaches it |
 
 For a purchase, your factory maps your event to `AmplitudeRevenueEvent` and hands it to
-`RevenueEventTracker` (`RevenueAmplitudeEventTracker` on Flutter); put that factory before the
+`RevenueEventTracker` (`RevenueAmplitudeEventTracker` on Flutter and iOS); put that factory before the
 generic one. The type uses Amplitude's own
 fields:
 
@@ -65,7 +72,7 @@ See [Revenue](../guides/revenue.md).
 ## Consent
 
 **A fresh install collects** unless the `Configuration` sets `optOut = true` (`optOut: true` on
-Flutter). Amplitude doesn't
+Flutter and iOS). Amplitude doesn't
 persist the opt-out, so re-apply the stored decision after start-up. Revoking stops new events;
 events recorded before the revoke, while consent was given, may still upload.
 
@@ -76,3 +83,7 @@ events recorded before the revoke, while consent was given, may still upload.
   autocapture setting is sessions only.
 - **`reset()` rotates the device id,** so a signed-out user starts a new anonymous device in
   Amplitude.
+- **`HeraldCore.Identity` on iOS.** Amplitude's iOS SDK has an `Identity` type too, so in a file
+  that imports both modules, write `HeraldCore.Identity(userId: id)`.
+- **A factory of your own that stores your `Amplitude`** needs `@preconcurrency import
+  AmplitudeSwift` on iOS, because Amplitude isn't marked `Sendable`. Xcode offers the fix.

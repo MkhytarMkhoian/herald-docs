@@ -1,6 +1,7 @@
 # Log
 
-The log provider prints every call to your log, Logcat or Flutter's debug console, instead of
+The log provider prints every call to your log, Logcat, Flutter's debug console or Xcode's console,
+instead of
 sending it anywhere. Use it in debug builds
 to see exactly what your app reports, and in what order: events, properties, sign-in, consent and
 start-up.
@@ -9,11 +10,14 @@ start-up.
 | --- | --- |
 | Android | `io.github.mkhytarmkhoian:herald-log` |
 | Flutter | [`herald_log`](https://pub.dev/packages/herald_log) |
+| iOS | [`herald-ios`](https://github.com/MkhytarMkhoian/herald-ios), module `HeraldLog` |
 
 ## Setup
 
 It writes through `AnalyticsLogger`, so it depends on no logging library. On Android it's a
-one-method interface; on Flutter it's a function type, so `debugPrint` fits as-is:
+one-method interface; on Flutter and iOS it's a function type, so `debugPrint` or
+`{ message in print(message) }` fits as-is. On iOS, Apple's `Logger` works too, and shows the lines
+in the Console app as well:
 
 === "Kotlin"
 
@@ -27,7 +31,13 @@ one-method interface; on Flutter it's a function type, so `debugPrint` fits as-i
     --8<-- "docs_samples/lib/quick_start.dart:herald"
     ```
 
-Register it only in debug builds, next to your real vendors.
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/QuickStart.swift:herald"
+    ```
+
+Register it only in debug builds, next to your real vendors; on iOS, inside `#if DEBUG`.
 
 ## Output
 

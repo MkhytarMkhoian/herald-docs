@@ -34,6 +34,12 @@ The event describes the purchase and knows nothing about the vendors:
     --8<-- "docs_samples/lib/guides/revenue.dart:purchase"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:purchase"
+    ```
+
 Firebase and Mixpanel send it through their generic factories, with no extra code.
 
 ## Mapping it for each vendor
@@ -60,6 +66,12 @@ replaced.
     --8<-- "docs_samples/lib/guides/revenue.dart:mappings"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:mappings"
+    ```
+
 Your event can't implement a vendor type, because those types are final classes. So only the
 mapping knows the vendor exists.
 
@@ -84,6 +96,12 @@ tracker, which knows the vendor's API:
     --8<-- "docs_samples/lib/guides/revenue.dart:factories"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:factories"
+    ```
+
 Put them before the generic factory in each vendor's chain. Otherwise Amplitude's generic factory
 would take the purchase first and send it as an ordinary event. On Adjust, the factory passes the
 token to `RevenueEventTracker` itself, so the event needs no entry in
@@ -104,6 +122,12 @@ ad-revenue APIs, the same way:
 
     ```dart
     --8<-- "docs_samples/lib/guides/revenue.dart:ad-impression"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:ad-impression"
     ```
 
 On Android, both vendor modules call their tracker `AdRevenueEventTracker`, so a file that uses

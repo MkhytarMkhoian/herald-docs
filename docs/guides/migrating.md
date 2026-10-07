@@ -21,6 +21,12 @@ is sent differently yet; you've only added the new way in.
     --8<-- "docs_samples/lib/guides/migrating.dart:bridge"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Migrating.swift:bridge"
+    ```
+
 Give `Herald` to your classes through its interfaces, as in
 [Set up your app](../getting-started/app-setup.md). In debug builds, add the log provider to see
 every call in your log.
@@ -61,6 +67,31 @@ Replace direct calls with an event class and `EventTrackerService`, one feature 
 
         ```dart
         --8<-- "docs_samples/lib/quick_start.dart:track"
+        ```
+
+=== "Swift"
+
+    === "Before"
+
+        ```swift
+        final class CheckoutViewModel {
+            private let analytics: LegacyAnalytics
+
+            init(analytics: LegacyAnalytics) {
+                self.analytics = analytics
+            }
+
+            func onCheckout(plan: String, seats: Int) {
+                analytics.logEvent(
+                    name: "checkout_started", params: ["plan": plan, "seats": "\(seats)"])
+            }
+        }
+        ```
+
+    === "After"
+
+        ```swift
+        --8<-- "Samples/Sources/Samples/QuickStart.swift:track"
         ```
 
 Moved and unmoved code still go through the same wrapper, so dashboards don't change. Each moved

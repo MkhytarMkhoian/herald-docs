@@ -2,7 +2,7 @@
 
 Analytics breaks quietly. A renamed parameter, or a double tap that sends an event twice, shows up
 weeks later as a wrong number on a dashboard. Herald's testing module lets you check it in tests.
-Add `herald-testing`, or `herald_testing` on Flutter:
+Add `herald-testing`, `herald_testing` on Flutter, or `HeraldTesting` on iOS:
 
 === "Kotlin"
 
@@ -21,6 +21,11 @@ Add `herald-testing`, or `herald_testing` on Flutter:
     ```bash
     flutter pub add dev:herald_testing
     ```
+
+=== "Swift"
+
+    `HeraldTesting` is part of `herald-ios`. Add it to your test target only. Its assertions work
+    in Swift Testing and XCTest alike.
 
 The examples on this page are real tests, run on every Herald build.
 
@@ -42,6 +47,12 @@ the same setup you ship: your factories and your wrappers.
     --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:fake-provider"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:fake-provider"
+    ```
+
 - **`assertTracked` expects exactly one match.** A double tap that sends an event twice fails the
   test instead of passing quietly. Use `assertTrackedTimes` when a repeat is expected.
 - **Parameters are checked by type.** `"3"` sent as text fails against `param("seats", 3)`,
@@ -61,7 +72,8 @@ the same setup you ship: your factories and your wrappers.
 The other assertions are `assertNotTracked`, `assertNothingTracked`, `assertPropertySet` and
 `assertIdentified`. On Android, assertions throw a plain `AssertionError`, so any test framework
 works. On Flutter they throw a `TestFailure`, which `package:test` and `flutter_test` report like
-any failed `expect`.
+any failed `expect`. On iOS they record a failure through Swift Testing, at the line of the
+assertion, and an XCTest test fails the same way; the test goes on, as after a failed `#expect`.
 
 ## Order between calls
 
@@ -78,6 +90,12 @@ when the order matters, such as a property that must be set before the event tha
 
     ```dart
     --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:order"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:order"
     ```
 
 ## A smaller fake for one interface
@@ -100,6 +118,14 @@ A class that only tracks events doesn't need a `Herald`:
     --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:single-capability"
     ```
 
+=== "Swift"
+
+    `FakeAnalyticsProvider` is every protocol, so pass it to the class directly:
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:single-capability"
+    ```
+
 Go through a real `Herald` when the test uses several interfaces or should run your factories.
 
 ## Testing a factory
@@ -119,50 +145,114 @@ can test it directly:
     --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:factory"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:factory"
+    ```
+
 To assert what a tracker sends, mock the vendor SDK and verify the call. Build real events rather
 than mocked ones.
 
-## More examples on Flutter
+## More examples
 
 These test a small view model:
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:app"
-```
+=== "Dart"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:app"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:app"
+    ```
 
 Values are compared by type, and `assertTracked` expects exactly one such event:
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:parameters"
-```
+=== "Dart"
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:counting"
-```
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:parameters"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:parameters"
+    ```
+
+Repeats can be counted, and an event checked to be absent:
+
+=== "Dart"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:counting"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:counting"
+    ```
 
 For a property, the last value counts:
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:properties"
-```
+=== "Dart"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:properties"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:properties"
+    ```
 
 Sign-in and sign-out are recorded too:
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:identity"
-```
+=== "Dart"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:identity"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:identity"
+    ```
 
 For checks of your own, read the recorded events and properties:
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:custom-checks"
-```
+=== "Dart"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:custom-checks"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:custom-checks"
+    ```
 
 `clear()` forgets everything recorded so far, for tests with several steps:
 
-```dart
---8<-- "docs_samples/test/testing/showcase_test.dart:clear"
-```
+=== "Dart"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:clear"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:clear"
+    ```
 
 !!! note "Kotlin"
     With MockK, never stub a getter that returns an `AnalyticsValue`. It's a value class, and such

@@ -41,11 +41,20 @@ Turn the other three off where you create them:
     | Mixpanel | `Mixpanel.init(token, optOutTrackingDefault: true, ...)` |
     | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
 
+=== "Swift"
+
+    | Vendor | Turn it off where |
+    | --- | --- |
+    | Firebase | `FIREBASE_ANALYTICS_COLLECTION_ENABLED` set to `NO` in `Info.plist` |
+    | Mixpanel | `Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` |
+    | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
+
 Herald can do it for Adjust and AppsFlyer because their switch is just a flag. For the others it
 would do harm:
 
 - Mixpanel's `optOutTracking()` deletes unflushed events and the stored identity, so calling it on
-  every launch would throw away the last session of a user who had already agreed;
+  every launch would throw away the last session of a user who had already agreed. On iOS it also
+  deletes the identified user's People profile;
 - Firebase reads its switch from the app's native settings before any Herald code runs.
 
 ## Recording the decision
@@ -63,6 +72,12 @@ your privacy settings screen:
 
     ```dart
     --8<-- "docs_samples/lib/guides/consent.dart:record"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Consent.swift:record"
     ```
 
 ## Re-applying it on every launch
@@ -89,6 +104,12 @@ shows:
 
     ```dart
     --8<-- "docs_samples/lib/guides/consent.dart:restore"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Consent.swift:restore"
     ```
 
 For AppsFlyer this is also the moment it actually starts. With consent stored, `setEnabled(true)`

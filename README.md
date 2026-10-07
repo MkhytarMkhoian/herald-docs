@@ -1,17 +1,19 @@
 # Herald docs
 
-The source of the [Herald website](https://mkhytarmkhoian.github.io/herald-docs/), for both SDKs:
-[Herald for Android](https://github.com/MkhytarMkhoian/herald) and
-[Herald for Flutter](https://github.com/MkhytarMkhoian/herald-flutter).
+The source of the [Herald website](https://mkhytarmkhoian.github.io/herald-docs/), for every SDK:
+[Herald for Android](https://github.com/MkhytarMkhoian/herald),
+[Herald for Flutter](https://github.com/MkhytarMkhoian/herald-flutter) and
+[Herald for iOS](https://github.com/MkhytarMkhoian/herald-ios).
 
 The site is [MkDocs](https://www.mkdocs.org) with the
 [Material theme](https://squidfunk.github.io/mkdocs-material/). The pages are here, in `docs/`.
 The code on them comes from the SDK repositories, where it is compiled and tested:
-`docs-samples` in herald and `docs_samples` in herald-flutter.
+`docs-samples` in herald, `docs_samples` in herald-flutter and `Samples` in herald-ios.
 
 ## Building
 
-Clone both SDKs next to this repository, then:
+Clone the three SDK repositories next to this one (`herald`, `herald-flutter` and `herald-ios`),
+then:
 
 ```bash
 scripts/build_docs.sh          # build into site/, failing on any broken link or missing snippet
@@ -19,9 +21,9 @@ scripts/build_docs.sh serve    # preview at http://localhost:8000
 ```
 
 It needs JDK 17 and an Android SDK for the Android API reference, and Python 3 for MkDocs, which it
-installs into `build/docs-venv`. Set `HERALD_ANDROID` or `HERALD_FLUTTER` to use clones somewhere
-else. The local build uses your clones as they are, so you can preview pages for features that
-aren't released yet.
+installs into `build/docs-venv`. Set `HERALD_ANDROID`, `HERALD_FLUTTER` or `HERALD_IOS` to use
+clones somewhere else. The local build uses your clones as they are, so you can preview pages for
+features that aren't released yet.
 
 ## Publishing
 

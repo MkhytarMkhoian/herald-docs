@@ -28,6 +28,12 @@ Most apps use vendors in two ways, and the end of each chain is what makes the d
     --8<-- "docs_samples/lib/guides/routing.dart:two-kinds"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Routing.swift:two-kinds"
+    ```
+
 Adjust has no generic factory at all, because an Adjust event only exists with a token from the
 Adjust dashboard. So Adjust always works the second way.
 
@@ -62,6 +68,12 @@ the event:
     --8<-- "docs_samples/lib/concepts/factory_chain.dart:factory"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:factory"
+    ```
+
 `CardNumberSeen` is dropped, so the generic factory never sees it. The rule lives right beside the
 event.
 
@@ -77,6 +89,12 @@ Properties work the same way:
 
     ```dart
     --8<-- "docs_samples/lib/guides/routing.dart:drop-property"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/Routing.swift:drop-property"
     ```
 
 ## Requiring every event to be mapped

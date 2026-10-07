@@ -10,10 +10,11 @@ where Mixpanel keeps attributes:
 | --- | --- |
 | Android | `io.github.mkhytarmkhoian:herald-mixpanel` |
 | Flutter | [`herald_mixpanel`](https://pub.dev/packages/herald_mixpanel), over `mixpanel_flutter` |
+| iOS | [`herald-ios-mixpanel`](https://github.com/MkhytarMkhoian/herald-ios-mixpanel), module `HeraldMixpanel`, over `mixpanel-swift` |
 
 ## Setup
 
-You create the `MixpanelAPI`, or the `Mixpanel` on Flutter: token, options, server URL for data
+You create the `MixpanelAPI`, the `Mixpanel` on Flutter, or the `MixpanelInstance` on iOS: token, options, server URL for data
 residency. Herald never changes them.
 
 === "Kotlin"
@@ -26,6 +27,12 @@ residency. Herald never changes them.
 
     ```dart
     --8<-- "docs_samples/lib/vendors/mixpanel_setup.dart:provider"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Vendors/MixpanelSetup.swift:provider"
     ```
 
 ## What reaches Mixpanel
@@ -56,6 +63,19 @@ residency. Herald never changes them.
     | `flush` | `flush()` |
     | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
 
+=== "Swift"
+
+    | Herald | Mixpanel |
+    | --- | --- |
+    | an event | `track(event:properties:)`, with each value as its own type |
+    | a `ScreenViewEvent` | `track(event: "screen_view")` with its name as `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a `UserProperty` | `people.set(property:to:)`: the person's profile |
+    | any other property | `registerSuperProperties`: sent with every later event |
+    | `identify` / `reset` | `identify(distinctId: userId)` / `reset()` |
+    | `start` | nothing: turn on Mixpanel's logging yourself, as its docs describe |
+    | `flush` | `flush()` |
+    | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
+
 ## Factories
 
 | Factory | Handles |
@@ -75,12 +95,14 @@ residency. Herald never changes them.
 ## Consent
 
 **A fresh install collects** unless Mixpanel is created opted out:
-`MixpanelOptions.Builder().optOutTrackingDefault(true)` on Android, or
-`Mixpanel.init(token, optOutTrackingDefault: true, ...)` on Flutter.
+`MixpanelOptions.Builder().optOutTrackingDefault(true)` on Android,
+`Mixpanel.init(token, optOutTrackingDefault: true, ...)` on Flutter, or
+`Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` on iOS.
 
 Herald can't opt out for you in `start()`. `optOutTracking()` deletes events not yet sent and the
 stored user, so calling it on every launch would throw away the previous session and forget a user
-who had already agreed. Once the user agrees, Mixpanel remembers it.
+who had already agreed. Once the user agrees, Mixpanel remembers it. On iOS, opting out also
+deletes the identified user's People profile in Mixpanel: that's Mixpanel's own behaviour.
 
 ## Identity
 

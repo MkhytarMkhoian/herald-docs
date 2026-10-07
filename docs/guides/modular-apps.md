@@ -28,7 +28,7 @@ really needs something different:
 ## The app collects them
 
 The app module doesn't need to know what a feature's factories are. On Android, your DI library
-collects them; on Flutter, each feature exposes its list and the app joins them:
+collects them; on Flutter and iOS, each feature exposes its list and the app joins them:
 
 === "Kotlin"
 
@@ -76,10 +76,24 @@ collects them; on Flutter, each feature exposes its list and the app joins them:
     --8<-- "docs_samples/lib/guides/modular_apps.dart:root"
     ```
 
+=== "Swift"
+
+    The feature module exposes its factories:
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:feature"
+    ```
+
+    The app builds the chain from what the features contribute:
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:root"
+    ```
+
 ## A DI set has no order
 
-A chain uses the first factory that answers, but a DI set has no order, and on Flutter the order
-features are joined in shouldn't matter either. That's fine while each
+A chain uses the first factory that answers, but a DI set has no order, and on Flutter and iOS the
+order features are joined in shouldn't matter either. That's fine while each
 feature's factories handle only that feature's events, which they should. Factories whose position
 matters go around the injected set, placed by hand:
 
@@ -97,12 +111,14 @@ factory is then never created when the vendor is missing.
 
 ## Two layouts
 
-Implementing `FirebaseEventTrackerFactory` puts `herald-firebase` (`herald_firebase` on Flutter) in
+Implementing `FirebaseEventTrackerFactory` puts `herald-firebase` (`herald_firebase` on Flutter,
+`HeraldFirebase` on iOS) in
 a feature's dependencies, so in the layout above **feature modules know which vendors exist**. The upside is that an event and its
 vendor rules live together. Some teams would rather features not know about vendors at all.
 
 The other layout turns this around. Per-vendor modules own the vendor rules and depend on small API
-modules that declare the events. Features depend only on `herald-core` (`herald` on Flutter):
+modules that declare the events. Features depend only on `herald-core` (`herald` on Flutter,
+`HeraldCore` on iOS):
 
 ```text
 :analytics:firebase   depends on :feature:checkout:api, :feature:search:api

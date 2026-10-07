@@ -2,8 +2,8 @@
 # either SDK releases, or when run by hand.
 #
 # The site documents what Maven Central and pub.dev serve, so the code samples, the Android API
-# reference and the change logs come from each SDK's latest release tag. A release in herald or
-# herald-flutter triggers this workflow with `repository_dispatch`.
+# reference and the change logs come from each SDK's latest release tag. A release in herald,
+# herald-flutter or herald-ios triggers this workflow with `repository_dispatch`.
 name: Docs
 
 on:
@@ -32,13 +32,15 @@ jobs:
         run: |
           android=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald)
           flutter=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-flutter)
-          if [[ -z "$android" || -z "$flutter" ]]; then
-            echo "Both SDKs need a release tag. Android: '$android', Flutter: '$flutter'"
+          ios=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-ios)
+          if [[ -z "$android" || -z "$flutter" || -z "$ios" ]]; then
+            echo "Every SDK needs a release tag. Android: '$android', Flutter: '$flutter', iOS: '$ios'"
             exit 1
           fi
           echo "android=$android" >> "$GITHUB_OUTPUT"
           echo "flutter=$flutter" >> "$GITHUB_OUTPUT"
-          echo "Android: $android, Flutter: $flutter"
+          echo "ios=$ios" >> "$GITHUB_OUTPUT"
+          echo "Android: $android, Flutter: $flutter, iOS: $ios"
 
       - uses: actions/checkout@v5
         with:
@@ -51,6 +53,12 @@ jobs:
           repository: MkhytarMkhoian/herald-flutter
           ref: ${{ steps.releases.outputs.flutter }}
           path: build/herald-flutter
+
+      - uses: actions/checkout@v5
+        with:
+          repository: MkhytarMkhoian/herald-ios
+          ref: ${{ steps.releases.outputs.ios }}
+          path: build/herald-ios
 
       - uses: actions/setup-java@v5
         with:

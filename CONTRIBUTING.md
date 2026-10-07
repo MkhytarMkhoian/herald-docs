@@ -9,7 +9,7 @@ Thanks for helping with the Herald website. Changes to the SDKs themselves go to
 - **Plain, simple words.** Short sentences, and the words a developer would use. Say what to do and
   why, not how the code got that way.
 - **One page for both SDKs.** Herald works the same on Android and Flutter, so a page explains it
-  once. Code that differs goes in a **Kotlin** and a **Dart** tab, in that order.
+  once. Code that differs goes in a **Kotlin**, a **Dart** and a **Swift** tab, in that order.
 - **Only released features.** The site deploys from `main`, against each SDK's latest release, so
   a page about a new feature merges once that feature is released.
 

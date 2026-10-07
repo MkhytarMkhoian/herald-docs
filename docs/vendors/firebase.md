@@ -7,12 +7,15 @@ typed parameters, and screen views arrive as GA4's own `screen_view` event.
 | --- | --- |
 | Android | `io.github.mkhytarmkhoian:herald-firebase` |
 | Flutter | [`herald_firebase`](https://pub.dev/packages/herald_firebase), over `firebase_analytics` |
+| iOS | [`herald-ios-firebase`](https://github.com/MkhytarMkhoian/herald-ios-firebase), module `HeraldFirebase`, over the Firebase iOS SDK |
 
 ## Setup
 
-Firebase sets itself up from its config files: `google-services.json` on Android, and on Flutter
-whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has run. Herald takes the
-`FirebaseAnalytics` instance and never changes its settings.
+Firebase sets itself up from its config files: `google-services.json` on Android, on Flutter
+whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has run, and on iOS
+`GoogleService-Info.plist`, once `FirebaseApp.configure()` has run. Herald takes the
+`FirebaseAnalytics` instance and never changes its settings. On iOS, Firebase Analytics is static
+functions, so Herald's classes take no Firebase object.
 
 === "Kotlin"
 
@@ -24,6 +27,12 @@ whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has 
 
     ```dart
     --8<-- "docs_samples/lib/composition_root.dart:firebase-provider"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/CompositionRoot.swift:firebase-provider"
     ```
 
 ## What reaches Firebase
@@ -50,6 +59,17 @@ whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has 
     | `setEnabled` | `setAnalyticsCollectionEnabled(enabled)` |
     | `start`, `flush` | nothing: Firebase starts and delivers on its own |
 
+=== "Swift"
+
+    | Herald | Firebase |
+    | --- | --- |
+    | an event | `Analytics.logEvent(name, parameters:)`: numbers as numbers, text and booleans as strings |
+    | a `ScreenViewEvent` | `Analytics.logEvent(AnalyticsEventScreenView)` with its name as `screen_name`, sent by `ScreenViewFirebaseEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a property, including a `UserProperty` | `Analytics.setUserProperty(value, forName:)`, as text |
+    | `identify` / `reset` | `Analytics.setUserID(userId)` / `Analytics.setUserID(nil)` |
+    | `setEnabled` | `Analytics.setAnalyticsCollectionEnabled(enabled)` |
+    | `start`, `flush` | nothing: Firebase starts and delivers on its own |
+
 ## Factories
 
 | Factory | Handles |
@@ -61,18 +81,20 @@ whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has 
 
 To send one of GA4's [recommended events](https://developers.google.com/analytics/devguides/collection/ga4/reference/events)
 (`purchase`, `refund`, `select_content`, …), either name your event after it with its parameters,
-or write a tracker for it. See [Custom markers](../guides/custom-markers.md).
+or write a tracker for it. See [Custom markers](../guides/custom-markers.md). Its parameters convert
+as Herald's do with `parameters.toFirebaseParameters()`.
 
 ## Consent
 
 **A fresh install collects** until your app says otherwise. Firebase's off switch is a native
-setting, read before any Herald code runs. On Flutter, set it in both native projects:
+setting, read before any Herald code runs. On Flutter, set it in both native projects; on iOS, in
+`Info.plist`:
 
 ```xml title="AndroidManifest.xml"
 <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
 ```
 
-```xml title="ios/Runner/Info.plist (Flutter)"
+```xml title="Info.plist (iOS; ios/Runner/Info.plist on Flutter)"
 <key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
 <false/>
 ```

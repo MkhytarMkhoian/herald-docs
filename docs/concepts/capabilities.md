@@ -28,6 +28,12 @@ Dart they return a `Future`. See [Threads](herald.md#threads).
     --8<-- "docs_samples/lib/concepts/capabilities.dart:consumers"
     ```
 
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/Capabilities.swift:consumers"
+    ```
+
 A paywall that tracks events can't sign the user out or turn analytics off, and the consent screen
 can't track anything. Each class's constructor shows exactly what it does with analytics, so a
 reviewer sees it at a glance.
@@ -61,6 +67,12 @@ is tiny. In Kotlin they're `fun interface`s, so the fake is a lambda; in Dart it
 
     ```dart
     --8<-- "docs_samples/lib/concepts/capabilities.dart:fake"
+    ```
+
+=== "Swift"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Concepts/Capabilities.swift:fake"
     ```
 
 For tests that use several interfaces, or check the order of calls, use `FakeAnalyticsProvider`. See [Testing](../guides/testing.md).

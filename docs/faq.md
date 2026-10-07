@@ -61,7 +61,7 @@ recording a charge on the buyer's Mixpanel profile. See
 ## Do I need a DI framework?
 
 No. Herald works with any DI library, or with none. The docs show Koin, Hilt and wiring by hand on
-Android, and wiring by hand on Flutter.
+Android, and wiring by hand on Flutter and iOS.
 
 ## Can I call Herald from Java?
 
@@ -70,11 +70,13 @@ from Java. Call Herald from Kotlin, and wrap it if Java code needs it.
 
 ## Which platforms are supported?
 
-Android and Flutter. The [Android SDK](sdks/android/index.md) and the
-[Flutter SDK](sdks/flutter/index.md) share the same concepts and the same vendors, and most code
-examples on this site have a Kotlin and a Dart tab.
+Android, Flutter and iOS. The [Android SDK](sdks/android/index.md), the
+[Flutter SDK](sdks/flutter/index.md) and the [iOS SDK](sdks/ios/index.md) share the same concepts
+and the same vendors, and most code examples on this site have a Kotlin, a Dart and a Swift tab.
+The iOS SDK is in beta.
 
 ## Where do I report a bug or ask a question?
 
-Open an issue on GitHub, for [Android](https://github.com/MkhytarMkhoian/herald/issues) or
-[Flutter](https://github.com/MkhytarMkhoian/herald-flutter/issues).
+Open an issue on GitHub, for [Android](https://github.com/MkhytarMkhoian/herald/issues),
+[Flutter](https://github.com/MkhytarMkhoian/herald-flutter/issues) or
+[iOS](https://github.com/MkhytarMkhoian/herald-ios/issues).
