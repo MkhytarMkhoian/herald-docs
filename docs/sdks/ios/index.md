@@ -1,11 +1,8 @@
 # iOS SDK
 
-Herald for iOS is a set of Swift packages: the core, one package per vendor, a logger and a fake
-for your tests. Each vendor package works over that vendor's official iOS SDK.
-
-!!! info "Beta"
-    The iOS SDK is in beta, at version 1.0.0-beta.2, so its API can still change before 1.0.0.
-    Swift Package Manager installs a beta only when you ask for it, as below.
+Herald for iOS is a set of Swift packages: the core, one package per vendor, optional SwiftUI
+helpers, a logger and a fake for your tests. Each vendor package works over that vendor's official
+iOS SDK.
 
 [API reference](api.md){ .md-button } [Changelog](../../changelog/ios.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-ios){ .md-button }
 
@@ -16,8 +13,8 @@ analytics service you use. In a `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0-beta.2"),
-    .package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0-beta.2"),
+    .package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0"),
+    .package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0"),
 ]
 ```
 

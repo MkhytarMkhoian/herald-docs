@@ -73,7 +73,6 @@ from Java. Call Herald from Kotlin, and wrap it if Java code needs it.
 Android, Flutter and iOS. The [Android SDK](sdks/android/index.md), the
 [Flutter SDK](sdks/flutter/index.md) and the [iOS SDK](sdks/ios/index.md) share the same concepts
 and the same vendors, and most code examples on this site have a Kotlin, a Dart and a Swift tab.
-The iOS SDK is in beta.
 
 ## Where do I report a bug or ask a question?
 

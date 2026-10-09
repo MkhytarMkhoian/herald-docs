@@ -37,12 +37,12 @@ Amplitude, or one you build yourself.
 
     [:octicons-arrow-right-24: Flutter SDK](sdks/flutter/index.md)
 
--   :simple-apple:{ .lg .middle } **iOS** (beta)
+-   :simple-apple:{ .lg .middle } **iOS**
 
     ---
 
-    Swift packages, over each vendor's official iOS SDK: the core, one package per vendor, a logger
-    and a fake for your tests.
+    Swift packages, over each vendor's official iOS SDK: the core, one package per vendor, optional
+    SwiftUI helpers, a logger and a fake for your tests.
 
     [:octicons-arrow-right-24: iOS SDK](sdks/ios/index.md)
 

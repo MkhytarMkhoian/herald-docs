@@ -39,7 +39,7 @@ modules.
     `Package.swift`:
 
     ```swift
-    .package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0-beta.2")
+    .package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0")
     ```
 
 ## 1. Describe what happened
@@ -224,7 +224,7 @@ Firebase module:
     `HeraldFirebase`:
 
     ```swift
-    .package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0-beta.2")
+    .package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0")
     ```
 
 The Firebase provider is built the same way as the log one. Its factories send screen views as
