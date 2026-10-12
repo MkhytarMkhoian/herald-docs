@@ -64,6 +64,9 @@ extra:
     - icon: simple/apple
       link: https://github.com/MkhytarMkhoian/herald-ios
       name: Herald for iOS
+    - icon: simple/kotlin
+      link: https://github.com/MkhytarMkhoian/herald-kmp
+      name: Herald for Kotlin Multiplatform
 
 markdown_extensions:
   - admonition
@@ -90,8 +93,9 @@ markdown_extensions:
       alternate_style: true
   # Code on the site comes from the SDK repositories, checked out under build/ at their latest
   # release: the herald repository's docs-samples, which its build compiles, herald-flutter's
-  # docs_samples and herald-ios's Samples, which their CI tests, and the marked sections of their
-  # READMEs. A missing file or section fails the docs build rather than rendering an empty block.
+  # docs_samples, herald-ios's Samples and herald-kmp's sample, which their CI tests, and the
+  # marked sections of their READMEs. A missing file or section fails the docs build rather than
+  # rendering an empty block.
   - pymdownx.snippets:
       base_path:
         - build/herald/docs-samples/src/main/kotlin
@@ -149,9 +153,11 @@ nav:
           - Overview: sdks/ios/index.md
           - SwiftUI: sdks/ios/swiftui.md
           - API reference: sdks/ios/api.md
+      - Kotlin Multiplatform: sdks/kmp/index.md
   - Changelog:
       - Android: changelog/android.md
       - Flutter: changelog/flutter.md
       - iOS: changelog/ios.md
+      - Kotlin Multiplatform: changelog/kmp.md
   - FAQ: faq.md
   - Contributing: contributing.md

@@ -6,10 +6,10 @@
 #   scripts/build_docs.sh serve    # build the API reference once, then preview at localhost:8000
 #
 # The site is MkDocs with the Material theme. Its code samples, the Android API reference (Dokka)
-# and the change logs come from the SDK repositories, at build/herald, build/herald-flutter and
-# build/herald-ios. CI checks out their latest releases there. Locally the script links your clones
-# as they are: ../herald, ../herald-flutter and ../herald-ios, or HERALD_ANDROID, HERALD_FLUTTER
-# and HERALD_IOS if set.
+# and the change logs come from the SDK repositories, at build/herald, build/herald-flutter,
+# build/herald-ios and build/herald-kmp. CI checks out their latest releases there. Locally the
+# script links your clones as they are: ../herald, ../herald-flutter, ../herald-ios and
+# ../herald-kmp, or HERALD_ANDROID, HERALD_FLUTTER, HERALD_IOS and HERALD_KMP if set.
 #
 # Pass extra Gradle arguments through GRADLE_ARGS, e.g. GRADLE_ARGS="-Pversion=1.1.0" so the API
 # reference's source links point at that release tag. CI installs the Python packages itself;
@@ -35,6 +35,7 @@ link_sdk() {
 link_sdk herald "${HERALD_ANDROID:-../herald}" settings.gradle.kts HERALD_ANDROID
 link_sdk herald-flutter "${HERALD_FLUTTER:-../herald-flutter}" pubspec.yaml HERALD_FLUTTER
 link_sdk herald-ios "${HERALD_IOS:-../herald-ios}" Package.swift HERALD_IOS
+link_sdk herald-kmp "${HERALD_KMP:-../herald-kmp}" settings.gradle.kts HERALD_KMP
 
 # The Android API reference, from every published module. Flutter's is on pub.dev, and iOS's on
 # the Swift Package Index.
@@ -47,6 +48,7 @@ mkdir -p docs/changelog
 cp build/herald/CHANGELOG.md docs/changelog/android.md
 cp build/herald-flutter/CHANGELOG.md docs/changelog/flutter.md
 cp build/herald-ios/CHANGELOG.md docs/changelog/ios.md
+cp build/herald-kmp/CHANGELOG.md docs/changelog/kmp.md
 
 if ! command -v mkdocs > /dev/null; then
   if [ ! -x build/docs-venv/bin/mkdocs ]; then

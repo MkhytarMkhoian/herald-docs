@@ -46,6 +46,15 @@ Amplitude, or one you build yourself.
 
     [:octicons-arrow-right-24: iOS SDK](sdks/ios/index.md)
 
+-   :simple-kotlin:{ .lg .middle } **Kotlin Multiplatform**
+
+    ---
+
+    Write events once, in shared Kotlin, over the Android and iOS SDKs: the core, and revenue
+    events for Amplitude, Adjust and AppsFlyer.
+
+    [:octicons-arrow-right-24: Kotlin Multiplatform](sdks/kmp/index.md)
+
 </div>
 
 ## Why Herald

@@ -7,12 +7,14 @@ Herald lives in these repositories:
 | [herald](https://github.com/MkhytarMkhoian/herald) | the Android SDK, and the Kotlin code shown on this site |
 | [herald-flutter](https://github.com/MkhytarMkhoian/herald-flutter) | the Flutter SDK, and the Dart code shown on this site |
 | [herald-ios](https://github.com/MkhytarMkhoian/herald-ios) | the iOS SDK's core, and the Swift code shown on this site; each iOS vendor package has a repository of its own |
+| [herald-kmp](https://github.com/MkhytarMkhoian/herald-kmp) | Kotlin Multiplatform, over the Android and iOS SDKs |
 | [herald-docs](https://github.com/MkhytarMkhoian/herald-docs) | this website's pages |
 
 Each has a CONTRIBUTING file with its rules:
 [Android](https://github.com/MkhytarMkhoian/herald/blob/main/CONTRIBUTING.md),
 [Flutter](https://github.com/MkhytarMkhoian/herald-flutter/blob/main/CONTRIBUTING.md),
-[iOS](https://github.com/MkhytarMkhoian/herald-ios/blob/main/CONTRIBUTING.md) and
+[iOS](https://github.com/MkhytarMkhoian/herald-ios/blob/main/CONTRIBUTING.md),
+[Kotlin Multiplatform](https://github.com/MkhytarMkhoian/herald-kmp/blob/main/CONTRIBUTING.md) and
 [website](https://github.com/MkhytarMkhoian/herald-docs/blob/main/CONTRIBUTING.md).
 
 ## Where a change goes

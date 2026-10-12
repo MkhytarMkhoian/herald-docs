@@ -1,9 +1,9 @@
 # Builds the website on every pull request, and deploys it to GitHub Pages on a push to main, when
-# either SDK releases, or when run by hand.
+# an SDK releases, or when run by hand.
 #
 # The site documents what Maven Central and pub.dev serve, so the code samples, the Android API
 # reference and the change logs come from each SDK's latest release tag. A release in herald,
-# herald-flutter or herald-ios triggers this workflow with `repository_dispatch`.
+# herald-flutter, herald-ios or herald-kmp triggers this workflow with `repository_dispatch`.
 name: Docs
 
 on:
@@ -33,14 +33,17 @@ jobs:
           android=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald)
           flutter=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-flutter)
           ios=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-ios)
-          if [[ -z "$android" || -z "$flutter" || -z "$ios" ]]; then
-            echo "Every SDK needs a release tag. Android: '$android', Flutter: '$flutter', iOS: '$ios'"
+          kmp=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-kmp)
+          if [[ -z "$android" || -z "$flutter" || -z "$ios" || -z "$kmp" ]]; then
+            echo "Every SDK needs a release tag. Android: '$android', Flutter: '$flutter'," \
+              "iOS: '$ios', KMP: '$kmp'"
             exit 1
           fi
           echo "android=$android" >> "$GITHUB_OUTPUT"
           echo "flutter=$flutter" >> "$GITHUB_OUTPUT"
           echo "ios=$ios" >> "$GITHUB_OUTPUT"
-          echo "Android: $android, Flutter: $flutter, iOS: $ios"
+          echo "kmp=$kmp" >> "$GITHUB_OUTPUT"
+          echo "Android: $android, Flutter: $flutter, iOS: $ios, KMP: $kmp"
 
       - uses: actions/checkout@v5
         with:
@@ -59,6 +62,12 @@ jobs:
           repository: MkhytarMkhoian/herald-ios
           ref: ${{ steps.releases.outputs.ios }}
           path: build/herald-ios
+
+      - uses: actions/checkout@v5
+        with:
+          repository: MkhytarMkhoian/herald-kmp
+          ref: ${{ steps.releases.outputs.kmp }}
+          path: build/herald-kmp
 
       - uses: actions/setup-java@v5
         with:
