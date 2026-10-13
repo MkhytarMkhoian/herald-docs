@@ -153,7 +153,8 @@ nav:
           - Overview: sdks/ios/index.md
           - SwiftUI: sdks/ios/swiftui.md
           - API reference: sdks/ios/api.md
-      - Kotlin Multiplatform: sdks/kmp/index.md
+      - Kotlin Multiplatform:
+          - Overview: sdks/kmp/index.md
   - Changelog:
       - Android: changelog/android.md
       - Flutter: changelog/flutter.md
