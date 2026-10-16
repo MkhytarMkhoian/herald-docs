@@ -47,7 +47,6 @@ link_sdk herald-react-native "${HERALD_REACT_NATIVE:-../herald-react-native}" ty
 (
   cd build/herald-react-native
   [ -d node_modules ] || npm ci
-  npm run build  # TypeDoc reads each package's built types of the others
   npm run docs:api
 )
 rm -rf docs/api
