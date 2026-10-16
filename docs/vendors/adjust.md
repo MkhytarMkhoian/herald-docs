@@ -9,6 +9,7 @@ impressions go through Adjust's ad-revenue API.
 | Android | `io.github.mkhytarmkhoian:herald-adjust` |
 | Flutter | [`herald_adjust`](https://pub.dev/packages/herald_adjust), over `adjust_sdk` |
 | iOS | [`herald-ios-adjust`](https://github.com/MkhytarMkhoian/herald-ios-adjust), module `HeraldAdjust`, over Adjust's iOS SDK |
+| React Native | [`@herald-analytics/adjust`](https://www.npmjs.com/package/@herald-analytics/adjust), over `react-native-adjust` |
 
 ## Setup
 
@@ -38,6 +39,15 @@ Herald's `start()` passes it to `initSdk`, so don't call `initSdk` yourself.
     --8<-- "Samples/Sources/Samples/Vendors/AdjustSetup.swift:provider"
     ```
 
+=== "TypeScript"
+
+    The Adjust package is static functions too, so Herald's React Native classes take no Adjust
+    object. The service takes your `AdjustConfig`.
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/adjust-setup.ts:provider"
+    ```
+
 ## What reaches Adjust
 
 | Herald | Adjust |
@@ -56,6 +66,7 @@ Herald's `start()` passes it to `initSdk`, so don't call `initSdk` yourself.
 | Factory | Handles |
 | --- | --- |
 | `TokenAdjustEventTrackerFactory(tokens, adjust)`; `(tokens)` on Flutter; `(tokens:)` on iOS | events whose name has a token in the map |
+| `TokenAdjustEventTrackerFactory([[EventClass, token], …])` on React Native | events of a class that has a token in the list |
 | `RequireMappedAdjustEventTrackerFactory` | nothing: throws for any event that reaches it |
 | `GenericAdjustPropertySetterFactory` | every property |
 
@@ -65,11 +76,11 @@ Revenue types, which your Adjust factory maps your events to (see [Revenue](../g
 
 - **`AdjustRevenueEvent`:** `revenue`, `currency`, and an optional `deduplicationId`. Send it with
   `RevenueEventTracker(revenueEvent, token, adjust)`, or `RevenueAdjustEventTracker(revenueEvent,
-  token)` on Flutter and iOS; the factory passes the token, so the event needs no entry in
+  token)` on Flutter, iOS and React Native; the factory passes the token, so the event needs no entry in
   `TokenAdjustEventTrackerFactory`.
 - **`AdjustAdRevenueEvent`:** `source`, such as `applovin_max_sdk`; `revenue`; `currency`; and
   optional impression count, network, unit and placement. Send it with `AdRevenueEventTracker`, or
-  `AdRevenueAdjustEventTracker` on Flutter and iOS.
+  `AdRevenueAdjustEventTracker` on Flutter, iOS and React Native.
 
 ## Consent
 
@@ -91,9 +102,10 @@ your Adjust dashboard. Don't give any property that name: it would overwrite the
 ## Watch out for
 
 - **Callback parameters are text.** Typed values are flattened with `asString`.
-- **On Flutter, Herald can't see Adjust's own failures.** The Adjust plugin doesn't wait for its
-  native side, so an error there never reaches your error reporter.
+- **On Flutter and React Native, Herald can't see Adjust's own failures.** The Adjust package
+  doesn't wait for its native side, so an error there never reaches your error reporter.
 - **On iOS, an empty token or ad revenue source is reported.** Adjust itself would drop the event
   with only a log line, so Herald refuses it and tells your error reporter.
 - **Tokens are dashboard configuration,** keyed by event name, so a renamed event silently loses
-  its token. Keep token maps next to the events they map.
+  its token. Keep token maps next to the events they map. On React Native they're keyed by the
+  event's class instead, so the compiler checks the list and a rename can't lose a token.

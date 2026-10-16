@@ -8,14 +8,16 @@ typed parameters, and screen views arrive as GA4's own `screen_view` event.
 | Android | `io.github.mkhytarmkhoian:herald-firebase` |
 | Flutter | [`herald_firebase`](https://pub.dev/packages/herald_firebase), over `firebase_analytics` |
 | iOS | [`herald-ios-firebase`](https://github.com/MkhytarMkhoian/herald-ios-firebase), module `HeraldFirebase`, over the Firebase iOS SDK |
+| React Native | [`@herald-analytics/firebase`](https://www.npmjs.com/package/@herald-analytics/firebase), over `@react-native-firebase/analytics` |
 
 ## Setup
 
 Firebase sets itself up from its config files: `google-services.json` on Android, on Flutter
 whatever `flutterfire configure` generated, once `Firebase.initializeApp()` has run, and on iOS
-`GoogleService-Info.plist`, once `FirebaseApp.configure()` has run. Herald takes the
-`FirebaseAnalytics` instance and never changes its settings. On iOS, Firebase Analytics is static
-functions, so Herald's classes take no Firebase object.
+`GoogleService-Info.plist`, once `FirebaseApp.configure()` has run. React Native Firebase reads
+both native files, which an Expo app names in `app.json`. Herald takes the `FirebaseAnalytics`
+instance, the `Analytics` from `getAnalytics()` on React Native, and never changes its settings. On
+iOS, Firebase Analytics is static functions, so Herald's classes take no Firebase object.
 
 === "Kotlin"
 
@@ -33,6 +35,12 @@ functions, so Herald's classes take no Firebase object.
 
     ```swift
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:firebase-provider"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/composition-root.ts:firebase-provider"
     ```
 
 ## What reaches Firebase
@@ -70,6 +78,17 @@ functions, so Herald's classes take no Firebase object.
     | `setEnabled` | `Analytics.setAnalyticsCollectionEnabled(enabled)` |
     | `start`, `flush` | nothing: Firebase starts and delivers on its own |
 
+=== "TypeScript"
+
+    | Herald | Firebase |
+    | --- | --- |
+    | an event | `logEvent(analytics, name, parameters)`: numbers as numbers, text and booleans as strings |
+    | a `ScreenViewEvent` | `logEvent(analytics, 'screen_view')` with its name as `screen_name`, sent by `ScreenViewFirebaseEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a property, including a `UserProperty` | `setUserProperty(analytics, name, value)`, as text |
+    | `identify` / `reset` | `setUserId(analytics, userId)` / `setUserId(analytics, null)` |
+    | `setEnabled` | `setAnalyticsCollectionEnabled(analytics, enabled)` |
+    | `start`, `flush` | nothing: Firebase starts and delivers on its own |
+
 ## Factories
 
 | Factory | Handles |
@@ -82,13 +101,14 @@ functions, so Herald's classes take no Firebase object.
 To send one of GA4's [recommended events](https://developers.google.com/analytics/devguides/collection/ga4/reference/events)
 (`purchase`, `refund`, `select_content`, …), either name your event after it with its parameters,
 or write a tracker for it. See [Custom markers](../guides/custom-markers.md). Its parameters convert
-as Herald's do with `parameters.toFirebaseParameters()`.
+as Herald's do with `parameters.toFirebaseParameters()`, or
+`toFirebaseParameters(parametersOf(event))` in TypeScript.
 
 ## Consent
 
 **A fresh install collects** until your app says otherwise. Firebase's off switch is a native
 setting, read before any Herald code runs. On Flutter, set it in both native projects; on iOS, in
-`Info.plist`:
+`Info.plist`; on React Native, in `firebase.json`, which React Native Firebase writes into both:
 
 ```xml title="AndroidManifest.xml"
 <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
@@ -97,6 +117,14 @@ setting, read before any Herald code runs. On Flutter, set it in both native pro
 ```xml title="Info.plist (iOS; ios/Runner/Info.plist on Flutter)"
 <key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
 <false/>
+```
+
+```json title="firebase.json (React Native, next to package.json)"
+{
+  "react-native": {
+    "analytics_auto_collection_enabled": false
+  }
+}
 ```
 
 `setEnabled(true)` then turns collection on, and Firebase remembers the choice across launches.

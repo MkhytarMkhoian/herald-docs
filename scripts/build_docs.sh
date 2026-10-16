@@ -5,11 +5,13 @@
 #   scripts/build_docs.sh          # build, failing on any broken link or missing snippet
 #   scripts/build_docs.sh serve    # build the API reference once, then preview at localhost:8000
 #
-# The site is MkDocs with the Material theme. Its code samples, the Android API reference (Dokka)
-# and the change logs come from the SDK repositories, at build/herald, build/herald-flutter,
-# build/herald-ios and build/herald-kmp. CI checks out their latest releases there. Locally the
-# script links your clones as they are: ../herald, ../herald-flutter, ../herald-ios and
-# ../herald-kmp, or HERALD_ANDROID, HERALD_FLUTTER, HERALD_IOS and HERALD_KMP if set.
+# The site is MkDocs with the Material theme. Its code samples, the Android and React Native API
+# references (Dokka and TypeDoc) and the change logs come from the SDK repositories, at
+# build/herald, build/herald-flutter, build/herald-ios, build/herald-kmp and
+# build/herald-react-native. CI checks out their latest releases there. Locally the script links
+# your clones as they are: ../herald, ../herald-flutter, ../herald-ios, ../herald-kmp and
+# ../herald-react-native, or HERALD_ANDROID, HERALD_FLUTTER, HERALD_IOS, HERALD_KMP and
+# HERALD_REACT_NATIVE if set.
 #
 # Pass extra Gradle arguments through GRADLE_ARGS, e.g. GRADLE_ARGS="-Pversion=1.1.0" so the API
 # reference's source links point at that release tag. CI installs the Python packages itself;
@@ -36,19 +38,29 @@ link_sdk herald "${HERALD_ANDROID:-../herald}" settings.gradle.kts HERALD_ANDROI
 link_sdk herald-flutter "${HERALD_FLUTTER:-../herald-flutter}" pubspec.yaml HERALD_FLUTTER
 link_sdk herald-ios "${HERALD_IOS:-../herald-ios}" Package.swift HERALD_IOS
 link_sdk herald-kmp "${HERALD_KMP:-../herald-kmp}" settings.gradle.kts HERALD_KMP
+link_sdk herald-react-native "${HERALD_REACT_NATIVE:-../herald-react-native}" typedoc.json \
+  HERALD_REACT_NATIVE
 
-# The Android API reference, from every published module. Flutter's is on pub.dev, and iOS's on
-# the Swift Package Index.
+# The Android and React Native API references, from every published module. Flutter's is on
+# pub.dev, and iOS's on the Swift Package Index.
 (cd build/herald && ./gradlew :dokkaGeneratePublicationHtml ${GRADLE_ARGS:-})
+(
+  cd build/herald-react-native
+  [ -d node_modules ] || npm ci
+  npm run build  # TypeDoc reads each package's built types of the others
+  npm run docs:api
+)
 rm -rf docs/api
 mkdir -p docs/api
 cp -R build/herald/build/dokka/html docs/api/android
+cp -R build/herald-react-native/build/api docs/api/react-native
 
 mkdir -p docs/changelog
 cp build/herald/CHANGELOG.md docs/changelog/android.md
 cp build/herald-flutter/CHANGELOG.md docs/changelog/flutter.md
 cp build/herald-ios/CHANGELOG.md docs/changelog/ios.md
 cp build/herald-kmp/CHANGELOG.md docs/changelog/kmp.md
+cp build/herald-react-native/CHANGELOG.md docs/changelog/react-native.md
 
 if ! command -v mkdocs > /dev/null; then
   if [ ! -x build/docs-venv/bin/mkdocs ]; then

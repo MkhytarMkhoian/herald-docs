@@ -31,6 +31,12 @@ name:
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:no-parameters"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/vocabulary.ts:no-parameters"
+    ```
+
 An event with details also has parameters. In Kotlin they come from the `parameters { }` builder;
 in Dart they are a map of typed values:
 
@@ -50,6 +56,12 @@ in Dart they are a map of typed values:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:parameters"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/vocabulary.ts:parameters"
     ```
 
 Give the class and the event name the same meaning. Your code and your factories recognise an event
@@ -119,6 +131,12 @@ Marking an event as a screen view lets those vendors receive it that way:
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:screen-view"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/vocabulary.ts:screen-view"
+    ```
+
 The event's `name` is the screen's name. Vendors with a special screen view event send it as the
 screen name; vendors without one log it like any other event. To show a different name in one
 vendor's screen reports, put a factory for that event before the vendor's screen-view factory.
@@ -144,6 +162,12 @@ moment. `UserProperty`, the second marker type, says the value belongs to the *p
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:properties"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/vocabulary.ts:properties"
     ```
 
 That difference matters to vendors that store the two separately:

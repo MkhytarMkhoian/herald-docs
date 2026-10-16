@@ -11,11 +11,13 @@ every event:
 | Android | `io.github.mkhytarmkhoian:herald-amplitude` |
 | Flutter | [`herald_amplitude`](https://pub.dev/packages/herald_amplitude), over `amplitude_flutter` |
 | iOS | [`herald-ios-amplitude`](https://github.com/MkhytarMkhoian/herald-ios-amplitude), module `HeraldAmplitude`, over `Amplitude-Swift` |
+| React Native | [`@herald-analytics/amplitude`](https://www.npmjs.com/package/@herald-analytics/amplitude), over `@amplitude/analytics-react-native` |
 
 ## Setup
 
 You build the `Amplitude` instance: API key, server zone, autocapture and the rest of its
-`Configuration`. Herald never changes them.
+`Configuration`. On React Native, you call `amplitude.init(...)` with those options and give Herald
+the `amplitude` module itself. Herald never changes them.
 
 === "Kotlin"
 
@@ -35,6 +37,12 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
     --8<-- "Samples/Sources/Samples/Vendors/AmplitudeSetup.swift:provider"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/amplitude-setup.ts:provider"
+    ```
+
 ## What reaches Amplitude
 
 | Herald | Amplitude |
@@ -44,9 +52,9 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
 | an `AmplitudeRevenueEvent` | `revenue(Revenue)`, deduplicated by `insertId` when set |
 | a property, including a `UserProperty` | `identify(Identify().set(name, value))`: a user property |
 | `identify` / `reset` | `setUserId(userId)` / `reset()`, which also rotates the device id |
-| `start` | waits for the SDK to finish setting up, so a failed setup is reported; nothing on iOS, where Amplitude is ready once created |
+| `start` | waits for the SDK to finish setting up, so a failed setup is reported; nothing on iOS and React Native |
 | `flush` | `flush()` |
-| `setEnabled` | `optOut = !enabled` |
+| `setEnabled` | `optOut = !enabled`; `setOptOut(!enabled)` on React Native |
 
 ## Factories and revenue types
 
@@ -58,7 +66,8 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
 | `RequireMappedAmplitudeEventTrackerFactory`, `RequireMappedAmplitudePropertySetterFactory` | nothing: throws for anything that reaches it |
 
 For a purchase, your factory maps your event to `AmplitudeRevenueEvent` and hands it to
-`RevenueEventTracker` (`RevenueAmplitudeEventTracker` on Flutter and iOS); put that factory before the
+`RevenueEventTracker` (`RevenueAmplitudeEventTracker` on Flutter, iOS and React Native); put that
+factory before the
 generic one. The type uses Amplitude's own
 fields:
 
@@ -72,7 +81,7 @@ See [Revenue](../guides/revenue.md).
 ## Consent
 
 **A fresh install collects** unless the `Configuration` sets `optOut = true` (`optOut: true` on
-Flutter and iOS). Amplitude doesn't
+Flutter, iOS and React Native). Amplitude doesn't
 persist the opt-out, so re-apply the stored decision after start-up. Revoking stops new events;
 events recorded before the revoke, while consent was given, may still upload.
 

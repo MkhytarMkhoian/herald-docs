@@ -34,6 +34,12 @@ There are two good reasons to write one:
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:marker"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-markers.ts:marker"
+    ```
+
 Only vendors that treat a refund specially need a tracker. Here GA4 gets its `refund` event, and
 every other vendor still sends `ticket_refunded` through its generic factory.
 
@@ -53,6 +59,12 @@ every other vendor still sends `ticket_refunded` through its generic factory.
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:marker-tracker"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-markers.ts:marker-tracker"
     ```
 
 Put the factory before Herald's own factories in the Firebase chain, so yours is asked first.
@@ -85,6 +97,12 @@ app, not in Herald:
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:structured"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-markers.ts:structured"
+    ```
+
 Because `name` is built for you, every vendor already gets the right name with no tracker at all:
 the generic factories send `checkout_pay_button_tap`.
 
@@ -107,6 +125,12 @@ the name. That's where your app makes choices a library shouldn't make for it:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:structured-tracker"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-markers.ts:structured-tracker"
     ```
 
 GA4 allows 25 parameters per event and 40 characters per name, and the lines marked above are where

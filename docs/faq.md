@@ -61,7 +61,7 @@ recording a charge on the buyer's Mixpanel profile. See
 ## Do I need a DI framework?
 
 No. Herald works with any DI library, or with none. The docs show Koin, Hilt and wiring by hand on
-Android, and wiring by hand on Flutter and iOS.
+Android, and wiring by hand on Flutter, iOS and React Native.
 
 ## Can I call Herald from Java?
 
@@ -70,14 +70,16 @@ from Java. Call Herald from Kotlin, and wrap it if Java code needs it.
 
 ## Which platforms are supported?
 
-Android, Flutter and iOS. The [Android SDK](sdks/android/index.md), the
-[Flutter SDK](sdks/flutter/index.md) and the [iOS SDK](sdks/ios/index.md) share the same concepts
-and the same vendors, and most code examples on this site have a Kotlin, a Dart and a Swift tab.
+Android, Flutter, iOS and React Native. The [Android SDK](sdks/android/index.md), the
+[Flutter SDK](sdks/flutter/index.md), the [iOS SDK](sdks/ios/index.md) and the
+[React Native SDK](sdks/react-native/index.md) share the same concepts and the same vendors, and
+most code examples on this site have a Kotlin, a Dart, a Swift and a TypeScript tab.
 For an app that shares Kotlin code between Android and iOS,
 [Kotlin Multiplatform](sdks/kmp/index.md) wraps the Android and iOS SDKs.
 
 ## Where do I report a bug or ask a question?
 
 Open an issue on GitHub, for [Android](https://github.com/MkhytarMkhoian/herald/issues),
-[Flutter](https://github.com/MkhytarMkhoian/herald-flutter/issues) or
-[iOS](https://github.com/MkhytarMkhoian/herald-ios/issues).
+[Flutter](https://github.com/MkhytarMkhoian/herald-flutter/issues),
+[iOS](https://github.com/MkhytarMkhoian/herald-ios/issues) or
+[React Native](https://github.com/MkhytarMkhoian/herald-react-native/issues).

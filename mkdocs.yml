@@ -1,8 +1,8 @@
-# The Herald website. Built by scripts/build_docs.sh, which first generates the Android API
-# reference and copies both SDKs' change logs into docs/.
+# The Herald website. Built by scripts/build_docs.sh, which first generates the Android and React
+# Native API references and copies the SDKs' change logs into docs/.
 site_name: Herald
 site_url: https://mkhytarmkhoian.github.io/herald-docs/
-site_description: One analytics vocabulary, heard by every vendor — for Android, Flutter and iOS.
+site_description: One analytics vocabulary, heard by every vendor — for Android, Flutter, iOS and React Native.
 site_author: Mkhytar Mkhoian
 repo_name: MkhytarMkhoian/herald-docs
 repo_url: https://github.com/MkhytarMkhoian/herald-docs
@@ -67,6 +67,9 @@ extra:
     - icon: simple/kotlin
       link: https://github.com/MkhytarMkhoian/herald-kmp
       name: Herald for Kotlin Multiplatform
+    - icon: simple/react
+      link: https://github.com/MkhytarMkhoian/herald-react-native
+      name: Herald for React Native
 
 markdown_extensions:
   - admonition
@@ -93,8 +96,8 @@ markdown_extensions:
       alternate_style: true
   # Code on the site comes from the SDK repositories, checked out under build/ at their latest
   # release: the herald repository's docs-samples, which its build compiles, herald-flutter's
-  # docs_samples, herald-ios's Samples and herald-kmp's sample, which their CI tests, and the
-  # marked sections of their READMEs. A missing file or section fails the docs build rather than
+  # docs_samples, herald-ios's Samples, herald-kmp's sample and herald-react-native's docs-samples,
+  # which their CI tests, and the marked sections of their READMEs. A missing file or section fails the docs build rather than
   # rendering an empty block.
   - pymdownx.snippets:
       base_path:
@@ -102,6 +105,7 @@ markdown_extensions:
         - build/herald/docs-samples/src/test/kotlin
         - build/herald-flutter
         - build/herald-ios
+        - build/herald-react-native
         - build
       check_paths: true
       dedent_subsections: true
@@ -155,10 +159,15 @@ nav:
           - API reference: sdks/ios/api.md
       - Kotlin Multiplatform:
           - Overview: sdks/kmp/index.md
+      - React Native:
+          - Overview: sdks/react-native/index.md
+          - React: sdks/react-native/react.md
+          - API reference: api/react-native/index.html
   - Changelog:
       - Android: changelog/android.md
       - Flutter: changelog/flutter.md
       - iOS: changelog/ios.md
       - Kotlin Multiplatform: changelog/kmp.md
+      - React Native: changelog/react-native.md
   - FAQ: faq.md
   - Contributing: contributing.md

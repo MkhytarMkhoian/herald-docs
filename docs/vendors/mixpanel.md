@@ -11,11 +11,12 @@ where Mixpanel keeps attributes:
 | Android | `io.github.mkhytarmkhoian:herald-mixpanel` |
 | Flutter | [`herald_mixpanel`](https://pub.dev/packages/herald_mixpanel), over `mixpanel_flutter` |
 | iOS | [`herald-ios-mixpanel`](https://github.com/MkhytarMkhoian/herald-ios-mixpanel), module `HeraldMixpanel`, over `mixpanel-swift` |
+| React Native | [`@herald-analytics/mixpanel`](https://www.npmjs.com/package/@herald-analytics/mixpanel), over `mixpanel-react-native` |
 
 ## Setup
 
-You create the `MixpanelAPI`, the `Mixpanel` on Flutter, or the `MixpanelInstance` on iOS: token, options, server URL for data
-residency. Herald never changes them.
+You create the `MixpanelAPI`, the `Mixpanel` on Flutter and React Native, or the `MixpanelInstance`
+on iOS: token, options, server URL for data residency. Herald never changes them.
 
 === "Kotlin"
 
@@ -33,6 +34,12 @@ residency. Herald never changes them.
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/MixpanelSetup.swift:provider"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/mixpanel-setup.ts:provider"
     ```
 
 ## What reaches Mixpanel
@@ -76,6 +83,19 @@ residency. Herald never changes them.
     | `flush` | `flush()` |
     | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
 
+=== "TypeScript"
+
+    | Herald | Mixpanel |
+    | --- | --- |
+    | an event | `track(name, properties)`, with each value as its own JSON type |
+    | a `ScreenViewEvent` | `track('screen_view')` with its name as `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a `UserProperty` | `getPeople().set(name, value)`: the person's profile |
+    | any other property | `registerSuperProperties`: sent with every later event |
+    | `identify` / `reset` | `identify(userId)` / `reset()` |
+    | `start` | nothing: turn on Mixpanel's logging yourself, as its docs describe |
+    | `flush` | `flush()` |
+    | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
+
 ## Factories
 
 | Factory | Handles |
@@ -96,8 +116,9 @@ residency. Herald never changes them.
 
 **A fresh install collects** unless Mixpanel is created opted out:
 `MixpanelOptions.Builder().optOutTrackingDefault(true)` on Android,
-`Mixpanel.init(token, optOutTrackingDefault: true, ...)` on Flutter, or
-`Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` on iOS.
+`Mixpanel.init(token, optOutTrackingDefault: true, ...)` on Flutter,
+`Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` on iOS, or
+`Mixpanel.init(token, trackAutomaticEvents, true)` on React Native.
 
 Herald can't opt out for you in `start()`. `optOutTracking()` deletes events not yet sent and the
 stored user, so calling it on every launch would throw away the previous session and forget a user

@@ -27,6 +27,12 @@ is sent differently yet; you've only added the new way in.
     --8<-- "Samples/Sources/Samples/Guides/Migrating.swift:bridge"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/migrating.ts:bridge"
+    ```
+
 Give `Herald` to your classes through its interfaces, as in
 [Set up your app](../getting-started/app-setup.md). In debug builds, add the log provider to see
 every call in your log.
@@ -92,6 +98,26 @@ Replace direct calls with an event class and `EventTrackerService`, one feature 
 
         ```swift
         --8<-- "Samples/Sources/Samples/QuickStart.swift:track"
+        ```
+
+=== "TypeScript"
+
+    === "Before"
+
+        ```ts
+        class CheckoutViewModel {
+          constructor(private readonly analytics: LegacyAnalytics) {}
+
+          onCheckout(plan: string, seats: number): Promise<void> {
+            return this.analytics.logEvent('checkout_started', { plan, seats: String(seats) });
+          }
+        }
+        ```
+
+    === "After"
+
+        ```ts
+        --8<-- "docs-samples/src/quick-start.tsx:track"
         ```
 
 Moved and unmoved code still go through the same wrapper, so dashboards don't change. Each moved

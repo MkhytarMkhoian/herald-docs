@@ -70,6 +70,12 @@ Say AppsFlyer should count ticket sales as revenue. The event stays plain:
     --8<-- "Samples/Sources/Samples/Philosophy.swift:event"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/philosophy.ts:event"
+    ```
+
 Everything AppsFlyer-specific lives in the tickets feature's AppsFlyer factory:
 
 === "Kotlin"
@@ -88,6 +94,12 @@ Everything AppsFlyer-specific lives in the tickets feature's AppsFlyer factory:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Philosophy.swift:mapping"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/philosophy.ts:mapping"
     ```
 
 If AppsFlyer changes how it counts revenue, only the mapping changes. If you stop using AppsFlyer,

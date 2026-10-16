@@ -1,7 +1,7 @@
 # Log
 
-The log provider prints every call to your log, Logcat, Flutter's debug console or Xcode's console,
-instead of
+The log provider prints every call to your log, Logcat, Flutter's debug console, Xcode's console
+or Metro's output, instead of
 sending it anywhere. Use it in debug builds
 to see exactly what your app reports, and in what order: events, properties, sign-in, consent and
 start-up.
@@ -11,12 +11,13 @@ start-up.
 | Android | `io.github.mkhytarmkhoian:herald-log` |
 | Flutter | [`herald_log`](https://pub.dev/packages/herald_log) |
 | iOS | [`herald-ios`](https://github.com/MkhytarMkhoian/herald-ios), module `HeraldLog` |
+| React Native | [`@herald-analytics/log`](https://www.npmjs.com/package/@herald-analytics/log) |
 
 ## Setup
 
 It writes through `AnalyticsLogger`, so it depends on no logging library. On Android it's a
-one-method interface; on Flutter and iOS it's a function type, so `debugPrint` or
-`{ message in print(message) }` fits as-is. On iOS, Apple's `Logger` works too, and shows the lines
+one-method interface; on Flutter, iOS and React Native it's a function type, so `debugPrint`,
+`{ message in print(message) }` or `(message) => console.log(message)` fits as-is. On iOS, Apple's `Logger` works too, and shows the lines
 in the Console app as well:
 
 === "Kotlin"
@@ -37,7 +38,14 @@ in the Console app as well:
     --8<-- "Samples/Sources/Samples/QuickStart.swift:herald"
     ```
 
-Register it only in debug builds, next to your real vendors; on iOS, inside `#if DEBUG`.
+=== "TypeScript"
+
+    ```tsx
+    --8<-- "docs-samples/src/quick-start.tsx:herald"
+    ```
+
+Register it only in debug builds, next to your real vendors; on iOS, inside `#if DEBUG`, and on
+React Native when `__DEV__` is true.
 
 ## Output
 
@@ -53,7 +61,7 @@ D/analytics: [herald] prop    tickets_purchased = 2
 D/analytics: [herald] reset
 ```
 
-Flutter prints the same lines, without Logcat's prefix. Parameters are sorted by name and aligned. A screen view is headed by its screen name.
+Flutter, iOS and React Native print the same lines, without Logcat's prefix. Parameters are sorted by name and aligned. A screen view is headed by its screen name.
 
 ## Factories
 

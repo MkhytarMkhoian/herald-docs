@@ -25,6 +25,12 @@ To send events to your own collection endpoint, implement `EventTrackerService`:
     --8<-- "Samples/Sources/Samples/Guides/CustomProvider.swift:backend"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-provider.ts:backend"
+    ```
+
 Register it like any vendor, with only the interfaces it implements. It's called with the others,
 and its failures are caught and reported like theirs.
 
@@ -57,6 +63,12 @@ repeated events, keeping personal data on the device.
     --8<-- "Samples/Sources/Samples/Guides/CustomProvider.swift:decorators"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-provider.ts:decorators"
+    ```
+
 Then register the wrapped tracker instead of the original:
 
 === "Kotlin"
@@ -77,6 +89,12 @@ Then register the wrapped tracker instead of the original:
     --8<-- "Samples/Sources/Samples/Guides/CustomProvider.swift:register"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/custom-provider.ts:register"
+    ```
+
 Herald has no filtering or sampling of its own, on purpose. Wrappers can be combined, work with any
 provider, and need nothing new from Herald.
 
@@ -93,8 +111,9 @@ like Herald's own:
 
 The checklist for a
 [new vendor module](https://github.com/MkhytarMkhoian/herald/blob/main/CONTRIBUTING.md#a-new-vendor-module)
-lists every piece; on Flutter, the one for a
-[new vendor package](https://github.com/MkhytarMkhoian/herald-flutter/blob/main/CONTRIBUTING.md#a-new-vendor-package)
+lists every piece; on Flutter and React Native, the one for a new vendor package
+([Flutter](https://github.com/MkhytarMkhoian/herald-flutter/blob/main/CONTRIBUTING.md#a-new-vendor-package),
+[React Native](https://github.com/MkhytarMkhoian/herald-react-native/blob/main/CONTRIBUTING.md#a-new-vendor-package))
 has the same list. On iOS, copy one of the vendor packages, such as
 [`herald-ios-mixpanel`](https://github.com/MkhytarMkhoian/herald-ios-mixpanel). They're written for vendor modules added to Herald, but work the same for one
 that lives in your app.

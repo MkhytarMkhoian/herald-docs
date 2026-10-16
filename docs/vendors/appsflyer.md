@@ -10,12 +10,14 @@ user attributes.
 | Android | `io.github.mkhytarmkhoian:herald-appsflyer` |
 | Flutter | [`herald_appsflyer`](https://pub.dev/packages/herald_appsflyer), over `appsflyer_sdk` |
 | iOS | [`herald-ios-appsflyer`](https://github.com/MkhytarMkhoian/herald-ios-appsflyer), module `HeraldAppsFlyer`, over AppsFlyer's iOS SDK |
+| React Native | [`@herald-analytics/appsflyer`](https://www.npmjs.com/package/@herald-analytics/appsflyer), over `react-native-appsflyer` |
 
 ## Setup
 
 Your app initialises AppsFlyer, with the dev key and the conversion and deep-link listeners: in
-`Application.onCreate` on Android, in `main()` on Flutter, in the app delegate on iOS. On iOS,
-Herald uses the shared `AppsFlyerLib.shared()`, so its classes take no AppsFlyer object. AppsFlyer 7 also ignores `start()` until
+`Application.onCreate` on Android, in `main()` on Flutter, in the app delegate on iOS, in the app's
+entry file on React Native. On iOS, Herald uses the shared `AppsFlyerLib.shared()`, so its classes
+take no AppsFlyer object; on React Native they take `AppsFlyer` from `react-native-appsflyer`. AppsFlyer 7 also ignores `start()` until
 a session-ready listener is registered:
 
 === "Kotlin"
@@ -34,6 +36,12 @@ a session-ready listener is registered:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/AppsFlyerSetup.swift:init"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/appsflyer-setup.ts:init"
     ```
 
 Then build the provider. It has no `properties`, because AppsFlyer keeps no user attributes, and
@@ -55,6 +63,12 @@ no generic factory at the end, so only the conversions a factory handles reach A
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/AppsFlyerSetup.swift:provider"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/appsflyer-setup.ts:provider"
     ```
 
 ## What reaches AppsFlyer
@@ -95,6 +109,18 @@ no generic factory at the end, so only the conversions a factory handles reach A
     | `start` | `isStopped = true`: stays silent |
     | `setEnabled(true)` / `setEnabled(false)` | `isStopped = false` then `start()` / `isStopped = true` |
 
+=== "TypeScript"
+
+    | Herald | AppsFlyer |
+    | --- | --- |
+    | an event a factory handles | `logEvent({ eventName, eventValues })`, with each value as its own JSON type |
+    | an `AppsFlyerPurchaseEvent` | `af_purchase` with `af_revenue`, `af_currency` and optional content, quantity and order id; a parameter with one of those keys is refused and reported |
+    | an `AppsFlyerSubscribeEvent` | `af_subscribe` with `af_revenue` and `af_currency`, refusing those keys as parameters the same way |
+    | an `AppsFlyerAdRevenueEvent` | `logAdRevenue(...)`, with the parameters as additional parameters |
+    | `identify` / `reset` | `setCustomerUserId({ customerId: userId })` / nothing: the package can't clear the id, and AppsFlyer forgets it at the next cold start |
+    | `start` | `stop({ shouldStop: true })`: stays silent |
+    | `setEnabled(true)` / `setEnabled(false)` | `stop({ shouldStop: false })` then `start()` / `stop({ shouldStop: true })` |
+
 ## Your conversions
 
 Most AppsFlyer events are your own conversions under AppsFlyer's predefined names. Write a tracker
@@ -105,7 +131,7 @@ and a factory per event in the feature that owns it, as the
 For revenue, Herald's AppsFlyer module has its own types in AppsFlyer's terms, because AppsFlyer
 counts revenue only under `af_revenue`. Your factory maps your event to one and hands it to the matching tracker:
 
-| Type | Tracker | Tracker on Flutter and iOS |
+| Type | Tracker | Tracker on Flutter, iOS and React Native |
 | --- | --- | --- |
 | `AppsFlyerPurchaseEvent` | `PurchaseEventTracker` | `PurchaseAppsFlyerEventTracker` |
 | `AppsFlyerSubscribeEvent` | `SubscribeEventTracker` | `SubscribeAppsFlyerEventTracker` |
@@ -121,7 +147,7 @@ order AppsFlyer requires after a stop. Don't call `start()` yourself.
 
 AppsFlyer doesn't persist the stopped state, and `start()` applies it every launch, so re-apply
 the stored decision after start-up. DMA consent (`setConsentData`) and `anonymizeUser` are set on
-`AppsFlyerLib`, or `AppsFlyerSdk` on Flutter, directly.
+`AppsFlyerLib`, or `AppsFlyerSdk` on Flutter and `AppsFlyer` on React Native, directly.
 
 ## Identity
 
@@ -147,3 +173,7 @@ consent carries the id. See [Identity](../guides/identity.md#every-cold-start).
 
 - **`Context` on Android.** AppsFlyer's API takes one, so Herald's AppsFlyer trackers and service
   do too. Pass the `Application`.
+- **A type check on React Native.** `react-native-appsflyer` ships its TypeScript source, so a
+  strict `tsc` reports errors inside it. Herald's
+  [package README](https://www.npmjs.com/package/@herald-analytics/appsflyer) shows the one-line
+  fix.

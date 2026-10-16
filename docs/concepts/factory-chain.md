@@ -36,6 +36,12 @@ own events.
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:factory"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/factory-chain.ts:factory"
+    ```
+
 - **`Claimed` takes one or more trackers,** the vendor calls to make. It can't be empty; use
   `Dropped` to take an event and send nothing.
 - **A factory recognises an event with a plain `when` (Kotlin) or `switch` (Dart) on its type,** so
@@ -68,6 +74,12 @@ needs something different, write your own:
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:tracker"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/factory-chain.ts:tracker"
+    ```
+
 A tracker has a single method. A named class is easier to test and to find than a lambda.
 
 ## One event, two vendor calls
@@ -96,6 +108,12 @@ Your event stays a normal event:
     --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:event"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/several-trackers.ts:event"
+    ```
+
 Herald's generic tracker already sends the event. For the charge, write a small tracker that calls
 Mixpanel's profile API:
 
@@ -117,6 +135,12 @@ Mixpanel's profile API:
     --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:tracker"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/several-trackers.ts:tracker"
+    ```
+
 Then the Mixpanel factory takes the event and answers with both trackers:
 
 === "Kotlin"
@@ -135,6 +159,12 @@ Then the Mixpanel factory takes the event and answers with both trackers:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:factory"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/several-trackers.ts:factory"
     ```
 
 Herald runs both trackers one after the other, in that order, for this one vendor. If the first one
@@ -164,6 +194,12 @@ isn't `Declined`:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:chain"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/factory-chain.ts:chain"
     ```
 
 When every factory declines, the chain declines too, and the event isn't sent to that vendor.
@@ -201,6 +237,12 @@ with the last factory in its list:
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:default"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/factory-chain.ts:default"
+    ```
+
 The required-mapping version looks like this:
 
 === "Kotlin"
@@ -219,6 +261,12 @@ The required-mapping version looks like this:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:strict"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/concepts/factory-chain.ts:strict"
     ```
 
 !!! warning "A catch-all goes last"

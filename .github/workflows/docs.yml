@@ -1,9 +1,10 @@
 # Builds the website on every pull request, and deploys it to GitHub Pages on a push to main, when
 # an SDK releases, or when run by hand.
 #
-# The site documents what Maven Central and pub.dev serve, so the code samples, the Android API
-# reference and the change logs come from each SDK's latest release tag. A release in herald,
-# herald-flutter, herald-ios or herald-kmp triggers this workflow with `repository_dispatch`.
+# The site documents what each SDK's package registry serves, so the code samples, the Android and
+# React Native API references and the change logs come from each SDK's latest release tag. A
+# release in herald, herald-flutter, herald-ios, herald-kmp or herald-react-native triggers this
+# workflow with `repository_dispatch`.
 name: Docs
 
 on:
@@ -34,16 +35,21 @@ jobs:
           flutter=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-flutter)
           ios=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-ios)
           kmp=$(scripts/latest_release.sh https://github.com/MkhytarMkhoian/herald-kmp)
-          if [[ -z "$android" || -z "$flutter" || -z "$ios" || -z "$kmp" ]]; then
+          react_native=$(scripts/latest_release.sh \
+            https://github.com/MkhytarMkhoian/herald-react-native)
+          if [[ -z "$android" || -z "$flutter" || -z "$ios" || -z "$kmp" ||
+            -z "$react_native" ]]; then
             echo "Every SDK needs a release tag. Android: '$android', Flutter: '$flutter'," \
-              "iOS: '$ios', KMP: '$kmp'"
+              "iOS: '$ios', KMP: '$kmp', React Native: '$react_native'"
             exit 1
           fi
           echo "android=$android" >> "$GITHUB_OUTPUT"
           echo "flutter=$flutter" >> "$GITHUB_OUTPUT"
           echo "ios=$ios" >> "$GITHUB_OUTPUT"
           echo "kmp=$kmp" >> "$GITHUB_OUTPUT"
-          echo "Android: $android, Flutter: $flutter, iOS: $ios, KMP: $kmp"
+          echo "react_native=$react_native" >> "$GITHUB_OUTPUT"
+          echo "Android: $android, Flutter: $flutter, iOS: $ios, KMP: $kmp," \
+            "React Native: $react_native"
 
       - uses: actions/checkout@v5
         with:
@@ -68,6 +74,19 @@ jobs:
           repository: MkhytarMkhoian/herald-kmp
           ref: ${{ steps.releases.outputs.kmp }}
           path: build/herald-kmp
+
+      - uses: actions/checkout@v5
+        with:
+          repository: MkhytarMkhoian/herald-react-native
+          ref: ${{ steps.releases.outputs.react_native }}
+          path: build/herald-react-native
+
+      # For the React Native API reference, which TypeDoc builds.
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: build/herald-react-native/.nvmrc
+          cache: npm
+          cache-dependency-path: build/herald-react-native/package-lock.json
 
       - uses: actions/setup-java@v5
         with:

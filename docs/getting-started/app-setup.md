@@ -2,7 +2,8 @@
 
 Your app sets Herald up in one place: on Android, usually your dependency injection setup and the
 Application class; on Flutter, `main()` and whatever shares objects in your app; on iOS, the app
-delegate and whatever builds your objects. That place creates the vendors, builds one `Herald` from
+delegate and whatever builds your objects; on React Native, the app's entry file and whatever shares
+objects, such as a React context. That place creates the vendors, builds one `Herald` from
 them, starts it, and hands it to the rest of the app. No other code names a vendor or `Herald`
 itself.
 
@@ -29,6 +30,12 @@ Herald sends every call to each vendor you register. A registered vendor is call
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:herald"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/composition-root.ts:herald"
+    ```
+
 Each of those functions looks like the Firebase one from the
 [Quick start](quick-start.md#4-add-firebase), and each [vendor page](../vendors/firebase.md) shows
 its own. A provider has a name and the parts of Herald that the vendor supports: events, user
@@ -40,7 +47,8 @@ user properties, for example, so its provider has no `properties`.
 - **On Android, `providers(...)` takes vendors that are already built,** which is handy when your
   DI collects them from several modules. `provider(...)` builds one in place from its parts. You
   can use both in the same `Herald { }` block. On Flutter, `Herald(providers: [...])` takes a list
-  of `HeraldProvider`s, wherever they come from.
+  of `HeraldProvider`s, wherever they come from, and on React Native,
+  `new Herald({ providers: [...] })` does.
 
 ## Give it to your classes
 
@@ -106,6 +114,16 @@ That keeps each class honest about what it does, and easy to test with a fake.
     With a container such as Factory or Swinject, register the one `Herald` and hand it out as
     each of the protocols above, the same way.
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/di/manual-setup.ts:manual"
+    ```
+
+    To reach it from components, put the one `Herald` in a React context, or use
+    [`HeraldScope`](../sdks/react-native/react.md), which hands it out as an
+    `EventTrackerService`.
+
 ## Start it
 
 Call `start()` once, when the app starts, and then apply the consent decision the user made last
@@ -139,6 +157,15 @@ Do it where the vendors' own setup guides initialise their SDKs, on every start 
 
     ```swift
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:start-from-main"
+    ```
+
+=== "TypeScript"
+
+    Do it in the app's entry file, which runs once each time the app starts, and await each call:
+    Herald doesn't order calls you don't await.
+
+    ```ts
+    --8<-- "docs-samples/src/composition-root.ts:start-from-main"
     ```
 
 If a user is signed in, call `identify(...)` between the two calls. Some vendors forget the user
@@ -192,20 +219,30 @@ every call looks just like one that works. That's why the example above passes a
     }
     ```
 
+=== "TypeScript"
+
+    ```ts
+    errorReporter: (failure) => {
+      const crashlytics = getCrashlytics();
+      log(crashlytics, `${failure}`); // e.g. "adjust failed on Track(checkout_started): ..."
+      if (failure.error instanceof Error) recordError(crashlytics, failure.error);
+    },
+    ```
+
 - **The operation says what failed:** `Track(checkout_started)`, `SetProperty(plan)`, `Identify`,
   `Start`, and so on. It holds names only, never parameter values or the user id, so it's safe to
   send to another tool.
 - **Errors arrive one at a time,** after every vendor has finished, so your reporter doesn't need
   to be thread-safe. On iOS each arrives as soon as its vendor reports it, on the thread that made
   the call.
-- **If your reporter throws,** Herald catches that too. On Flutter, a reporter that returns a
-  failed `Future` is caught as well, and Herald doesn't wait for it.
+- **If your reporter throws,** Herald catches that too. On Flutter and React Native, a reporter
+  that returns a failed `Future` or promise is caught as well, and Herald doesn't wait for it.
 - **On Android, cancelling the caller isn't an error.** If the coroutine that called Herald is
   cancelled, the cancellation carries on as usual and nothing is reported.
 
 ## Threads and order
 
-On Android and Flutter, vendors are called at the same time, so one slow vendor doesn't hold up
+On Android, Flutter and React Native, vendors are called at the same time, so one slow vendor doesn't hold up
 the others, and a call returns when every vendor has finished. Tracking from UI code is safe on
 every platform.
 
@@ -240,6 +277,14 @@ every platform.
       call always reaches them after it.
     - **Calls from different threads at the same moment** can reach a vendor in either order, as
       on the other platforms.
+
+=== "TypeScript"
+
+    There is no dispatcher: vendor SDKs do their work in native code, off the JavaScript thread.
+
+    - **A call starts at once and doesn't wait for earlier ones.** Two calls you don't await, such
+      as `onPress={() => analytics.track(event)}`, can reach a vendor in either order. When order
+      matters, await the first call.
 
 ## Next
 

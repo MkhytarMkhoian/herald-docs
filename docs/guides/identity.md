@@ -21,6 +21,12 @@ then on belongs to that user, and forgets them at sign-out.
     --8<-- "Samples/Sources/Samples/Guides/Identity.swift:session"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/identity.ts:session"
+    ```
+
 `Identity.userId` uses the name every vendor uses. Pass an id that doesn't change and doesn't
 reveal who the person is, such as your backend's account id, never an email address or a phone
 number.
@@ -32,7 +38,7 @@ number.
 | Firebase | `setUserId(userId)` | `setUserId(null)` |
 | Mixpanel | `identify(userId, true)` | `reset()`: a new anonymous id |
 | Adjust | a `user_id` global callback parameter; the key is configurable | removes that parameter |
-| AppsFlyer | `setCustomerUserId(userId)` | `setCustomerUserId(null)`; nothing on Flutter, whose plugin can't clear it |
+| AppsFlyer | `setCustomerUserId(userId)` | `setCustomerUserId(null)`; nothing on Flutter and React Native, whose packages can't clear it |
 | Amplitude | `setUserId(userId)` | `reset()`: clears the user and rotates the device id |
 
 If your app must not send a user id to a vendor, register that vendor's provider without

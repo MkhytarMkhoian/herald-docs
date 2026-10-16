@@ -8,20 +8,22 @@ Herald lives in these repositories:
 | [herald-flutter](https://github.com/MkhytarMkhoian/herald-flutter) | the Flutter SDK, and the Dart code shown on this site |
 | [herald-ios](https://github.com/MkhytarMkhoian/herald-ios) | the iOS SDK's core, and the Swift code shown on this site; each iOS vendor package has a repository of its own |
 | [herald-kmp](https://github.com/MkhytarMkhoian/herald-kmp) | Kotlin Multiplatform, over the Android and iOS SDKs |
+| [herald-react-native](https://github.com/MkhytarMkhoian/herald-react-native) | the React Native SDK, and the TypeScript code shown on this site |
 | [herald-docs](https://github.com/MkhytarMkhoian/herald-docs) | this website's pages |
 
 Each has a CONTRIBUTING file with its rules:
 [Android](https://github.com/MkhytarMkhoian/herald/blob/main/CONTRIBUTING.md),
 [Flutter](https://github.com/MkhytarMkhoian/herald-flutter/blob/main/CONTRIBUTING.md),
 [iOS](https://github.com/MkhytarMkhoian/herald-ios/blob/main/CONTRIBUTING.md),
-[Kotlin Multiplatform](https://github.com/MkhytarMkhoian/herald-kmp/blob/main/CONTRIBUTING.md) and
+[Kotlin Multiplatform](https://github.com/MkhytarMkhoian/herald-kmp/blob/main/CONTRIBUTING.md),
+[React Native](https://github.com/MkhytarMkhoian/herald-react-native/blob/main/CONTRIBUTING.md) and
 [website](https://github.com/MkhytarMkhoian/herald-docs/blob/main/CONTRIBUTING.md).
 
 ## Where a change goes
 
 - **A bug or a feature:** the SDK's repository, with its tests.
-- **A code example:** the SDK's samples: `docs-samples` for Android, `docs_samples` for Flutter, or
-  `Samples` in herald-ios.
+- **A code example:** the SDK's samples: `docs-samples` for Android, `docs_samples` for Flutter,
+  `Samples` in herald-ios, or `docs-samples` in herald-react-native.
   The SDK's build compiles them, so an example can't stop working without failing it.
 - **The words on a page:** herald-docs. Pages describe released versions only, so a page about a
   new feature merges once the feature is released.
@@ -29,5 +31,6 @@ Each has a CONTRIBUTING file with its rules:
 To report a problem, open an issue on GitHub, for
 [Android](https://github.com/MkhytarMkhoian/herald/issues),
 [Flutter](https://github.com/MkhytarMkhoian/herald-flutter/issues),
-[iOS](https://github.com/MkhytarMkhoian/herald-ios/issues) or
+[iOS](https://github.com/MkhytarMkhoian/herald-ios/issues),
+[React Native](https://github.com/MkhytarMkhoian/herald-react-native/issues) or
 [this website](https://github.com/MkhytarMkhoian/herald-docs/issues).

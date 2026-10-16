@@ -5,8 +5,8 @@ with any analytics service yet: you start with Herald's log module, which prints
 of sending it. At the end you add Firebase.
 
 Add the core library and the log module. The [Android SDK](../sdks/android/index.md),
-[Flutter SDK](../sdks/flutter/index.md) and [iOS SDK](../sdks/ios/index.md) pages list all the
-modules.
+[Flutter SDK](../sdks/flutter/index.md), [iOS SDK](../sdks/ios/index.md) and
+[React Native SDK](../sdks/react-native/index.md) pages list all the modules.
 
 === "Kotlin"
 
@@ -42,6 +42,12 @@ modules.
     .package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0")
     ```
 
+=== "TypeScript"
+
+    ```bash
+    npm install @herald-analytics/core @herald-analytics/log
+    ```
+
 ## 1. Describe what happened
 
 An event is a small class in your app. It has a name, and parameters that describe what happened:
@@ -62,6 +68,12 @@ An event is a small class in your app. It has a name, and parameters that descri
 
     ```swift
     --8<-- "Samples/Sources/Samples/QuickStart.swift:event"
+    ```
+
+=== "TypeScript"
+
+    ```tsx
+    --8<-- "docs-samples/src/quick-start.tsx:event"
     ```
 
 Parameters keep their type. `seats` reaches every service as the number 3, not as the text `"3"`,
@@ -91,6 +103,12 @@ user properties, and a service that handles everything else, such as start-up an
 
     ```swift
     --8<-- "Samples/Sources/Samples/QuickStart.swift:herald"
+    ```
+
+=== "TypeScript"
+
+    ```tsx
+    --8<-- "docs-samples/src/quick-start.tsx:herald"
     ```
 
 Create Herald once for the whole app. [Set up your app](app-setup.md) shows how to share it.
@@ -138,6 +156,18 @@ app:
     --8<-- "Samples/Sources/Samples/QuickStart.swift:app"
     ```
 
+=== "TypeScript"
+
+    Start it in the app's entry file, which runs once each time the app starts. `start()` returns a
+    promise, because some services set themselves up in the background:
+
+    ```tsx
+    --8<-- "docs-samples/src/quick-start.tsx:app"
+    ```
+
+    With Expo Router, create Herald in a module of its own and start it there: the root layout
+    imports it, so it runs once when the app starts.
+
 ## 3. Track the event
 
 Your classes don't use `Herald` directly. They ask for `EventTrackerService`, a small interface
@@ -160,6 +190,12 @@ in tests you pass a fake instead.
 
     ```swift
     --8<-- "Samples/Sources/Samples/QuickStart.swift:track"
+    ```
+
+=== "TypeScript"
+
+    ```tsx
+    --8<-- "docs-samples/src/quick-start.tsx:track"
     ```
 
 Call `onCheckout("pro", 3)`, or `onCheckout(plan: "pro", seats: 3)` in Swift, and the log shows
@@ -192,13 +228,22 @@ the event as a real service would receive it:
         └─ seats = 3
     ```
 
+=== "TypeScript"
+
+    ```text title="Metro"
+     LOG  [herald] start
+     LOG  [herald] event   checkout_started
+        ├─ plan  = pro
+        └─ seats = 3
+    ```
+
 ## 4. Add Firebase
 
 First set up Firebase in your app the usual way, by following Firebase's guide for
 [Android](https://firebase.google.com/docs/analytics/get-started?platform=android),
 [Flutter](https://firebase.google.com/docs/analytics/get-started?platform=flutter) or
-[iOS](https://firebase.google.com/docs/analytics/get-started?platform=ios). Then add Herald's
-Firebase module:
+[iOS](https://firebase.google.com/docs/analytics/get-started?platform=ios), or React Native
+Firebase's [guide](https://rnfirebase.io/analytics/usage). Then add Herald's Firebase module:
 
 === "Kotlin"
 
@@ -227,6 +272,12 @@ Firebase module:
     .package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0")
     ```
 
+=== "TypeScript"
+
+    ```bash
+    npm install @herald-analytics/firebase
+    ```
+
 The Firebase provider is built the same way as the log one. Its factories send screen views as
 GA4's own `screen_view` event, and every other event under its own name:
 
@@ -248,6 +299,12 @@ GA4's own `screen_view` event, and every other event under its own name:
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:firebase-provider"
     ```
 
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/composition-root.ts:firebase-provider"
+    ```
+
 Add it to Herald next to the log provider:
 
 === "Kotlin"
@@ -266,6 +323,12 @@ Add it to Herald next to the log provider:
 
     ```swift
     --8<-- "Samples/Sources/Samples/QuickStart.swift:add-firebase"
+    ```
+
+=== "TypeScript"
+
+    ```tsx
+    --8<-- "docs-samples/src/quick-start.tsx:add-firebase"
     ```
 
 The same `CheckoutStarted` now goes to both the log and Firebase, and `CheckoutViewModel` didn't

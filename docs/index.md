@@ -55,6 +55,15 @@ Amplitude, or one you build yourself.
 
     [:octicons-arrow-right-24: Kotlin Multiplatform](sdks/kmp/index.md)
 
+-   :simple-react:{ .lg .middle } **React Native**
+
+    ---
+
+    TypeScript packages on npm, over each vendor's official React Native package: the core, one
+    package per vendor, optional React hooks, a logger and a fake for your tests.
+
+    [:octicons-arrow-right-24: React Native SDK](sdks/react-native/index.md)
+
 </div>
 
 ## Why Herald
@@ -113,3 +122,5 @@ saving user properties. You only write your own for events that need something s
   feature modules, consent, sign-in, Compose and a screen that shows every event it sent.
 - [The Flutter example app](https://github.com/MkhytarMkhoian/herald-flutter/tree/main/example):
   screen views with and without `herald_widgets`, and a timeline of every event it sent.
+- [The React Native example app](https://github.com/MkhytarMkhoian/herald-react-native/tree/main/example):
+  an Expo Router app with screen views, impressions, and a timeline of every event it sent.

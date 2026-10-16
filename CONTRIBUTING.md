@@ -1,15 +1,18 @@
 # Contributing
 
 Thanks for helping with the Herald website. Changes to the SDKs themselves go to
-[herald](https://github.com/MkhytarMkhoian/herald) or
-[herald-flutter](https://github.com/MkhytarMkhoian/herald-flutter).
+[herald](https://github.com/MkhytarMkhoian/herald),
+[herald-flutter](https://github.com/MkhytarMkhoian/herald-flutter),
+[herald-ios](https://github.com/MkhytarMkhoian/herald-ios) or
+[herald-react-native](https://github.com/MkhytarMkhoian/herald-react-native).
 
 ## Writing
 
 - **Plain, simple words.** Short sentences, and the words a developer would use. Say what to do and
   why, not how the code got that way.
-- **One page for both SDKs.** Herald works the same on Android and Flutter, so a page explains it
-  once. Code that differs goes in a **Kotlin**, a **Dart** and a **Swift** tab, in that order.
+- **One page for every SDK.** Herald works the same everywhere, so a page explains it once. Code
+  that differs goes in a **Kotlin**, a **Dart**, a **Swift** and a **TypeScript** tab, in that
+  order.
 - **Only released features.** The site deploys from `main`, against each SDK's latest release, so
   a page about a new feature merges once that feature is released.
 
@@ -22,6 +25,7 @@ name:
 ```text
 --8<-- "samples/QuickStart.kt:event"                 Android: docs-samples/src/main/kotlin
 --8<-- "docs_samples/lib/quick_start.dart:event"     Flutter: the herald-flutter repository root
+--8<-- "docs-samples/src/quick-start.tsx:event"      React Native: the herald-react-native root
 ```
 
 To show new code, add it to the SDK's samples first, where its build compiles and tests it. Section
@@ -31,4 +35,4 @@ names are shared between the repositories: renaming one means changing the page 
 
 - [ ] `scripts/build_docs.sh` passes.
 - [ ] New pages are in the `nav` of `mkdocs.yml`.
-- [ ] Both tabs are there wherever the code differs between the SDKs.
+- [ ] Every tab is there wherever the code differs between the SDKs.

@@ -49,6 +49,14 @@ Turn the other three off where you create them:
     | Mixpanel | `Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` |
     | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
 
+=== "TypeScript"
+
+    | Vendor | Turn it off where |
+    | --- | --- |
+    | Firebase | `"analytics_auto_collection_enabled": false` in `firebase.json` |
+    | Mixpanel | `Mixpanel.init(token, trackAutomaticEvents, true)` |
+    | Amplitude | `amplitude.init(apiKey, undefined, { optOut: true })` |
+
 Herald can do it for Adjust and AppsFlyer because their switch is just a flag. For the others it
 would do harm:
 
@@ -78,6 +86,12 @@ your privacy settings screen:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Consent.swift:record"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/consent.ts:record"
     ```
 
 ## Re-applying it on every launch
@@ -110,6 +124,12 @@ shows:
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Consent.swift:restore"
+    ```
+
+=== "TypeScript"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/consent.ts:restore"
     ```
 
 For AppsFlyer this is also the moment it actually starts. With consent stored, `setEnabled(true)`
