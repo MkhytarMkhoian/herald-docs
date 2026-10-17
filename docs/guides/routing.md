@@ -49,7 +49,7 @@ With those two chains, `analytics.track(CheckoutStarted)` goes like this:
 
 | Firebase chain | Adjust chain |
 | --- | --- |
-| feature factories: `CheckoutStarted` isn't theirs, so each declines | `TokenAdjustEventTrackerFactory`: no token for `checkout_started`, so it declines |
+| feature factories: `CheckoutStarted` isn't theirs, so each declines | `TokenAdjustEventTrackerFactory`: no token for `CheckoutStarted`, so it declines |
 | `ScreenViewFirebaseEventTrackerFactory`: not a screen view, so it declines | end of the chain, so it's **not sent** |
 | `GenericFirebaseEventTrackerFactory`: takes it, and it's **sent under its own name** | |
 

@@ -65,8 +65,7 @@ Herald's `start()` passes it to `initSdk`, so don't call `initSdk` yourself.
 
 | Factory | Handles |
 | --- | --- |
-| `TokenAdjustEventTrackerFactory(tokens, adjust)`; `(tokens)` on Flutter; `(tokens:)` on iOS | events whose name has a token in the map |
-| `TokenAdjustEventTrackerFactory([[EventClass, token], …])` on React Native | events of a class that has a token in the list |
+| `TokenAdjustEventTrackerFactory(tokens, adjust)`; `(tokens)` on Flutter and React Native; `(tokens:)` on iOS | events of a type that has an `AdjustToken` in the list |
 | `RequireMappedAdjustEventTrackerFactory` | nothing: throws for any event that reaches it |
 | `GenericAdjustPropertySetterFactory` | every property |
 
@@ -106,6 +105,12 @@ your Adjust dashboard. Don't give any property that name: it would overwrite the
   doesn't wait for its native side, so an error there never reaches your error reporter.
 - **On iOS, an empty token or ad revenue source is reported.** Adjust itself would drop the event
   with only a log line, so Herald refuses it and tells your error reporter.
-- **Tokens are dashboard configuration,** keyed by event name, so a renamed event silently loses
-  its token. Keep token maps next to the events they map. On React Native they're keyed by the
-  event's class instead, so the compiler checks the list and a rename can't lose a token.
+- **Each `AdjustToken` pairs a token with an event type, not a name,** so the compiler checks the
+  list and a renamed event keeps its token. An event that extends the type uses its token too:
+
+    | SDK | An `AdjustToken` |
+    | --- | --- |
+    | Android | `AdjustToken<SignUpCompleted>("abc123")` |
+    | Flutter | `AdjustToken<SignUpCompleted>('abc123')` |
+    | iOS | `AdjustToken(SignUpCompleted.self, "abc123")` |
+    | React Native | `new AdjustToken(SignUpCompleted, 'abc123')` |
