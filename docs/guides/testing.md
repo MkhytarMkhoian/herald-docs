@@ -8,13 +8,13 @@ Add `herald-testing`, `herald_testing` on Flutter, `HeraldTesting` on iOS, or
 === "Kotlin"
 
     ```kotlin
-    testImplementation("io.github.mkhytarmkhoian:herald-testing:1.2.0")
+    testImplementation("io.github.mkhytarmkhoian:herald-testing:1.3.0")
     ```
 
 === "Groovy"
 
     ```groovy
-    testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.2.0'
+    testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.3.0'
     ```
 
 === "Dart"

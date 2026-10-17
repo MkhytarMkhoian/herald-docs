@@ -12,8 +12,8 @@ Add the core library and the log module. The [Android SDK](../sdks/android/index
 
     ```kotlin
     dependencies {
-        implementation("io.github.mkhytarmkhoian:herald-core:1.2.0")
-        implementation("io.github.mkhytarmkhoian:herald-log:1.2.0")
+        implementation("io.github.mkhytarmkhoian:herald-core:1.3.0")
+        implementation("io.github.mkhytarmkhoian:herald-log:1.3.0")
     }
     ```
 
@@ -21,8 +21,8 @@ Add the core library and the log module. The [Android SDK](../sdks/android/index
 
     ```groovy
     dependencies {
-        implementation 'io.github.mkhytarmkhoian:herald-core:1.2.0'
-        implementation 'io.github.mkhytarmkhoian:herald-log:1.2.0'
+        implementation 'io.github.mkhytarmkhoian:herald-core:1.3.0'
+        implementation 'io.github.mkhytarmkhoian:herald-log:1.3.0'
     }
     ```
 
@@ -248,13 +248,13 @@ Firebase's [guide](https://rnfirebase.io/analytics/usage). Then add Herald's Fir
 === "Kotlin"
 
     ```kotlin
-    implementation("io.github.mkhytarmkhoian:herald-firebase:1.2.0")
+    implementation("io.github.mkhytarmkhoian:herald-firebase:1.3.0")
     ```
 
 === "Groovy"
 
     ```groovy
-    implementation 'io.github.mkhytarmkhoian:herald-firebase:1.2.0'
+    implementation 'io.github.mkhytarmkhoian:herald-firebase:1.3.0'
     ```
 
 === "Dart"
