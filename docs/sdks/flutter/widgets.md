@@ -44,7 +44,8 @@ time, and the user did nothing to cause it.
 | `TrackImpression(event: …, threshold: …, minVisibleDuration: …)` | once per appearance, when that share of the child has been visible that long | was this actually seen? |
 
 A screen is a page, a `PageRoute`. Dialogs, bottom sheets and menus over it don't hide it, and the
-app briefly losing focus, as under the notification shade, doesn't either.
+app briefly losing focus, as under Android's notification shade or iOS's Control Centre, doesn't
+either. On iOS the notification centre sends the app to the background, so it hides the screen.
 
 ### Screen views
 
