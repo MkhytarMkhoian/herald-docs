@@ -15,8 +15,11 @@ on:
     types: [sdk-release]
   workflow_dispatch:
 
+# Every deploying run shares one group, so a newer run cancels an older one, whatever started it.
+# Otherwise an older run could finish last and deploy an older site. Pull requests don't deploy, so
+# each has its own group.
 concurrency:
-  group: docs-${{ github.event_name }}-${{ github.ref }}
+  group: ${{ github.event_name == 'pull_request' && format('docs-{0}', github.ref) || 'docs-deploy' }}
   cancel-in-progress: true
 
 permissions:
