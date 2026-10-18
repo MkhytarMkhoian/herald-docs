@@ -6,13 +6,13 @@ one, or a small component reused across screens. It needs no DI library.
 === "Kotlin"
 
     ```kotlin
-    implementation("io.github.mkhytarmkhoian:herald-compose:1.3.0")
+    implementation("io.github.mkhytarmkhoian:herald-compose:1.4.0")
     ```
 
 === "Groovy"
 
     ```groovy
-    implementation 'io.github.mkhytarmkhoian:herald-compose:1.3.0'
+    implementation 'io.github.mkhytarmkhoian:herald-compose:1.4.0'
     ```
 
 ## Provide the tracker once

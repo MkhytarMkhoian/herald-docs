@@ -20,7 +20,7 @@ Here is every module. Keep the lines you need.
 
     ```kotlin
     dependencies {
-        val herald = "1.3.0"
+        val herald = "1.4.0"
 
         // Always needed
         implementation("io.github.mkhytarmkhoian:herald-core:$herald")
@@ -48,7 +48,7 @@ Here is every module. Keep the lines you need.
 
     ```groovy
     dependencies {
-        def herald = '1.3.0'
+        def herald = '1.4.0'
 
         // Always needed
         implementation "io.github.mkhytarmkhoian:herald-core:$herald"
@@ -77,7 +77,7 @@ Here is every module. Keep the lines you need.
     ```toml
     # gradle/libs.versions.toml
     [versions]
-    herald = "1.3.0"
+    herald = "1.4.0"
 
     [libraries]
     herald-core = { module = "io.github.mkhytarmkhoian:herald-core", version.ref = "herald" }

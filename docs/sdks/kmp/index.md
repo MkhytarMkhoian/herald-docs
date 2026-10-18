@@ -12,6 +12,7 @@ vendors:
 
 | herald-kmp | Android SDK | iOS SDK |
 | --- | --- | --- |
+| 1.1.0 | 1.4.0 | 1.3.0 |
 | 1.0.0 | 1.2.0 | 1.1.0 |
 
 Use it when your app shares Kotlin code between Android and iOS. A native app keeps using its own
@@ -26,12 +27,12 @@ kotlin {
     listOf(iosArm64(), iosSimulatorArm64()).forEach { target ->
         target.binaries.framework {
             baseName = "Shared"
-            export("io.github.mkhytarmkhoian:herald-kmp-core:1.0.0")
+            export("io.github.mkhytarmkhoian:herald-kmp-core:1.1.0")
         }
     }
     sourceSets {
         commonMain.dependencies {
-            api("io.github.mkhytarmkhoian:herald-kmp-core:1.0.0")
+            api("io.github.mkhytarmkhoian:herald-kmp-core:1.1.0")
         }
     }
 }

@@ -9,13 +9,13 @@ Add it to your tests:
     === "Kotlin DSL"
 
         ```kotlin
-        testImplementation("io.github.mkhytarmkhoian:herald-testing:1.3.0")
+        testImplementation("io.github.mkhytarmkhoian:herald-testing:1.4.0")
         ```
 
     === "Groovy DSL"
 
         ```groovy
-        testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.3.0'
+        testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.4.0'
         ```
 
     Its assertions throw a plain `AssertionError`, so any test framework works.

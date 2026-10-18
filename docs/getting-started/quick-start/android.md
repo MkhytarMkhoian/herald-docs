@@ -11,8 +11,8 @@ page lists all the modules.
 
     ```kotlin
     dependencies {
-        implementation("io.github.mkhytarmkhoian:herald-core:1.3.0")
-        implementation("io.github.mkhytarmkhoian:herald-log:1.3.0")
+        implementation("io.github.mkhytarmkhoian:herald-core:1.4.0")
+        implementation("io.github.mkhytarmkhoian:herald-log:1.4.0")
     }
     ```
 
@@ -20,8 +20,8 @@ page lists all the modules.
 
     ```groovy
     dependencies {
-        implementation 'io.github.mkhytarmkhoian:herald-core:1.3.0'
-        implementation 'io.github.mkhytarmkhoian:herald-log:1.3.0'
+        implementation 'io.github.mkhytarmkhoian:herald-core:1.4.0'
+        implementation 'io.github.mkhytarmkhoian:herald-log:1.4.0'
     }
     ```
 
@@ -96,13 +96,13 @@ Herald's Firebase module:
 === "Kotlin DSL"
 
     ```kotlin
-    implementation("io.github.mkhytarmkhoian:herald-firebase:1.3.0")
+    implementation("io.github.mkhytarmkhoian:herald-firebase:1.4.0")
     ```
 
 === "Groovy DSL"
 
     ```groovy
-    implementation 'io.github.mkhytarmkhoian:herald-firebase:1.3.0'
+    implementation 'io.github.mkhytarmkhoian:herald-firebase:1.4.0'
     ```
 
 The Firebase provider is built the same way as the log one. Its factories send screen views as

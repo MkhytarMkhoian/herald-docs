@@ -12,7 +12,7 @@ In Xcode, File → Add Package Dependencies, add
 `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.0.0")
+.package(url: "https://github.com/MkhytarMkhoian/herald-ios", from: "1.3.0")
 ```
 
 ## 1. Describe what happened
@@ -76,7 +76,7 @@ Add `https://github.com/MkhytarMkhoian/herald-ios-firebase` the same way, and ch
 `HeraldFirebase`:
 
 ```swift
-.package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.0.0")
+.package(url: "https://github.com/MkhytarMkhoian/herald-ios-firebase", from: "1.3.0")
 ```
 
 The Firebase provider is built the same way as the log one. Its factories send screen views as
