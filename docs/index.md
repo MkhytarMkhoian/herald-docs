@@ -9,8 +9,6 @@ hide:
   <img src="assets/readme-banner-dark.png#only-dark" alt="Herald" width="560">
 </h1>
 
-*A herald announces an event to whoever is listening.*
-
 Herald is an analytics library for mobile apps. Your app describes what happened as an event, and
 Herald sends that event to every analytics service you use: Firebase, Adjust, Mixpanel, AppsFlyer,
 Amplitude, Meta, or one you build yourself.
