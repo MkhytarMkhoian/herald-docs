@@ -16,21 +16,13 @@ impressions go through Adjust's ad-revenue API.
 You build the `AdjustConfig` (`ADJConfig` on iOS): environment, data residency, log level, attribution callbacks.
 Herald's `start()` passes it to `initSdk`, so don't call `initSdk` yourself.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/vendors/AdjustSetup.kt:provider"
     ```
 
-=== "Dart"
-
-    The Adjust plugin is static functions, so Herald's Flutter classes take no Adjust object.
-
-    ```dart
-    --8<-- "docs_samples/lib/vendors/adjust_setup.dart:provider"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     Adjust's iOS SDK is static functions too, so Herald's iOS classes take no Adjust object. The
     service takes your `ADJConfig`.
@@ -39,7 +31,15 @@ Herald's `start()` passes it to `initSdk`, so don't call `initSdk` yourself.
     --8<-- "Samples/Sources/Samples/Vendors/AdjustSetup.swift:provider"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    The Adjust plugin is static functions, so Herald's Flutter classes take no Adjust object.
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/adjust_setup.dart:provider"
+    ```
+
+=== "React Native"
 
     The Adjust package is static functions too, so Herald's React Native classes take no Adjust
     object. The service takes your `AdjustConfig`.

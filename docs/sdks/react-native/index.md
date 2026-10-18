@@ -4,7 +4,7 @@ Herald for React Native is a set of npm packages: the core, one package per vend
 hooks, a logger and a fake for your tests. Each vendor package works over that vendor's official
 React Native package. It's written in TypeScript, and works with Expo and with plain React Native.
 
-[API reference](../../api/react-native/index.html){ .md-button } [Changelog](../../changelog/react-native.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-react-native){ .md-button }
+[API reference](../../api/react-native/index.html){ .md-button } [Notes](notes.md){ .md-button } [Changelog](changelog.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-react-native){ .md-button }
 
 ## Installation
 
@@ -36,6 +36,6 @@ it writes a [factory](../../concepts/factory-chain.md) for. The app, which
 
 --8<-- "herald-react-native/README.md:compatibility"
 
-## TypeScript specifics
+## React Native notes
 
---8<-- "herald-react-native/README.md:differences"
+Where React Native differs from the other platforms is in the [React Native notes](notes.md).

@@ -25,7 +25,7 @@ switch is a setting on the vendor object you create:
 
 Turn the other three off where you create them:
 
-=== "Kotlin"
+=== "Android"
 
     | Vendor | Turn it off where |
     | --- | --- |
@@ -33,15 +33,7 @@ Turn the other three off where you create them:
     | Mixpanel | `MixpanelOptions.Builder().optOutTrackingDefault(true)` |
     | Amplitude | `Configuration(apiKey, context, optOut = true)` |
 
-=== "Dart"
-
-    | Vendor | Turn it off where |
-    | --- | --- |
-    | Firebase | `firebase_analytics_collection_enabled=false` in `AndroidManifest.xml`, and `FIREBASE_ANALYTICS_COLLECTION_ENABLED` set to `false` in iOS's `Info.plist` |
-    | Mixpanel | `Mixpanel.init(token, optOutTrackingDefault: true, ...)` |
-    | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
-
-=== "Swift"
+=== "iOS"
 
     | Vendor | Turn it off where |
     | --- | --- |
@@ -49,7 +41,15 @@ Turn the other three off where you create them:
     | Mixpanel | `Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` |
     | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
 
-=== "TypeScript"
+=== "Flutter"
+
+    | Vendor | Turn it off where |
+    | --- | --- |
+    | Firebase | `firebase_analytics_collection_enabled=false` in `AndroidManifest.xml`, and `FIREBASE_ANALYTICS_COLLECTION_ENABLED` set to `false` in iOS's `Info.plist` |
+    | Mixpanel | `Mixpanel.init(token, optOutTrackingDefault: true, ...)` |
+    | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
+
+=== "React Native"
 
     | Vendor | Turn it off where |
     | --- | --- |
@@ -70,25 +70,25 @@ would do harm:
 Save the user's answer yourself, then apply it to every vendor. For example, from the ViewModel of
 your privacy settings screen:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Consent.kt:record"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/consent.dart:record"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Consent.swift:record"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/consent.dart:record"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/consent.ts:record"
@@ -108,25 +108,25 @@ So one rule works for all of them: **after `start()`, re-apply the stored decisi
 it right where you start Herald, as [Set up your app](../getting-started/app-setup.md#start-it)
 shows:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Consent.kt:restore"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/consent.dart:restore"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Consent.swift:restore"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/consent.dart:restore"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/consent.ts:restore"

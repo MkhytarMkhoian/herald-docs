@@ -2,33 +2,40 @@
 
 Analytics breaks quietly. A renamed parameter, or a double tap that sends an event twice, shows up
 weeks later as a wrong number on a dashboard. Herald's testing module lets you check it in tests.
-Add `herald-testing`, `herald_testing` on Flutter, `HeraldTesting` on iOS, or
-`@herald-analytics/testing` on React Native:
+Add it to your tests:
 
-=== "Kotlin"
+=== "Android"
 
-    ```kotlin
-    testImplementation("io.github.mkhytarmkhoian:herald-testing:1.3.0")
-    ```
+    === "Kotlin DSL"
 
-=== "Groovy"
+        ```kotlin
+        testImplementation("io.github.mkhytarmkhoian:herald-testing:1.3.0")
+        ```
 
-    ```groovy
-    testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.3.0'
-    ```
+    === "Groovy DSL"
 
-=== "Dart"
+        ```groovy
+        testImplementation 'io.github.mkhytarmkhoian:herald-testing:1.3.0'
+        ```
+
+    Its assertions throw a plain `AssertionError`, so any test framework works.
+
+=== "iOS"
+
+    `HeraldTesting` is part of `herald-ios`. Add it to your test target only. Its assertions work
+    in Swift Testing and XCTest alike: a failure is recorded at the line of the assertion, and the
+    test goes on, as after a failed `#expect`.
+
+=== "Flutter"
 
     ```bash
     flutter pub add dev:herald_testing
     ```
 
-=== "Swift"
+    Its assertions throw a `TestFailure`, which `package:test` and `flutter_test` report like any
+    failed `expect`.
 
-    `HeraldTesting` is part of `herald-ios`. Add it to your test target only. Its assertions work
-    in Swift Testing and XCTest alike.
-
-=== "TypeScript"
+=== "React Native"
 
     ```bash
     npm install --save-dev @herald-analytics/testing
@@ -45,25 +52,25 @@ The examples on this page are real tests, run on every Herald build.
 implements all five interfaces, so you register it with a real `Herald`, and the test runs through
 the same setup you ship: your factories and your wrappers.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/testing/CheckoutAnalyticsTest.kt:fake-provider"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:fake-provider"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:fake-provider"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:fake-provider"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/checkout-analytics.test.ts:fake-provider"
@@ -71,8 +78,8 @@ the same setup you ship: your factories and your wrappers.
 
 - **`assertTracked` expects exactly one match.** A double tap that sends an event twice fails the
   test instead of passing quietly. Use `assertTrackedTimes` when a repeat is expected.
-- **Parameters are checked by type.** `"3"` sent as text fails against `param("seats", 3)`, or
-  `param('seats', int(3))` in TypeScript, because vendors receive the two differently.
+- **Parameters are checked by type.** `"3"` sent as text fails against the number 3, because
+  vendors receive the two differently.
 - **`assertNothingElseTracked()`** fails on any event no earlier assertion mentioned. That's what
   catches a duplicate, or an event sneaking in from another feature.
 - **A failure prints everything that was recorded,** which usually explains it:
@@ -86,35 +93,32 @@ the same setup you ship: your factories and your wrappers.
   ```
 
 The other assertions are `assertNotTracked`, `assertNothingTracked`, `assertPropertySet` and
-`assertIdentified`. On Android, assertions throw a plain `AssertionError`, so any test framework
-works. On Flutter they throw a `TestFailure`, which `package:test` and `flutter_test` report like
-any failed `expect`. On iOS they record a failure through Swift Testing, at the line of the
-assertion, and an XCTest test fails the same way; the test goes on, as after a failed `#expect`.
+`assertIdentified`.
 
 ## Order between calls
 
 `records` holds every call in order: events, properties, sign-in, consent and start-up. Use it
 when the order matters, such as a property that must be set before the event that should carry it:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/testing/CheckoutAnalyticsTest.kt:order"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:order"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:order"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:order"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/checkout-analytics.test.ts:order"
@@ -124,7 +128,7 @@ when the order matters, such as a property that must be set before the event tha
 
 A class that only tracks events doesn't need a `Herald`:
 
-=== "Kotlin"
+=== "Android"
 
     A lambda is the fake, with no extra dependency:
 
@@ -132,15 +136,7 @@ A class that only tracks events doesn't need a `Herald`:
     --8<-- "samples/testing/CheckoutAnalyticsTest.kt:lambda"
     ```
 
-=== "Dart"
-
-    `FakeAnalyticsProvider` is every interface, so pass it to the class directly:
-
-    ```dart
-    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:single-capability"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     `FakeAnalyticsProvider` is every protocol, so pass it to the class directly:
 
@@ -148,7 +144,15 @@ A class that only tracks events doesn't need a `Herald`:
     --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:single-capability"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    `FakeAnalyticsProvider` is every interface, so pass it to the class directly:
+
+    ```dart
+    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:single-capability"
+    ```
+
+=== "React Native"
 
     `FakeAnalyticsProvider` is every interface, so pass it to the class directly:
 
@@ -163,25 +167,25 @@ Go through a real `Herald` when the test uses several interfaces or should run y
 A feature's factory takes an event and returns a `Resolution`, with nothing else involved, so you
 can test it directly:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/testing/CheckoutAnalyticsTest.kt:factory"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:factory"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/CheckoutAnalyticsTests.swift:factory"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/checkout_analytics_test.dart:factory"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/checkout-analytics.test.ts:factory"
@@ -194,19 +198,19 @@ than mocked ones.
 
 These test a small view model:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:app"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:app"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:app"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:app"
@@ -214,19 +218,19 @@ These test a small view model:
 
 Values are compared by type, and `assertTracked` expects exactly one such event:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:parameters"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:parameters"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:parameters"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:parameters"
@@ -234,19 +238,19 @@ Values are compared by type, and `assertTracked` expects exactly one such event:
 
 Repeats can be counted, and an event checked to be absent:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:counting"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:counting"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:counting"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:counting"
@@ -254,19 +258,19 @@ Repeats can be counted, and an event checked to be absent:
 
 For a property, the last value counts:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:properties"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:properties"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:properties"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:properties"
@@ -274,19 +278,19 @@ For a property, the last value counts:
 
 Sign-in and sign-out are recorded too:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:identity"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:identity"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:identity"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:identity"
@@ -294,19 +298,19 @@ Sign-in and sign-out are recorded too:
 
 For checks of your own, read the recorded events and properties:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:custom-checks"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:custom-checks"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:custom-checks"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:custom-checks"
@@ -314,19 +318,19 @@ For checks of your own, read the recorded events and properties:
 
 `clear()` forgets everything recorded so far, for tests with several steps:
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/test/testing/showcase_test.dart:clear"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Tests/SamplesTests/Testing/ShowcaseTests.swift:clear"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/testing/showcase_test.dart:clear"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/test/testing/showcase.test.ts:clear"

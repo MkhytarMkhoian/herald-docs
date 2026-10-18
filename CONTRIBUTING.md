@@ -11,8 +11,13 @@ Thanks for helping with the Herald website. Changes to the SDKs themselves go to
 - **Plain, simple words.** Short sentences, and the words a developer would use. Say what to do and
   why, not how the code got that way.
 - **One page for every SDK.** Herald works the same everywhere, so a page explains it once. Code
-  that differs goes in a **Kotlin**, a **Dart**, a **Swift** and a **TypeScript** tab, in that
-  order.
+  that differs goes in an **Android**, an **iOS**, a **Flutter** and a **React Native** tab, in
+  that order.
+- **Shared pages stay platform-neutral.** Something true on one platform only goes in that
+  platform's tab, in a note titled with the platform, or in its notes page under Platforms. Avoid
+  sentences like "on Flutter and iOS, …" in shared text.
+- **Each platform has the same pages:** overview, UI helpers, notes, API reference and change log,
+  and a quick start under Get started.
 - **Only released features.** The site deploys from `main`, against each SDK's latest release, so
   a page about a new feature merges once that feature is released.
 

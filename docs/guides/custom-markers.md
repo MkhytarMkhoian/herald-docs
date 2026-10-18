@@ -16,25 +16,25 @@ There are two good reasons to write one:
 
 ## A marker a vendor API needs
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/CustomMarkers.kt:marker"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/custom_markers.dart:marker"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:marker"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/custom_markers.dart:marker"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/custom-markers.ts:marker"
@@ -43,25 +43,25 @@ There are two good reasons to write one:
 Only vendors that treat a refund specially need a tracker. Here GA4 gets its `refund` event, and
 every other vendor still sends `ticket_refunded` through its generic factory.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/CustomMarkers.kt:marker-tracker"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/custom_markers.dart:marker-tracker"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:marker-tracker"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/custom_markers.dart:marker-tracker"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/custom-markers.ts:marker-tracker"
@@ -79,25 +79,25 @@ If every event name is built from where it happened, two modules can't end up us
 because nobody types names by hand. No vendor asks for this, which is exactly why it belongs in your
 app, not in Herald:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/CustomMarkers.kt:structured"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/custom_markers.dart:structured"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:structured"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/custom_markers.dart:structured"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/custom-markers.ts:structured"
@@ -109,25 +109,25 @@ the generic factories send `checkout_pay_button_tap`.
 Write a tracker only when you want the parts sent *as separate parameters* instead of joined into
 the name. That's where your app makes choices a library shouldn't make for it:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/CustomMarkers.kt:structured-tracker"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/custom_markers.dart:structured-tracker"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/CustomMarkers.swift:structured-tracker"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/custom_markers.dart:structured-tracker"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/custom-markers.ts:structured-tracker"

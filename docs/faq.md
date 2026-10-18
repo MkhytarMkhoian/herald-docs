@@ -70,12 +70,10 @@ from Java. Call Herald from Kotlin, and wrap it if Java code needs it.
 
 ## Which platforms are supported?
 
-Android, Flutter, iOS and React Native. The [Android SDK](sdks/android/index.md), the
-[Flutter SDK](sdks/flutter/index.md), the [iOS SDK](sdks/ios/index.md) and the
-[React Native SDK](sdks/react-native/index.md) share the same concepts and the same vendors, and
-most code examples on this site have a Kotlin, a Dart, a Swift and a TypeScript tab.
-For an app that shares Kotlin code between Android and iOS,
-[Kotlin Multiplatform](sdks/kmp/index.md) wraps the Android and iOS SDKs.
+Android, iOS, Flutter and React Native, and Kotlin Multiplatform for an app that shares Kotlin
+between Android and iOS. They share the same concepts and the same vendors, and most code examples
+on this site have a tab for each platform. [Choose a platform](getting-started/platforms.md)
+compares them.
 
 ## Where do I report a bug or ask a question?
 

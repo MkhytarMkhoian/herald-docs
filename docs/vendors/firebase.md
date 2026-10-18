@@ -19,25 +19,25 @@ both native files, which an Expo app names in `app.json`. Herald takes the `Fire
 instance, the `Analytics` from `getAnalytics()` on React Native, and never changes its settings. On
 iOS, Firebase Analytics is static functions, so Herald's classes take no Firebase object.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/CompositionRoot.kt:firebase-provider"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/composition_root.dart:firebase-provider"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:firebase-provider"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/composition_root.dart:firebase-provider"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/composition-root.ts:firebase-provider"
@@ -45,7 +45,7 @@ iOS, Firebase Analytics is static functions, so Herald's classes take no Firebas
 
 ## What reaches Firebase
 
-=== "Kotlin"
+=== "Android"
 
     | Herald | Firebase |
     | --- | --- |
@@ -56,18 +56,7 @@ iOS, Firebase Analytics is static functions, so Herald's classes take no Firebas
     | `setEnabled` | `setAnalyticsCollectionEnabled(enabled)` |
     | `start`, `flush` | nothing: Firebase starts and delivers on its own |
 
-=== "Dart"
-
-    | Herald | Firebase |
-    | --- | --- |
-    | an event | `logEvent(name:, parameters:)`: numbers as numbers, text and booleans as strings |
-    | a `ScreenViewEvent` | `logScreenView(screenName: name, parameters:)`, sent by `ScreenViewFirebaseEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
-    | a property, including a `UserProperty` | `setUserProperty(name:, value:)`, as text |
-    | `identify` / `reset` | `setUserId(id: userId)` / `setUserId()` |
-    | `setEnabled` | `setAnalyticsCollectionEnabled(enabled)` |
-    | `start`, `flush` | nothing: Firebase starts and delivers on its own |
-
-=== "Swift"
+=== "iOS"
 
     | Herald | Firebase |
     | --- | --- |
@@ -78,7 +67,18 @@ iOS, Firebase Analytics is static functions, so Herald's classes take no Firebas
     | `setEnabled` | `Analytics.setAnalyticsCollectionEnabled(enabled)` |
     | `start`, `flush` | nothing: Firebase starts and delivers on its own |
 
-=== "TypeScript"
+=== "Flutter"
+
+    | Herald | Firebase |
+    | --- | --- |
+    | an event | `logEvent(name:, parameters:)`: numbers as numbers, text and booleans as strings |
+    | a `ScreenViewEvent` | `logScreenView(screenName: name, parameters:)`, sent by `ScreenViewFirebaseEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a property, including a `UserProperty` | `setUserProperty(name:, value:)`, as text |
+    | `identify` / `reset` | `setUserId(id: userId)` / `setUserId()` |
+    | `setEnabled` | `setAnalyticsCollectionEnabled(enabled)` |
+    | `start`, `flush` | nothing: Firebase starts and delivers on its own |
+
+=== "React Native"
 
     | Herald | Firebase |
     | --- | --- |

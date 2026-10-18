@@ -13,52 +13,51 @@ Both are small classes your app declares, in its own words.
 An `Event` has a `name` and, optionally, `parameters`. An event without parameters needs only its
 name:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/Vocabulary.kt:no-parameters"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/vocabulary.dart:no-parameters"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:no-parameters"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/vocabulary.dart:no-parameters"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/vocabulary.ts:no-parameters"
     ```
 
-An event with details also has parameters. In Kotlin they come from the `parameters { }` builder;
-in Dart they are a map of typed values:
+An event with details also has parameters, each with its own type:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/Vocabulary.kt:parameters"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/vocabulary.dart:parameters"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:parameters"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/vocabulary.dart:parameters"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/vocabulary.ts:parameters"
@@ -113,25 +112,25 @@ them:
 
 Marking an event as a screen view lets those vendors receive it that way:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/Vocabulary.kt:screen-view"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/vocabulary.dart:screen-view"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:screen-view"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/vocabulary.dart:screen-view"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/vocabulary.ts:screen-view"
@@ -146,25 +145,25 @@ vendor's screen reports, put a factory for that event before the vendor's screen
 A `Property` is a name and a typed value that describes the session or the user, rather than one
 moment. `UserProperty`, the second marker type, says the value belongs to the *person*:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/Vocabulary.kt:properties"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/vocabulary.dart:properties"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Vocabulary.swift:properties"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/vocabulary.dart:properties"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/vocabulary.ts:properties"

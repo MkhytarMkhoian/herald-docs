@@ -3,25 +3,25 @@
 `IdentifiableUserService` tells every vendor who the user is at sign-in, so what's collected from
 then on belongs to that user, and forgets them at sign-out.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Identity.kt:session"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/identity.dart:session"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Identity.swift:session"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/identity.dart:session"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/identity.ts:session"

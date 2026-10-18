@@ -10,33 +10,33 @@ A factory looks at one event and gives one of three answers, as a `Resolution`:
 
 | Answer | Meaning | The chain then |
 | --- | --- | --- |
-| `Resolution.Claimed(trackers)`, `.claimed([...])` in Dart | "mine: send it with these trackers" | stops, and runs the trackers |
-| `Resolution.Dropped`, `.dropped()` in Dart | "mine: send nothing" | stops, and sends nothing |
-| `Resolution.Declined`, `.declined()` in Dart | "not mine" | asks the next factory |
+| Claimed | "mine: send it with these trackers" | stops, and runs the trackers |
+| Dropped | "mine: send nothing" | stops, and sends nothing |
+| Declined | "not mine" | asks the next factory |
 
 A factory answers only for the events it knows, and declines everything else. That's the whole
 idea: no factory has to know every event in the app, so each feature can ship the factory for its
 own events.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/FactoryChain.kt:factory"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/factory_chain.dart:factory"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:factory"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/factory_chain.dart:factory"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/factory-chain.ts:factory"
@@ -52,29 +52,28 @@ own events.
 ## Trackers make the vendor call
 
 A **tracker** is a small class that makes one vendor call for one event. Herald ships
-generic ones, such as `GenericEventTracker` (`GenericFirebaseEventTracker` and so on in Dart), which
-logs an event under its own name. When a vendor
+generic ones, such as Firebase's generic tracker, which logs an event under its own name. When a vendor
 needs something different, write your own:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/FactoryChain.kt:tracker"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/factory_chain.dart:tracker"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:tracker"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/factory_chain.dart:tracker"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/factory-chain.ts:tracker"
@@ -90,25 +89,25 @@ profile. A purchase needs both.
 
 Your event stays a normal event:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/SeveralTrackers.kt:event"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/several_trackers.dart:event"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:event"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/several_trackers.dart:event"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/several-trackers.ts:event"
@@ -117,25 +116,25 @@ Your event stays a normal event:
 Herald's generic tracker already sends the event. For the charge, write a small tracker that calls
 Mixpanel's profile API:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/SeveralTrackers.kt:tracker"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/several_trackers.dart:tracker"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:tracker"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/several_trackers.dart:tracker"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/several-trackers.ts:tracker"
@@ -143,25 +142,25 @@ Mixpanel's profile API:
 
 Then the Mixpanel factory takes the event and answers with both trackers:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/SeveralTrackers.kt:factory"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/several_trackers.dart:factory"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/SeveralTrackers.swift:factory"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/several_trackers.dart:factory"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/several-trackers.ts:factory"
@@ -178,25 +177,25 @@ Firebase and Amplitude still get `order_paid` from their own chains, as usual. T
 A chain is a composite factory: it asks its factories in order and returns the first answer that
 isn't `Declined`:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/FactoryChain.kt:chain"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/factory_chain.dart:chain"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:chain"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/factory_chain.dart:chain"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/factory-chain.ts:chain"
@@ -219,25 +218,25 @@ with the last factory in its list:
   reporter. Use it when every event must be sent on purpose, so a forgotten one shows up instead
   of disappearing.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/FactoryChain.kt:default"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/factory_chain.dart:default"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:default"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/factory_chain.dart:default"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/factory-chain.ts:default"
@@ -245,25 +244,25 @@ with the last factory in its list:
 
 The required-mapping version looks like this:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/FactoryChain.kt:strict"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/factory_chain.dart:strict"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:strict"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/factory_chain.dart:strict"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/factory-chain.ts:strict"

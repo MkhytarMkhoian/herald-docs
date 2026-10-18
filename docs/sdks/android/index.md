@@ -10,7 +10,7 @@ Herald for Android is a set of Kotlin libraries on Maven Central under the group
 All modules share one version. Each vendor module pulls in `herald-core` and that vendor's SDK for
 you.
 
-[API reference](../../api/android/index.html){ .md-button } [Changelog](../../changelog/android.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald){ .md-button }
+[API reference](../../api/android/index.html){ .md-button } [Notes](notes.md){ .md-button } [Changelog](changelog.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald){ .md-button }
 
 ## Installation
 
@@ -149,23 +149,10 @@ Each vendor module exposes its vendor's SDK as an `api` dependency. If your app 
 version, Gradle uses the newer one, as it does for any dependency. A new major version of a vendor
 SDK may need a Herald release.
 
-## Kotlin specifics
+## Android notes
 
-The ideas are the same on every platform. On Android they look like this:
-
-- **Calls are `suspend` functions.** Herald runs them on a coroutine dispatcher,
-  `Dispatchers.Default` unless you choose another.
-- **Parameter values are `AnalyticsValue`s,** a sealed interface whose variants are `@JvmInline`
-  value classes, so they cost no extra object.
-- **`EventTrackerService` and `PropertyTrackerService` are `fun interface`s,** so a fake in a unit
-  test can be a lambda. For factories and trackers in your app, the docs use named classes, which
-  are easier to find and test.
-
-## R8 and ProGuard
-
-Herald needs no keep rules of its own, and vendor SDKs bring their own. Herald's error messages
-name classes, so in an obfuscated build they show obfuscated names; map them back with your mapping
-file.
+Where Android differs from the other platforms, such as `suspend` calls and R8, is in the
+[Android notes](notes.md).
 
 ## Showcase
 

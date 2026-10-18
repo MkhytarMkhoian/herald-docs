@@ -15,7 +15,7 @@ Herald is an analytics library for mobile apps. Your app describes what happened
 Herald sends that event to every analytics service you use: Firebase, Adjust, Mixpanel, AppsFlyer,
 Amplitude, or one you build yourself.
 
-## Choose your SDK
+## Choose your platform
 
 <div class="grid cards" markdown>
 
@@ -26,16 +26,8 @@ Amplitude, or one you build yourself.
     Kotlin libraries on Maven Central: the core, one module per vendor, helpers for Compose, and a
     fake for your tests.
 
-    [:octicons-arrow-right-24: Android SDK](sdks/android/index.md)
-
--   :simple-flutter:{ .lg .middle } **Flutter**
-
-    ---
-
-    Dart packages on pub.dev, over each vendor's official Flutter plugin: the core, one package
-    per vendor, optional widgets, a logger and a fake for your tests.
-
-    [:octicons-arrow-right-24: Flutter SDK](sdks/flutter/index.md)
+    [:octicons-arrow-right-24: Quick start](getting-started/quick-start/android.md) ·
+    [Android SDK](sdks/android/index.md)
 
 -   :simple-apple:{ .lg .middle } **iOS**
 
@@ -44,16 +36,18 @@ Amplitude, or one you build yourself.
     Swift packages, over each vendor's official iOS SDK: the core, one package per vendor, optional
     SwiftUI helpers, a logger and a fake for your tests.
 
-    [:octicons-arrow-right-24: iOS SDK](sdks/ios/index.md)
+    [:octicons-arrow-right-24: Quick start](getting-started/quick-start/ios.md) ·
+    [iOS SDK](sdks/ios/index.md)
 
--   :simple-kotlin:{ .lg .middle } **Kotlin Multiplatform**
+-   :simple-flutter:{ .lg .middle } **Flutter**
 
     ---
 
-    Write events once, in shared Kotlin, over the Android and iOS SDKs: the core, and revenue
-    events for Amplitude, Adjust and AppsFlyer.
+    Dart packages on pub.dev, over each vendor's official Flutter plugin: the core, one package
+    per vendor, optional widgets, a logger and a fake for your tests.
 
-    [:octicons-arrow-right-24: Kotlin Multiplatform](sdks/kmp/index.md)
+    [:octicons-arrow-right-24: Quick start](getting-started/quick-start/flutter.md) ·
+    [Flutter SDK](sdks/flutter/index.md)
 
 -   :simple-react:{ .lg .middle } **React Native**
 
@@ -62,9 +56,22 @@ Amplitude, or one you build yourself.
     TypeScript packages on npm, over each vendor's official React Native package: the core, one
     package per vendor, optional React hooks, a logger and a fake for your tests.
 
-    [:octicons-arrow-right-24: React Native SDK](sdks/react-native/index.md)
+    [:octicons-arrow-right-24: Quick start](getting-started/quick-start/react-native.md) ·
+    [React Native SDK](sdks/react-native/index.md)
+
+-   :simple-kotlin:{ .lg .middle } **Kotlin Multiplatform**
+
+    ---
+
+    Write events once, in shared Kotlin, over the Android and iOS SDKs: the core, and revenue
+    events for Amplitude, Adjust and AppsFlyer.
+
+    [:octicons-arrow-right-24: Quick start](getting-started/quick-start/kmp.md) ·
+    [Kotlin Multiplatform SDK](sdks/kmp/index.md)
 
 </div>
+
+Not sure which one fits? [Choose a platform](getting-started/platforms.md) compares them.
 
 ## Why Herald
 
@@ -114,7 +121,7 @@ saving user properties. You only write your own for events that need something s
 
 ## Start here
 
-- [Quick start](getting-started/quick-start.md): send your first event.
+- [Quick start](getting-started/quick-start/index.md): send your first event, on your platform.
 - [Philosophy](philosophy.md): why Herald works the way it does.
 - [Guides](guides/routing.md): routing, feature modules, consent, identity, revenue and testing.
 - [Vendors](vendors/firebase.md): what each vendor receives, and what to watch out for.

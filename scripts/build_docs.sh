@@ -54,12 +54,12 @@ mkdir -p docs/api
 cp -R build/herald/build/dokka/html docs/api/android
 cp -R build/herald-react-native/build/api docs/api/react-native
 
-mkdir -p docs/changelog
-cp build/herald/CHANGELOG.md docs/changelog/android.md
-cp build/herald-flutter/CHANGELOG.md docs/changelog/flutter.md
-cp build/herald-ios/CHANGELOG.md docs/changelog/ios.md
-cp build/herald-kmp/CHANGELOG.md docs/changelog/kmp.md
-cp build/herald-react-native/CHANGELOG.md docs/changelog/react-native.md
+# Each platform's change log goes in its own section of the site.
+cp build/herald/CHANGELOG.md docs/sdks/android/changelog.md
+cp build/herald-flutter/CHANGELOG.md docs/sdks/flutter/changelog.md
+cp build/herald-ios/CHANGELOG.md docs/sdks/ios/changelog.md
+cp build/herald-kmp/CHANGELOG.md docs/sdks/kmp/changelog.md
+cp build/herald-react-native/CHANGELOG.md docs/sdks/react-native/changelog.md
 
 if ! command -v mkdocs > /dev/null; then
   if [ ! -x build/docs-venv/bin/mkdocs ]; then

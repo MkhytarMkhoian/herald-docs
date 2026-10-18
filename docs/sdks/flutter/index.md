@@ -4,7 +4,7 @@ Herald for Flutter is a set of Dart packages on pub.dev: the core, one package p
 logger and a fake for your tests. Each vendor package works over that vendor's official Flutter
 plugin, so Herald adds no native code of its own.
 
-[API reference](api.md){ .md-button } [Changelog](../../changelog/flutter.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-flutter){ .md-button }
+[API reference](api.md){ .md-button } [Notes](notes.md){ .md-button } [Changelog](changelog.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-flutter){ .md-button }
 
 ## Installation
 
@@ -29,9 +29,9 @@ Feature packages usually need only `herald`, plus the vendor package for each ve
 
 --8<-- "README.md:compatibility"
 
-## Dart specifics
+## Flutter notes
 
---8<-- "README.md:differences"
+Where Flutter differs from the other platforms is in the [Flutter notes](notes.md).
 
 ## Example app
 

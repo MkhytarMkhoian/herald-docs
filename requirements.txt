@@ -2,3 +2,4 @@
 # May 2027); its successor Zensical has an official migration path when it leaves alpha.
 mkdocs==1.6.1
 mkdocs-material==9.7.7
+mkdocs-redirects==1.2.2

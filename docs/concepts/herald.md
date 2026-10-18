@@ -17,11 +17,9 @@ flowchart LR
 
 ## What each call does
 
-1. **Keeps vendor work off your UI.** On Android, Herald leaves the main thread; on Flutter, iOS
-   and React Native, vendor SDKs already work in the background. See [Threads](#threads).
-2. **Calls every vendor that supports it,** at the same time on Android, Flutter and React Native,
-   and one after another, in the order you registered them, on iOS. A vendor registered without `properties`,
-   for example, is skipped for `set`.
+1. **Keeps vendor work off your UI.** See [Threads](#threads) for how, on each platform.
+2. **Calls every vendor that supports it.** A vendor registered without `properties`, for example,
+   is skipped for `set`.
 3. **Waits for all of them.** The call returns when every vendor has the call, so a second `track`
    that waits for the first never overtakes it at any vendor.
 4. **Catches failures.** If a vendor fails, the others carry on.
@@ -32,7 +30,7 @@ flowchart LR
 
 ## Threads
 
-=== "Kotlin"
+=== "Android"
 
     Herald runs vendor calls on a coroutine dispatcher, `Dispatchers.Default` unless you pass
     another:
@@ -48,20 +46,7 @@ flowchart LR
     enough: `viewModelScope` for work that belongs to a screen, or an app-wide scope for work that
     must finish even if the screen closes.
 
-=== "Dart"
-
-    There is no dispatcher. A call returns a `Future` that completes when every vendor has
-    finished, and vendor plugins already do their work off the UI thread.
-
-    A call starts at once and doesn't wait for earlier ones. Two calls you don't await can reach a
-    vendor in either order, so await a call when the next one depends on it:
-
-    ```dart
-    await herald.setEnabled(false);
-    await herald.track(event); // reaches every vendor after collection is off
-    ```
-
-=== "Swift"
+=== "iOS"
 
     There is no queue or dispatcher. Herald calls each vendor on the thread you call it from, one
     after another, and returns once every vendor has the call. Vendor SDKs do their own work in
@@ -77,7 +62,20 @@ flowchart LR
     A provider of your own must return quickly too: do slow work, such as a network request, in a
     `Task`. See [Custom providers](../guides/custom-provider.md#your-own-backend).
 
-=== "TypeScript"
+=== "Flutter"
+
+    There is no dispatcher. A call returns a `Future` that completes when every vendor has
+    finished, and vendor plugins already do their work off the UI thread.
+
+    A call starts at once and doesn't wait for earlier ones. Two calls you don't await can reach a
+    vendor in either order, so await a call when the next one depends on it:
+
+    ```dart
+    await herald.setEnabled(false);
+    await herald.track(event); // reaches every vendor after collection is off
+    ```
+
+=== "React Native"
 
     There is no dispatcher. A call returns a promise that settles when every vendor has finished,
     and vendor SDKs do their work in native code, off the JavaScript thread. The promise never
@@ -97,19 +95,17 @@ Analytics must never break your app, so Herald catches failures at every step:
 
 | What fails | What happens |
 | --- | --- |
-| a vendor call throws, or on iOS reports a failure | caught; the other vendors still run; reported to you |
+| a vendor call fails | caught; the other vendors still run; reported to you |
 | your error reporter throws | caught; the other failures are still reported |
 | the calling coroutine is cancelled (Android) | the cancellation goes on as usual: that's your code stopping, not a vendor failing |
 
-Your error reporter gets the vendor's name, an `AnalyticsOperation` saying what was happening, and
-the exception. On Flutter, iOS and React Native they come together as one `AnalyticsFailure`, with
-the stack trace too on Flutter. Swift errors don't carry one, and in JavaScript an `Error` carries
-its own.
+Your error reporter gets the vendor's name, the operation that failed, and the error. The operation
+reads the same on every platform:
 
-| `AnalyticsOperation` | Holds |
+| Operation | Holds |
 | --- | --- |
-| `Track(eventName)`; `TrackOperation` on Flutter and React Native; `.track(eventName:)` on iOS | the event's name, never its parameters |
-| `SetProperty(propertyName)`; `SetPropertyOperation` on Flutter and React Native; `.setProperty(propertyName:)` on iOS | the property's name, never its value |
+| `Track(eventName)` | the event's name, never its parameters |
+| `SetProperty(propertyName)` | the property's name, never its value |
 | `Identify`, `Reset` | nothing, so never the user id |
 | `SetEnabled(enabled)` | whether analytics was being turned on or off |
 | `Start`, `Flush` | nothing |
@@ -117,7 +113,7 @@ its own.
 Because it holds names only, you can send it to a crash reporting tool without copying any personal
 data into it:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     errorReporter { provider, operation, failure ->
@@ -126,7 +122,16 @@ data into it:
     }
     ```
 
-=== "Dart"
+=== "iOS"
+
+    ```swift
+    errorReporter: { failure in
+        // "adjust failed on Track(checkout_started): ..."
+        Crashlytics.crashlytics().record(error: failure.error, userInfo: ["call": "\(failure)"])
+    }
+    ```
+
+=== "Flutter"
 
     ```dart
     errorReporter: (failure) => FirebaseCrashlytics.instance.recordError(
@@ -136,16 +141,7 @@ data into it:
     ),
     ```
 
-=== "Swift"
-
-    ```swift
-    errorReporter: { failure in
-        // "adjust failed on Track(checkout_started): ..."
-        Crashlytics.crashlytics().record(error: failure.error, userInfo: ["call": "\(failure)"])
-    }
-    ```
-
-=== "TypeScript"
+=== "React Native"
 
     ```ts
     errorReporter: (failure) => {
@@ -156,21 +152,15 @@ data into it:
     ```
 
 An event that reaches a required-mapping factory, such as
-`RequireMappedFirebaseEventTrackerFactory`, arrives here too, as an `UnhandledEventException`
-(`UnhandledEventError` on iOS and React Native). That's
+`RequireMappedFirebaseEventTrackerFactory`, arrives here too, as an unhandled-event error. That's
 how Herald tells you an event reached a vendor that nobody wrote a factory for.
 
 ## Providers
 
-A provider is a `Herald.Provider`, or a `HeraldProvider` on Flutter, iOS and React Native: a name
-and at least one of the five interfaces. Herald refuses to build one with an empty name or no
-interfaces, because nothing could ever call it; on iOS, that stops the app at start-up with a
-message. On Flutter, iOS and React Native, it also refuses two providers with the same name,
-because a failure report couldn't tell them apart. On Android, build them in place with
-`provider(...)`, or build them yourself and pass them with `providers(...)`, for example when DI
-collects them. On Flutter and iOS, pass a list to `Herald(providers: [...])`, and on React Native
-to `new Herald({ providers: [...] })`. See
-[Set up your app](../getting-started/app-setup.md).
+A provider is a name and at least one of the five interfaces. Herald refuses to build one with an
+empty name or no interfaces, because nothing could ever call it. Pick names you'd recognise in a
+crash log, and give each provider its own. [Set up your app](../getting-started/app-setup.md) shows
+how to build them on your platform.
 
 ## Next
 

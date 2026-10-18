@@ -52,25 +52,25 @@ that vendor's factory uses it.
 
 Say AppsFlyer should count ticket sales as revenue. The event stays plain:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/Philosophy.kt:event"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/philosophy.dart:event"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Philosophy.swift:event"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/philosophy.dart:event"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/philosophy.ts:event"
@@ -78,25 +78,25 @@ Say AppsFlyer should count ticket sales as revenue. The event stays plain:
 
 Everything AppsFlyer-specific lives in the tickets feature's AppsFlyer factory:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/Philosophy.kt:mapping"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/philosophy.dart:mapping"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Philosophy.swift:mapping"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/philosophy.dart:mapping"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/philosophy.ts:mapping"

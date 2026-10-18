@@ -27,11 +27,10 @@ really needs something different:
 
 ## The app collects them
 
-The app module doesn't need to know what a feature's factories are. On Android, your DI library
-collects them; on Flutter, iOS and React Native, each feature exposes its list and the app joins
-them:
+The app module doesn't need to know what a feature's factories are. Each feature hands over its
+own, and the app joins them, through your DI library or by hand:
 
-=== "Kotlin"
+=== "Android"
 
     === "Koin"
 
@@ -63,21 +62,7 @@ them:
         The analytics module injects `Set<@JvmSuppressWildcards FirebaseEventTrackerFactory>` and
         builds the chain the same way.
 
-=== "Dart"
-
-    The feature package exposes its factories:
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/modular_apps.dart:feature"
-    ```
-
-    The app builds the chain from what the features contribute:
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/modular_apps.dart:root"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     The feature module exposes its factories:
 
@@ -91,7 +76,21 @@ them:
     --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:root"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    The feature package exposes its factories:
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:feature"
+    ```
+
+    The app builds the chain from what the features contribute:
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:root"
+    ```
+
+=== "React Native"
 
     The feature package exposes its factories:
 
@@ -107,8 +106,8 @@ them:
 
 ## A DI set has no order
 
-A chain uses the first factory that answers, but a DI set has no order, and on Flutter, iOS and
-React Native the order features are joined in shouldn't matter either. That's fine while each
+A chain uses the first factory that answers, but a DI set has no order, and the order features
+are joined in shouldn't matter either. That's fine while each
 feature's factories handle only that feature's events, which they should. Factories whose position
 matters go around the injected set, placed by hand:
 
@@ -126,14 +125,12 @@ factory is then never created when the vendor is missing.
 
 ## Two layouts
 
-Implementing `FirebaseEventTrackerFactory` puts `herald-firebase` (`herald_firebase` on Flutter,
-`HeraldFirebase` on iOS, `@herald-analytics/firebase` on React Native) in
-a feature's dependencies, so in the layout above **feature modules know which vendors exist**. The upside is that an event and its
+Implementing `FirebaseEventTrackerFactory` puts Herald's Firebase package in a feature's
+dependencies, so in the layout above **feature modules know which vendors exist**. The upside is that an event and its
 vendor rules live together. Some teams would rather features not know about vendors at all.
 
 The other layout turns this around. Per-vendor modules own the vendor rules and depend on small API
-modules that declare the events. Features depend only on `herald-core` (`herald` on Flutter,
-`HeraldCore` on iOS, `@herald-analytics/core` on React Native):
+modules that declare the events. Features depend only on Herald's core package:
 
 ```text
 :analytics:firebase   depends on :feature:checkout:api, :feature:search:api

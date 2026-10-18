@@ -16,25 +16,25 @@ Most apps use vendors in two ways, and the end of each chain is what makes the d
 - **Vendors that get a few chosen events,** usually attribution and marketing vendors such as
   Adjust and AppsFlyer. Their chain ends with nothing, so an event no factory took isn't sent.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Routing.kt:two-kinds"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/routing.dart:two-kinds"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Routing.swift:two-kinds"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/routing.dart:two-kinds"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/routing.ts:two-kinds"
@@ -59,28 +59,27 @@ No shared configuration was involved, and nothing outside the checkout feature m
 ## Keeping one event away from one vendor
 
 In a chain that ends with the generic factory, every event is sent unless a factory takes it first.
-To keep one out, take it and answer `Resolution.Dropped` (`.dropped()` in Dart), in the factory of the feature that owns
-the event:
+To keep one out, take it and answer Dropped, in the factory of the feature that owns the event:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/FactoryChain.kt:factory"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/factory_chain.dart:factory"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/FactoryChain.swift:factory"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/factory_chain.dart:factory"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/factory-chain.ts:factory"
@@ -91,25 +90,25 @@ event.
 
 Properties work the same way:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Routing.kt:drop-property"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/routing.dart:drop-property"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Routing.swift:drop-property"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/routing.dart:drop-property"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/routing.ts:drop-property"

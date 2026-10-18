@@ -4,7 +4,7 @@ Herald for iOS is a set of Swift packages: the core, one package per vendor, opt
 helpers, a logger and a fake for your tests. Each vendor package works over that vendor's official
 iOS SDK.
 
-[API reference](api.md){ .md-button } [Changelog](../../changelog/ios.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-ios){ .md-button }
+[API reference](api.md){ .md-button } [Notes](notes.md){ .md-button } [Changelog](changelog.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-ios){ .md-button }
 
 ## Installation
 
@@ -37,6 +37,6 @@ Feature modules usually need only `HeraldCore`, plus the vendor module for each 
 
 --8<-- "herald-ios/README.md:compatibility"
 
-## Swift specifics
+## iOS notes
 
---8<-- "herald-ios/README.md:differences"
+Where iOS differs from the other platforms is in the [iOS notes](notes.md).

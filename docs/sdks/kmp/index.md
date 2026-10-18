@@ -8,7 +8,7 @@ vendors:
   events;
 - on iOS, the [iOS SDK](../ios/index.md), through its `HeraldInterop` bridge.
 
-[Changelog](../../changelog/kmp.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-kmp){ .md-button }
+[Notes](notes.md){ .md-button } [Changelog](changelog.md){ .md-button } [Source](https://github.com/MkhytarMkhoian/herald-kmp){ .md-button }
 
 | herald-kmp | Android SDK | iOS SDK |
 | --- | --- | --- |
@@ -55,16 +55,6 @@ Events and view models are the same Kotlin as on Android:
 --8<-- "herald-kmp/sample/shared/src/commonMain/kotlin/io/github/mkhytarmkhoian/herald/sample/Checkout.kt"
 ```
 
-Two things differ from Android, because of Kotlin limits:
-
-- A property's value is `AnalyticsValues.string("dark")`, not `AnalyticsValue.String("dark")`.
-- A revenue event is made by the function named after its class, with a small first letter. It has
-  the same parameters and defaults as the Android constructor:
-
-```kotlin
---8<-- "herald-kmp/sample/shared/src/commonMain/kotlin/io/github/mkhytarmkhoian/herald/sample/Store.kt"
-```
-
 ## Android
 
 Nothing extra. [Set Herald up](../../getting-started/app-setup.md) as in any Android app, and give
@@ -107,32 +97,5 @@ let viewModel = CheckoutViewModel(analytics: IosAnalytics(bridge: HeraldKmpBridg
 If `RevenueTranslation.swift` misses a revenue event, the bridge reports it to `errorReporter`
 instead of letting the revenue disappear without a word.
 
-herald-ios has types with the same names as herald-kmp's, so Swift sees the Kotlin ones with
-"Kotlin" in front: `KotlinEvent`, `KotlinAmplitudeRevenueEvent` and so on.
-
-## Labels
-
-A [label](../../guides/custom-markers.md) is an interface your events implement. Checks in shared
-Kotlin and on Android work as usual:
-
-```kotlin
---8<-- "herald-kmp/sample/shared/src/commonMain/kotlin/io/github/mkhytarmkhoian/herald/sample/Profile.kt"
-```
-
-A factory written in Swift checks the Kotlin event:
-
-```swift
---8<-- "herald-kmp/sample/iosApp/App/NoPersonalDataLogFactory.swift"
-```
-
-## Errors
-
-Vendor failures go to the error reporter each app sets up: in Kotlin on Android, in Swift on iOS,
-on `Herald` and on `HeraldBridge`. To report them through shared Kotlin code, call it from Swift's
-reporter:
-
-```swift
-let report: AnalyticsErrorReporter = { failure in
-    AnalyticsFailuresKt.reportAnalyticsFailure(message: "\(failure)")
-}
-```
+Where shared Kotlin differs from Android, and how labels and errors work across the two apps, is
+in the [Kotlin Multiplatform notes](notes.md).

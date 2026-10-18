@@ -20,25 +20,25 @@ entry file on React Native. On iOS, Herald uses the shared `AppsFlyerLib.shared(
 take no AppsFlyer object; on React Native they take `AppsFlyer` from `react-native-appsflyer`. AppsFlyer 7 also ignores `start()` until
 a session-ready listener is registered:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/vendors/AppsFlyerSetup.kt:init"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/vendors/appsflyer_setup.dart:init"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/AppsFlyerSetup.swift:init"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/appsflyer_setup.dart:init"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/vendors/appsflyer-setup.ts:init"
@@ -47,25 +47,25 @@ a session-ready listener is registered:
 Then build the provider. It has no `properties`, because AppsFlyer keeps no user attributes, and
 no generic factory at the end, so only the conversions a factory handles reach AppsFlyer:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/vendors/AppsFlyerSetup.kt:provider"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/vendors/appsflyer_setup.dart:provider"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/AppsFlyerSetup.swift:provider"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/appsflyer_setup.dart:provider"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/vendors/appsflyer-setup.ts:provider"
@@ -73,7 +73,7 @@ no generic factory at the end, so only the conversions a factory handles reach A
 
 ## What reaches AppsFlyer
 
-=== "Kotlin"
+=== "Android"
 
     | Herald | AppsFlyer |
     | --- | --- |
@@ -85,19 +85,7 @@ no generic factory at the end, so only the conversions a factory handles reach A
     | `start` | `stop(true)`: stays silent |
     | `setEnabled(true)` / `setEnabled(false)` | `stop(false)` then `start()` / `stop(true)` |
 
-=== "Dart"
-
-    | Herald | AppsFlyer |
-    | --- | --- |
-    | an event a factory handles | `logEvent(name, eventValues:)`, with each value as its own JSON type |
-    | an `AppsFlyerPurchaseEvent` | `af_purchase` with `af_revenue`, `af_currency` and optional content, quantity and order id; a parameter with one of those keys is refused and reported |
-    | an `AppsFlyerSubscribeEvent` | `af_subscribe` with `af_revenue` and `af_currency`, refusing those keys as parameters the same way |
-    | an `AppsFlyerAdRevenueEvent` | `logAdRevenue(...)`, with the parameters as additional parameters |
-    | `identify` / `reset` | `setCustomerUserId(userId)` / nothing: the plugin can't clear the id, and AppsFlyer forgets it at the next cold start |
-    | `start` | `stop(true)`: stays silent |
-    | `setEnabled(true)` / `setEnabled(false)` | `stop(false)` then `start()` / `stop(true)` |
-
-=== "Swift"
+=== "iOS"
 
     | Herald | AppsFlyer |
     | --- | --- |
@@ -109,7 +97,19 @@ no generic factory at the end, so only the conversions a factory handles reach A
     | `start` | `isStopped = true`: stays silent |
     | `setEnabled(true)` / `setEnabled(false)` | `isStopped = false` then `start()` / `isStopped = true` |
 
-=== "TypeScript"
+=== "Flutter"
+
+    | Herald | AppsFlyer |
+    | --- | --- |
+    | an event a factory handles | `logEvent(name, eventValues:)`, with each value as its own JSON type |
+    | an `AppsFlyerPurchaseEvent` | `af_purchase` with `af_revenue`, `af_currency` and optional content, quantity and order id; a parameter with one of those keys is refused and reported |
+    | an `AppsFlyerSubscribeEvent` | `af_subscribe` with `af_revenue` and `af_currency`, refusing those keys as parameters the same way |
+    | an `AppsFlyerAdRevenueEvent` | `logAdRevenue(...)`, with the parameters as additional parameters |
+    | `identify` / `reset` | `setCustomerUserId(userId)` / nothing: the plugin can't clear the id, and AppsFlyer forgets it at the next cold start |
+    | `start` | `stop(true)`: stays silent |
+    | `setEnabled(true)` / `setEnabled(false)` | `stop(false)` then `start()` / `stop(true)` |
+
+=== "React Native"
 
     | Herald | AppsFlyer |
     | --- | --- |

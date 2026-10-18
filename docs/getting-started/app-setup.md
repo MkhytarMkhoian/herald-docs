@@ -1,54 +1,50 @@
 # Set up your app
 
-Your app sets Herald up in one place: on Android, usually your dependency injection setup and the
-Application class; on Flutter, `main()` and whatever shares objects in your app; on iOS, the app
-delegate and whatever builds your objects; on React Native, the app's entry file and whatever shares
-objects, such as a React context. That place creates the vendors, builds one `Herald` from
-them, starts it, and hands it to the rest of the app. No other code names a vendor or `Herald`
-itself.
+Your app sets Herald up in one place: the code that runs when the app starts, and whatever shares
+objects with the rest of the app, such as dependency injection. That place creates the vendors,
+builds one `Herald` from them, starts it, and hands it to the rest of the app. No other code names a
+vendor or `Herald` itself.
 
 ## Build Herald with your vendors
 
 Herald sends every call to each vendor you register. A registered vendor is called a
 **provider**. Keeping each provider in its own small function keeps this part short:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/CompositionRoot.kt:herald"
     ```
 
-=== "Dart"
+    `providers(...)` takes vendors that are already built, which is handy when your DI collects them
+    from several modules. `provider(...)` builds one in place from its parts. You can use both in
+    the same `Herald { }` block.
 
-    ```dart
-    --8<-- "docs_samples/lib/composition_root.dart:herald"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:herald"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/composition_root.dart:herald"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/composition-root.ts:herald"
     ```
 
 Each of those functions looks like the Firebase one from the
-[Quick start](quick-start.md#4-add-firebase), and each [vendor page](../vendors/firebase.md) shows
+[quick start](quick-start/index.md), and each [vendor page](../vendors/firebase.md) shows
 its own. A provider has a name and the parts of Herald that the vendor supports: events, user
 properties, sign-in, start-up and consent. Leave out what a vendor doesn't have. AppsFlyer keeps no
 user properties, for example, so its provider has no `properties`.
 
-- **Pick a name you'd recognise in a crash log.** It's the name Herald reports when that vendor
-  fails.
-- **On Android, `providers(...)` takes vendors that are already built,** which is handy when your
-  DI collects them from several modules. `provider(...)` builds one in place from its parts. You
-  can use both in the same `Herald { }` block. On Flutter, `Herald(providers: [...])` takes a list
-  of `HeraldProvider`s, wherever they come from, and on React Native,
-  `new Herald({ providers: [...] })` does.
+Pick a name you'd recognise in a crash log: it's the name Herald reports when that vendor fails.
 
 ## Give it to your classes
 
@@ -70,7 +66,7 @@ That keeps each class honest about what it does, and easy to test with a fake.
     class can end up with it and send events to that one vendor only. Nothing fails to compile and
     nothing crashes. The events are just missing everywhere else.
 
-=== "Kotlin"
+=== "Android"
 
     === "Manual"
 
@@ -96,16 +92,7 @@ That keeps each class honest about what it does, and easy to test with a fake.
 
         Each vendor module adds its provider with `@Provides @IntoSet`.
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/di/manual_setup.dart:manual"
-    ```
-
-    With a package such as get_it or Riverpod, register the one `Herald` and hand it out as each of
-    the interfaces above, the same way.
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/DI/ManualSetup.swift:manual"
@@ -114,7 +101,16 @@ That keeps each class honest about what it does, and easy to test with a fake.
     With a container such as Factory or Swinject, register the one `Herald` and hand it out as
     each of the protocols above, the same way.
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/di/manual_setup.dart:manual"
+    ```
+
+    With a package such as get_it or Riverpod, register the one `Herald` and hand it out as each of
+    the interfaces above, the same way.
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/di/manual-setup.ts:manual"
@@ -132,7 +128,7 @@ quiet at start-up on purpose, until consent is applied (see [Consent](../guides/
 
 Do it where the vendors' own setup guides initialise their SDKs, on every start of your app:
 
-=== "Kotlin"
+=== "Android"
 
     Do it in `Application.onCreate()`, in a scope that lives as long as the app. It runs on every
     start, including ones without a screen, like a push notification or a WorkManager job:
@@ -141,16 +137,7 @@ Do it where the vendors' own setup guides initialise their SDKs, on every start 
     --8<-- "samples/CompositionRoot.kt:start-from-application"
     ```
 
-=== "Dart"
-
-    Do it in `main()`, before `runApp`, and await each call: Herald doesn't order calls you don't
-    await.
-
-    ```dart
-    --8<-- "docs_samples/lib/composition_root.dart:start-from-main"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     Do it in your app delegate's `application(_:didFinishLaunchingWithOptions:)`, after the
     vendors' own setup. Calls keep their order, so there's nothing to wait for:
@@ -159,7 +146,16 @@ Do it where the vendors' own setup guides initialise their SDKs, on every start 
     --8<-- "Samples/Sources/Samples/CompositionRoot.swift:start-from-main"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    Do it in `main()`, before `runApp`, and await each call: Herald doesn't order calls you don't
+    await.
+
+    ```dart
+    --8<-- "docs_samples/lib/composition_root.dart:start-from-main"
+    ```
+
+=== "React Native"
 
     Do it in the app's entry file, which runs once each time the app starts, and await each call:
     Herald doesn't order calls you don't await.
@@ -175,11 +171,10 @@ applied. See [Identity](../guides/identity.md#every-cold-start).
 If your app uses use cases, these two calls fit in one, like `StartAnalyticsUseCase` in the
 [Moove](https://github.com/MkhytarMkhoian/Moove) sample app.
 
-On Android, an app with a single activity and no background work can do the same from that
-activity's ViewModel instead. Moove does this: its main activity's ViewModel also handles deep
-links, so nothing is tracked before the vendors have started.
-
-=== "Kotlin"
+??? tip "Android: starting from a ViewModel"
+    An app with a single activity and no background work can do the same from that activity's
+    ViewModel instead. Moove does this: its main activity's ViewModel also handles deep links, so
+    nothing is tracked before the vendors have started.
 
     ```kotlin
     --8<-- "samples/CompositionRoot.kt:start-from-entry"
@@ -187,12 +182,12 @@ links, so nothing is tracked before the vendors have started.
 
 ## When a vendor fails
 
-If a vendor's SDK throws, or on iOS reports a failure, Herald catches the error and still sends to
+If a vendor fails, Herald catches the error and still sends to
 the other vendors, so analytics never crashes your app. The downside is that a vendor failing on
 every call looks just like one that works. That's why the example above passes an
 `errorReporter`: send the errors to the crash or logging tool you already use.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     errorReporter { provider, operation, failure ->
@@ -200,7 +195,16 @@ every call looks just like one that works. That's why the example above passes a
     }
     ```
 
-=== "Dart"
+=== "iOS"
+
+    ```swift
+    errorReporter: { failure in
+        // e.g. "adjust failed on Track(checkout_started): ..."
+        Crashlytics.crashlytics().record(error: failure.error, userInfo: ["call": "\(failure)"])
+    }
+    ```
+
+=== "Flutter"
 
     ```dart
     errorReporter: (failure) => FirebaseCrashlytics.instance.recordError(
@@ -210,16 +214,7 @@ every call looks just like one that works. That's why the example above passes a
     ),
     ```
 
-=== "Swift"
-
-    ```swift
-    errorReporter: { failure in
-        // e.g. "adjust failed on Track(checkout_started): ..."
-        Crashlytics.crashlytics().record(error: failure.error, userInfo: ["call": "\(failure)"])
-    }
-    ```
-
-=== "TypeScript"
+=== "React Native"
 
     ```ts
     errorReporter: (failure) => {
@@ -232,24 +227,19 @@ every call looks just like one that works. That's why the example above passes a
 - **The operation says what failed:** `Track(checkout_started)`, `SetProperty(plan)`, `Identify`,
   `Start`, and so on. It holds names only, never parameter values or the user id, so it's safe to
   send to another tool.
-- **Errors arrive one at a time,** after every vendor has finished, so your reporter doesn't need
-  to be thread-safe. On iOS each arrives as soon as its vendor reports it, on the thread that made
-  the call.
-- **If your reporter throws,** Herald catches that too. On Flutter and React Native, a reporter
-  that returns a failed `Future` or promise is caught as well, and Herald doesn't wait for it.
-- **On Android, cancelling the caller isn't an error.** If the coroutine that called Herald is
-  cancelled, the cancellation carries on as usual and nothing is reported.
+- **Errors arrive one at a time,** so your reporter doesn't need to be thread-safe.
+- **If your reporter fails,** Herald catches that too, and doesn't wait for it.
 
 ## Threads and order
 
-On Android, Flutter and React Native, vendors are called at the same time, so one slow vendor doesn't hold up
-the others, and a call returns when every vendor has finished. Tracking from UI code is safe on
-every platform.
+Tracking from UI code is safe on every platform. How calls reach the vendors depends on the
+platform:
 
-=== "Kotlin"
+=== "Android"
 
-    Herald never calls a vendor SDK on the main thread. It uses `Dispatchers.Default` unless you
-    pass another dispatcher:
+    Herald calls every vendor at the same time, so one slow vendor doesn't hold up the others, and a
+    call returns when every vendor has finished. It never calls a vendor SDK on the main thread: it
+    uses `Dispatchers.Default` unless you pass another dispatcher:
 
     ```kotlin
     --8<-- "samples/CompositionRoot.kt:dispatcher"
@@ -260,15 +250,7 @@ every platform.
     - **In tests,** pass a test dispatcher, such as `StandardTestDispatcher()`, so the calls run in
       a predictable order.
 
-=== "Dart"
-
-    There is no dispatcher: vendor plugins already do their work off the UI thread.
-
-    - **A call starts at once and doesn't wait for earlier ones.** Two calls you don't await, such
-      as `onPressed: () => analytics.track(event)`, can reach a vendor in either order. When order
-      matters, await the first call.
-
-=== "Swift"
+=== "iOS"
 
     There is no queue: Herald calls each vendor on your thread, one after another, and vendor SDKs
     do their own work in the background.
@@ -278,8 +260,18 @@ every platform.
     - **Calls from different threads at the same moment** can reach a vendor in either order, as
       on the other platforms.
 
-=== "TypeScript"
+=== "Flutter"
 
+    Herald calls every vendor at the same time, and a call completes when every vendor has
+    finished. There is no dispatcher: vendor plugins already do their work off the UI thread.
+
+    - **A call starts at once and doesn't wait for earlier ones.** Two calls you don't await, such
+      as `onPressed: () => analytics.track(event)`, can reach a vendor in either order. When order
+      matters, await the first call.
+
+=== "React Native"
+
+    Herald calls every vendor at the same time, and a call settles when every vendor has finished.
     There is no dispatcher: vendor SDKs do their work in native code, off the JavaScript thread.
 
     - **A call starts at once and doesn't wait for earlier ones.** Two calls you don't await, such

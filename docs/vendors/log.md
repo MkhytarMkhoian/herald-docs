@@ -20,25 +20,25 @@ one-method interface; on Flutter, iOS and React Native it's a function type, so 
 `{ message in print(message) }` or `(message) => console.log(message)` fits as-is. On iOS, Apple's `Logger` works too, and shows the lines
 in the Console app as well:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/QuickStart.kt:herald"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/quick_start.dart:herald"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/QuickStart.swift:herald"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/quick_start.dart:herald"
+    ```
+
+=== "React Native"
 
     ```tsx
     --8<-- "docs-samples/src/quick-start.tsx:herald"

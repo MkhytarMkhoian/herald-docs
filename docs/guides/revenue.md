@@ -22,25 +22,25 @@ In Dart, trackers carry their vendor's name, such as `RevenueAdjustEventTracker`
 
 The event describes the purchase and knows nothing about the vendors:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Revenue.kt:purchase"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/revenue.dart:purchase"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:purchase"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/revenue.dart:purchase"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/revenue.ts:purchase"
@@ -60,25 +60,25 @@ revenue properties. Leave `parameters` out to send none. AppsFlyer refuses a par
 its revenue type sets itself, such as `af_revenue`, so the value you meant is never quietly
 replaced.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Revenue.kt:mappings"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/revenue.dart:mappings"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:mappings"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/revenue.dart:mappings"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/revenue.ts:mappings"
@@ -96,25 +96,25 @@ callback or a restored receipt, still counts once.
 Each vendor's factory takes your event, maps it, and hands the result to that vendor module's
 tracker, which knows the vendor's API:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Revenue.kt:factories"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/revenue.dart:factories"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:factories"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/revenue.dart:factories"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/revenue.ts:factories"
@@ -130,34 +130,34 @@ token to `RevenueEventTracker` itself, so the event needs no entry in
 An ad impression reported by your ad mediation SDK reaches Adjust and AppsFlyer through their
 ad-revenue APIs, the same way:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Revenue.kt:ad-impression"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/revenue.dart:ad-impression"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Revenue.swift:ad-impression"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/revenue.dart:ad-impression"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/revenue.ts:ad-impression"
     ```
 
-On Android, both vendor modules call their tracker `AdRevenueEventTracker`, so a file that uses
-both imports one under another name. Usually each lives in its own vendor's factory file, so it
-doesn't come up. On Flutter, the names differ: `AdRevenueAdjustEventTracker` and
-`AdRevenueAppsFlyerEventTracker`.
+!!! note "Android"
+    Both vendor modules call their tracker `AdRevenueEventTracker`, so a file that uses both imports
+    one under another name. Usually each lives in its own vendor's factory file, so it doesn't come
+    up.
 
 [Moove](https://github.com/MkhytarMkhoian/Moove)'s `TicketPurchased` reaches all five vendors this
 way, and its simulated ad impression reaches both ad-revenue APIs.

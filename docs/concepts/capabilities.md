@@ -16,25 +16,25 @@ Dart they return a `Future`. See [Threads](herald.md#threads).
 
 ## Ask only for what you use
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/Capabilities.kt:consumers"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/capabilities.dart:consumers"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Capabilities.swift:consumers"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/capabilities.dart:consumers"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/capabilities.ts:consumers"
@@ -61,27 +61,27 @@ class gets the same `Herald`, seen through the interface it asked for. See
 ## A fake is a few lines
 
 `EventTrackerService` and `PropertyTrackerService` have a single method, so a fake in a unit test
-is tiny. In Kotlin they're `fun interface`s, so the fake is a lambda; in Dart it's a small class:
+is tiny:
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/concepts/Capabilities.kt:fake"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/concepts/capabilities.dart:fake"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Concepts/Capabilities.swift:fake"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/concepts/capabilities.dart:fake"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/concepts/capabilities.ts:fake"

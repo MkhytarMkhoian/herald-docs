@@ -18,25 +18,25 @@ where Mixpanel keeps attributes:
 You create the `MixpanelAPI`, the `Mixpanel` on Flutter and React Native, or the `MixpanelInstance`
 on iOS: token, options, server URL for data residency. Herald never changes them.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/vendors/MixpanelSetup.kt:provider"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/vendors/mixpanel_setup.dart:provider"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/MixpanelSetup.swift:provider"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/mixpanel_setup.dart:provider"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/vendors/mixpanel-setup.ts:provider"
@@ -44,7 +44,7 @@ on iOS: token, options, server URL for data residency. Herald never changes them
 
 ## What reaches Mixpanel
 
-=== "Kotlin"
+=== "Android"
 
     | Herald | Mixpanel |
     | --- | --- |
@@ -57,20 +57,7 @@ on iOS: token, options, server URL for data residency. Herald never changes them
     | `flush` | `flush()` |
     | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
 
-=== "Dart"
-
-    | Herald | Mixpanel |
-    | --- | --- |
-    | an event | `track(name, properties:)`, with each value as its own JSON type |
-    | a `ScreenViewEvent` | `track('screen_view')` with its name as `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
-    | a `UserProperty` | `getPeople().set(name, value)`: the person's profile |
-    | any other property | `registerSuperProperties`: sent with every later event |
-    | `identify` / `reset` | `identify(userId)` / `reset()` |
-    | `start` | nothing: turn on Mixpanel's logging yourself, as its docs describe |
-    | `flush` | `flush()` |
-    | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
-
-=== "Swift"
+=== "iOS"
 
     | Herald | Mixpanel |
     | --- | --- |
@@ -83,7 +70,20 @@ on iOS: token, options, server URL for data residency. Herald never changes them
     | `flush` | `flush()` |
     | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
 
-=== "TypeScript"
+=== "Flutter"
+
+    | Herald | Mixpanel |
+    | --- | --- |
+    | an event | `track(name, properties:)`, with each value as its own JSON type |
+    | a `ScreenViewEvent` | `track('screen_view')` with its name as `screen_name`, sent by `ScreenViewMixpanelEventTrackerFactory`; a screen view with its own `screen_name` parameter is refused and reported |
+    | a `UserProperty` | `getPeople().set(name, value)`: the person's profile |
+    | any other property | `registerSuperProperties`: sent with every later event |
+    | `identify` / `reset` | `identify(userId)` / `reset()` |
+    | `start` | nothing: turn on Mixpanel's logging yourself, as its docs describe |
+    | `flush` | `flush()` |
+    | `setEnabled(true)` / `setEnabled(false)` | `optInTracking()` / `flush()` then `optOutTracking()` |
+
+=== "React Native"
 
     | Herald | Mixpanel |
     | --- | --- |

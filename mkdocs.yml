@@ -115,11 +115,26 @@ markdown_extensions:
 
 plugins:
   - search
+  # Pages that moved keep their old addresses working.
+  - redirects:
+      redirect_maps:
+        changelog/android.md: sdks/android/changelog.md
+        changelog/flutter.md: sdks/flutter/changelog.md
+        changelog/ios.md: sdks/ios/changelog.md
+        changelog/kmp.md: sdks/kmp/changelog.md
+        changelog/react-native.md: sdks/react-native/changelog.md
 
 nav:
   - Home: index.md
-  - Getting started:
-      - Quick start: getting-started/quick-start.md
+  - Get started:
+      - Choose a platform: getting-started/platforms.md
+      - Quick start:
+          - getting-started/quick-start/index.md
+          - Android: getting-started/quick-start/android.md
+          - iOS: getting-started/quick-start/ios.md
+          - Flutter: getting-started/quick-start/flutter.md
+          - React Native: getting-started/quick-start/react-native.md
+          - Kotlin Multiplatform: getting-started/quick-start/kmp.md
       - Set up your app: getting-started/app-setup.md
   - Philosophy: philosophy.md
   - Concepts:
@@ -144,30 +159,34 @@ nav:
       - AppsFlyer: vendors/appsflyer.md
       - Amplitude: vendors/amplitude.md
       - Log: vendors/log.md
-  - SDKs:
+  - Platforms:
       - Android:
           - Overview: sdks/android/index.md
           - Compose: sdks/android/compose.md
+          - Notes: sdks/android/notes.md
           - API reference: api/android/index.html
-      - Flutter:
-          - Overview: sdks/flutter/index.md
-          - Widgets: sdks/flutter/widgets.md
-          - API reference: sdks/flutter/api.md
+          - Changelog: sdks/android/changelog.md
       - iOS:
           - Overview: sdks/ios/index.md
           - SwiftUI: sdks/ios/swiftui.md
+          - Notes: sdks/ios/notes.md
           - API reference: sdks/ios/api.md
-      - Kotlin Multiplatform:
-          - Overview: sdks/kmp/index.md
+          - Changelog: sdks/ios/changelog.md
+      - Flutter:
+          - Overview: sdks/flutter/index.md
+          - Widgets: sdks/flutter/widgets.md
+          - Notes: sdks/flutter/notes.md
+          - API reference: sdks/flutter/api.md
+          - Changelog: sdks/flutter/changelog.md
       - React Native:
           - Overview: sdks/react-native/index.md
           - React: sdks/react-native/react.md
+          - Notes: sdks/react-native/notes.md
           - API reference: api/react-native/index.html
-  - Changelog:
-      - Android: changelog/android.md
-      - Flutter: changelog/flutter.md
-      - iOS: changelog/ios.md
-      - Kotlin Multiplatform: changelog/kmp.md
-      - React Native: changelog/react-native.md
+          - Changelog: sdks/react-native/changelog.md
+      - Kotlin Multiplatform:
+          - Overview: sdks/kmp/index.md
+          - Notes: sdks/kmp/notes.md
+          - Changelog: sdks/kmp/changelog.md
   - FAQ: faq.md
   - Contributing: contributing.md

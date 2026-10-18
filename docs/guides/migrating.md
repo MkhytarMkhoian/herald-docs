@@ -9,25 +9,25 @@ app after every step.
 Add Herald with a single provider that passes every call to the wrapper you already have. Nothing
 is sent differently yet; you've only added the new way in.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/guides/Migrating.kt:bridge"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/guides/migrating.dart:bridge"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Guides/Migrating.swift:bridge"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/migrating.dart:bridge"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/guides/migrating.ts:bridge"
@@ -41,7 +41,7 @@ every call in your log.
 
 Replace direct calls with an event class and `EventTrackerService`, one feature at a time:
 
-=== "Kotlin"
+=== "Android"
 
     === "Before"
 
@@ -58,24 +58,7 @@ Replace direct calls with an event class and `EventTrackerService`, one feature 
         --8<-- "samples/QuickStart.kt:track"
         ```
 
-=== "Dart"
-
-    === "Before"
-
-        ```dart
-        class CheckoutViewModel(final LegacyAnalytics analytics) {
-          Future<void> onCheckout(String plan, int seats) =>
-              analytics.logEvent('checkout_started', {'plan': plan, 'seats': '$seats'});
-        }
-        ```
-
-    === "After"
-
-        ```dart
-        --8<-- "docs_samples/lib/quick_start.dart:track"
-        ```
-
-=== "Swift"
+=== "iOS"
 
     === "Before"
 
@@ -100,7 +83,24 @@ Replace direct calls with an event class and `EventTrackerService`, one feature 
         --8<-- "Samples/Sources/Samples/QuickStart.swift:track"
         ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    === "Before"
+
+        ```dart
+        class CheckoutViewModel(final LegacyAnalytics analytics) {
+          Future<void> onCheckout(String plan, int seats) =>
+              analytics.logEvent('checkout_started', {'plan': plan, 'seats': '$seats'});
+        }
+        ```
+
+    === "After"
+
+        ```dart
+        --8<-- "docs_samples/lib/quick_start.dart:track"
+        ```
+
+=== "React Native"
 
     === "Before"
 

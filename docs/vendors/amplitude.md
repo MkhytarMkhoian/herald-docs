@@ -19,25 +19,25 @@ You build the `Amplitude` instance: API key, server zone, autocapture and the re
 `Configuration`. On React Native, you call `amplitude.init(...)` with those options and give Herald
 the `amplitude` module itself. Herald never changes them.
 
-=== "Kotlin"
+=== "Android"
 
     ```kotlin
     --8<-- "samples/vendors/AmplitudeSetup.kt:provider"
     ```
 
-=== "Dart"
-
-    ```dart
-    --8<-- "docs_samples/lib/vendors/amplitude_setup.dart:provider"
-    ```
-
-=== "Swift"
+=== "iOS"
 
     ```swift
     --8<-- "Samples/Sources/Samples/Vendors/AmplitudeSetup.swift:provider"
     ```
 
-=== "TypeScript"
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/amplitude_setup.dart:provider"
+    ```
+
+=== "React Native"
 
     ```ts
     --8<-- "docs-samples/src/vendors/amplitude-setup.ts:provider"
