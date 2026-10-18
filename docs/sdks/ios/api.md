@@ -10,5 +10,6 @@ The Swift Package Index builds each package's reference from its latest release.
 | `herald-ios-amplitude` | `HeraldAmplitude` | [API](https://swiftpackageindex.com/MkhytarMkhoian/herald-ios-amplitude/documentation) |
 | `herald-ios-adjust` | `HeraldAdjust` | [API](https://swiftpackageindex.com/MkhytarMkhoian/herald-ios-adjust/documentation) |
 | `herald-ios-appsflyer` | `HeraldAppsFlyer` | [API](https://swiftpackageindex.com/MkhytarMkhoian/herald-ios-appsflyer/documentation) |
+| `herald-ios-meta` | `HeraldMeta` | [API](https://swiftpackageindex.com/MkhytarMkhoian/herald-ios-meta/documentation) |
 
 In Xcode, Product → Build Documentation shows the same reference for the packages your app uses.

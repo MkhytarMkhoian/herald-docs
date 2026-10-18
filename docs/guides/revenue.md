@@ -14,9 +14,10 @@ it. [Philosophy](../philosophy.md#events-know-no-vendors) explains why.
 | Adjust | `AdjustRevenueEvent`, sent by `RevenueEventTracker`: the event under its token, with the amount and a transaction id | `AdjustAdRevenueEvent`, sent by `AdRevenueEventTracker` |
 | AppsFlyer | `AppsFlyerPurchaseEvent`, sent by `PurchaseEventTracker` as `af_purchase` with `af_revenue`; for subscriptions, `AppsFlyerSubscribeEvent` and `SubscribeEventTracker` | `AppsFlyerAdRevenueEvent`, sent by `AdRevenueEventTracker` |
 | Amplitude | `AmplitudeRevenueEvent`, sent by `RevenueEventTracker` through Amplitude's revenue API | your event as it is |
+| Meta | `MetaPurchaseEvent`, sent by `PurchaseEventTracker` as `fb_mobile_purchase` | — |
 
 In Dart, trackers carry their vendor's name, such as `RevenueAdjustEventTracker`,
-`PurchaseAppsFlyerEventTracker` and `AdRevenueAppsFlyerEventTracker`.
+`PurchaseAppsFlyerEventTracker`, `AdRevenueAppsFlyerEventTracker` and `PurchaseMetaEventTracker`.
 
 ## The event
 

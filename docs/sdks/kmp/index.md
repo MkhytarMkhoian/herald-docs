@@ -43,6 +43,7 @@ kotlin {
 | `herald-kmp-amplitude` | Amplitude's revenue event. |
 | `herald-kmp-adjust` | Adjust's revenue and ad revenue events. |
 | `herald-kmp-appsflyer` | AppsFlyer's purchase, subscription and ad revenue events. |
+| `herald-kmp-meta` | Meta's purchase event. |
 
 Add a vendor's module only for its revenue events, and export it too. Every other event works with
 the core alone.

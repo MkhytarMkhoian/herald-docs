@@ -31,6 +31,7 @@ Here is every module. Keep the lines you need.
         implementation("io.github.mkhytarmkhoian:herald-mixpanel:$herald")
         implementation("io.github.mkhytarmkhoian:herald-appsflyer:$herald")
         implementation("io.github.mkhytarmkhoian:herald-amplitude:$herald")
+        implementation("io.github.mkhytarmkhoian:herald-meta:$herald")
 
         // Prints every event to Logcat, handy in debug builds
         implementation("io.github.mkhytarmkhoian:herald-log:$herald")
@@ -58,6 +59,7 @@ Here is every module. Keep the lines you need.
         implementation "io.github.mkhytarmkhoian:herald-mixpanel:$herald"
         implementation "io.github.mkhytarmkhoian:herald-appsflyer:$herald"
         implementation "io.github.mkhytarmkhoian:herald-amplitude:$herald"
+        implementation "io.github.mkhytarmkhoian:herald-meta:$herald"
 
         // Prints every event to Logcat, handy in debug builds
         implementation "io.github.mkhytarmkhoian:herald-log:$herald"
@@ -84,6 +86,7 @@ Here is every module. Keep the lines you need.
     herald-mixpanel = { module = "io.github.mkhytarmkhoian:herald-mixpanel", version.ref = "herald" }
     herald-appsflyer = { module = "io.github.mkhytarmkhoian:herald-appsflyer", version.ref = "herald" }
     herald-amplitude = { module = "io.github.mkhytarmkhoian:herald-amplitude", version.ref = "herald" }
+    herald-meta = { module = "io.github.mkhytarmkhoian:herald-meta", version.ref = "herald" }
     herald-log = { module = "io.github.mkhytarmkhoian:herald-log", version.ref = "herald" }
     herald-compose = { module = "io.github.mkhytarmkhoian:herald-compose", version.ref = "herald" }
     herald-testing = { module = "io.github.mkhytarmkhoian:herald-testing", version.ref = "herald" }
@@ -99,6 +102,7 @@ Here is every module. Keep the lines you need.
         implementation(libs.herald.mixpanel)
         implementation(libs.herald.appsflyer)
         implementation(libs.herald.amplitude)
+        implementation(libs.herald.meta)
 
         implementation(libs.herald.log)
         implementation(libs.herald.compose)
@@ -116,6 +120,7 @@ Here is every module. Keep the lines you need.
 | `herald-mixpanel` | [Mixpanel](../../vendors/mixpanel.md): events, the people profile, super properties. | Mixpanel SDK |
 | `herald-appsflyer` | [AppsFlyer](../../vendors/appsflyer.md): attribution, conversions, purchase and ad revenue. | AppsFlyer SDK |
 | `herald-amplitude` | [Amplitude](../../vendors/amplitude.md): events, user properties, revenue. | Amplitude Kotlin SDK |
+| `herald-meta` | [Meta](../../vendors/meta.md): conversions and purchases, for Meta's ads. | Meta's `facebook-core` |
 | `herald-log` | [Printing every call](../../vendors/log.md), in debug builds. | — |
 | `herald-compose` | [Tracking from composables](compose.md). | Compose runtime and UI, Lifecycle Compose |
 | `herald-testing` | [Asserting on what your app reports](../../guides/testing.md), in tests. | — |

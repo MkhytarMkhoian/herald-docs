@@ -158,6 +158,7 @@ nav:
       - Mixpanel: vendors/mixpanel.md
       - AppsFlyer: vendors/appsflyer.md
       - Amplitude: vendors/amplitude.md
+      - Meta: vendors/meta.md
       - Log: vendors/log.md
   - Platforms:
       - Android:

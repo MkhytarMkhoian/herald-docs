@@ -13,7 +13,7 @@ hide:
 
 Herald is an analytics library for mobile apps. Your app describes what happened as an event, and
 Herald sends that event to every analytics service you use: Firebase, Adjust, Mixpanel, AppsFlyer,
-Amplitude, or one you build yourself.
+Amplitude, Meta, or one you build yourself.
 
 ## Choose your platform
 
@@ -64,7 +64,7 @@ Amplitude, or one you build yourself.
     ---
 
     Write events once, in shared Kotlin, over the Android and iOS SDKs: the core, and revenue
-    events for Amplitude, Adjust and AppsFlyer.
+    events for Amplitude, Adjust, AppsFlyer and Meta.
 
     [:octicons-arrow-right-24: Quick start](getting-started/quick-start/kmp.md) ·
     [Kotlin Multiplatform SDK](sdks/kmp/index.md)
