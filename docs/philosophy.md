@@ -169,7 +169,7 @@ sampler is a few lines of your own code.
 
 - **Feature modules that write factories depend on vendor modules.** The mapping sits next to the
   event, but the feature knows which vendors exist. If you'd rather it didn't, put the mappings in
-  per-vendor modules instead. [Modular apps](guides/modular-apps.md) shows both layouts.
+  per-vendor modules instead. [Modular apps](guides/modular-apps.md) compares the layouts.
 - **Order in a list matters, and a DI set has no order.** Factories that must come first, like the
   screen-view one, or last, like the generic one, are placed by hand around the injected set.
 - **More small classes than one wrapper.** Each vendor has its own factories and trackers. In
