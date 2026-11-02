@@ -29,7 +29,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Choose the releases
         id: releases
@@ -54,44 +54,44 @@ jobs:
           echo "Android: $android, Flutter: $flutter, iOS: $ios, KMP: $kmp," \
             "React Native: $react_native"
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           repository: MkhytarMkhoian/herald
           ref: ${{ steps.releases.outputs.android }}
           path: build/herald
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           repository: MkhytarMkhoian/herald-flutter
           ref: ${{ steps.releases.outputs.flutter }}
           path: build/herald-flutter
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           repository: MkhytarMkhoian/herald-ios
           ref: ${{ steps.releases.outputs.ios }}
           path: build/herald-ios
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           repository: MkhytarMkhoian/herald-kmp
           ref: ${{ steps.releases.outputs.kmp }}
           path: build/herald-kmp
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           repository: MkhytarMkhoian/herald-react-native
           ref: ${{ steps.releases.outputs.react_native }}
           path: build/herald-react-native
 
       # For the React Native API reference, which TypeDoc builds.
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version-file: build/herald-react-native/.nvmrc
           cache: npm
           cache-dependency-path: build/herald-react-native/package-lock.json
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 17
