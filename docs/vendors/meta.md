@@ -28,6 +28,8 @@ so Meta collects nothing by itself before consent:
     <meta-data android:name="com.facebook.sdk.AutoInitEnabled" android:value="false" />
     <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="false" />
     <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled" android:value="false" />
+    <meta-data android:name="com.facebook.sdk.AutoLogMetaDataEnabled" android:value="false" />
+    <meta-data android:name="com.facebook.sdk.AutoLogProductImprovementEnabled" android:value="false" />
     ```
 
 === "iOS"
@@ -38,6 +40,10 @@ so Meta collects nothing by itself before consent:
     <key>FacebookAutoLogAppEventsEnabled</key>
     <false/>
     <key>FacebookAdvertiserIDCollectionEnabled</key>
+    <false/>
+    <key>FBSDKAutoLogMetaDataEnabled</key>
+    <false/>
+    <key>FBSDKAutoLogProductImprovementEnabled</key>
     <false/>
     ```
 
@@ -122,7 +128,7 @@ generic factory at the end, so only the conversions a factory handles reach Meta
     | `identify` / `reset` | `AppEventsLogger.setUserID(userId)` / `clearUserID()` |
     | `flush` | `flush()` |
     | `start` | nothing: Meta's SDK starts itself |
-    | `setEnabled(true)` / `setEnabled(false)` | automatic events, advertiser id collection and auto init on, then `fullyInitialize()` / the same three off |
+    | `setEnabled(true)` / `setEnabled(false)` | automatic events, advertiser id collection, event details, product improvement data and auto init on, then `fullyInitialize()` / the same five off |
 
 === "iOS"
 
@@ -133,7 +139,7 @@ generic factory at the end, so only the conversions a factory handles reach Meta
     | `identify` / `reset` | `AppEvents.shared.userID = userId` / `nil` |
     | `flush` | `flush()` |
     | `start` | nothing: Meta's SDK starts from your app delegate |
-    | `setEnabled` | `isAutoLogAppEventsEnabled` and `isAdvertiserIDCollectionEnabled` on `Settings.shared` |
+    | `setEnabled` | `isAutoLogAppEventsEnabled`, `isAdvertiserIDCollectionEnabled`, `isMetaDataCollectionEnabled` and `isAutoLogProductImprovementEnabled` on `Settings.shared` |
 
 === "Flutter"
 
@@ -198,23 +204,84 @@ See [Revenue](../guides/revenue.md).
 ## Consent
 
 `setEnabled` turns Meta's own switches on or off: the events Meta logs by itself, such as installs
-and app opens, and the advertiser id. **They don't stop the events your app logs**: an event a
+and app opens, and the advertiser id. On Android and iOS they also cover what Meta's SDK 19 adds:
+the screen title and app link it adds to events, and its product improvement data. **They don't stop the events your app logs**: an event a
 factory sends reaches Meta with or without consent.
 
 Call `setEnabled` with the stored decision after start-up, on every launch, as for every vendor.
+
+### Dropping your events too
+
+To stop your events while consent is off, wrap the tracker in a small class of your own. It
+remembers the answer `setEnabled` gives it, drops events while that answer is no, and passes the
+answer on to Meta's own switch:
+
+=== "Android"
+
+    ```kotlin
+    --8<-- "samples/vendors/MetaSetup.kt:gate-class"
+    ```
+
+=== "iOS"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Vendors/MetaSetup.swift:gate-class"
+    ```
+
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/meta_setup.dart:gate-class"
+    ```
+
+=== "React Native"
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/meta-setup.ts:gate-class"
+    ```
+
+Register it as both the provider's `events` and its `consent`:
+
+=== "Android"
+
+    ```kotlin
+    --8<-- "samples/vendors/MetaSetup.kt:gate"
+    ```
+
+=== "iOS"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Vendors/MetaSetup.swift:gate"
+    ```
+
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/vendors/meta_setup.dart:gate"
+    ```
+
+=== "React Native"
+
+    ```ts
+    --8<-- "docs-samples/src/vendors/meta-setup.ts:gate"
+    ```
+
+It starts with consent off, so nothing reaches Meta until the first `setEnabled(true)`.
 
 Meta's other privacy settings, such as Limited Data Use (`setDataProcessingOptions`) and, on iOS,
 `setAdvertiserTrackingEnabled`, are set on Meta's SDK directly.
 
 ## Watch out for
 
-- **Android: more event details from 31 October 2026.** Meta's Android SDK 19 adds the screen title
-  and app link to the events it sends, and sends samples of your screens' layout. Turn them off in
-  `AndroidManifest.xml` or in Events Manager, as
-  [Meta's change log](https://github.com/facebook/facebook-android-sdk/blob/main/CHANGELOG.md)
-  shows.
+- **Meta's SDK 19 collects more by itself.** It adds the screen title and app link to the events it
+  sends, and has a product improvement setting. On Android and iOS, `setEnabled` switches both, and
+  the setup above turns them off for a fresh install. The Flutter and React Native plugins use
+  Meta's SDK 18, which has neither. If a React Native app raises Android to Meta's SDK 19 with
+  `facebookSdkVersion`, `setEnabled` can't reach them: add the two `AutoLog…` lines from the Android
+  setup to `AndroidManifest.xml`.
 - **Flutter on iOS: keep `FacebookAutoInitEnabled`.** If `Info.plist` sets it to `false`, the
   plugin refuses every call until the SDK is started, and each refusal reaches Herald's error
   reporter.
-- **iOS: Meta's SDK 18.** Meta's SDK 19 for iOS doesn't install through Swift Package Manager yet,
-  so `herald-ios-meta` uses 18.
+- **iOS: Meta's SDK 19.** `herald-ios-meta` needs Meta's iOS SDK 19. If Xcode refuses 19.0.0 with
+  "does not match previously recorded value", the Mac has a record of the tag from before Meta fixed
+  it: delete the `facebook-ios-sdk-…json` file in `~/Library/org.swift.swiftpm/security/fingerprints`.

@@ -22,7 +22,7 @@ settings, and covers only the events Meta logs by itself:
 | --- | --- |
 | Adjust | no: Herald calls `disable()` before `initSdk()` |
 | AppsFlyer | no: Herald's `start()` only stops the SDK, which starts on consent |
-| Meta | its own events, such as installs, **yes**, until you turn them off. Events your app sends always reach it: Meta has no switch for them |
+| Meta | its own events, such as installs, **yes**, until you turn them off. Events your app sends always reach it, unless you [drop them yourself](../vendors/meta.md#dropping-your-events-too) |
 | Firebase, Mixpanel, Amplitude | **yes**, until you turn it off |
 
 Turn the others off where you create them:
@@ -34,7 +34,7 @@ Turn the others off where you create them:
     | Firebase | `firebase_analytics_collection_enabled=false` in `AndroidManifest.xml` |
     | Mixpanel | `MixpanelOptions.Builder().optOutTrackingDefault(true)` |
     | Amplitude | `Configuration(apiKey, context, optOut = true)` |
-    | Meta | `AutoInitEnabled`, `AutoLogAppEventsEnabled` and `AdvertiserIDCollectionEnabled` set to `false` in `AndroidManifest.xml`, as [Meta](../vendors/meta.md#setup) shows |
+    | Meta | `AutoInitEnabled`, `AutoLogAppEventsEnabled`, `AdvertiserIDCollectionEnabled`, `AutoLogMetaDataEnabled` and `AutoLogProductImprovementEnabled` set to `false` in `AndroidManifest.xml`, as [Meta](../vendors/meta.md#setup) shows |
 
 === "iOS"
 
@@ -43,7 +43,7 @@ Turn the others off where you create them:
     | Firebase | `FIREBASE_ANALYTICS_COLLECTION_ENABLED` set to `NO` in `Info.plist` |
     | Mixpanel | `Mixpanel.initialize(token:trackAutomaticEvents:optOutTrackingByDefault: true)` |
     | Amplitude | `Configuration(apiKey: apiKey, optOut: true)` |
-    | Meta | `FacebookAutoLogAppEventsEnabled` and `FacebookAdvertiserIDCollectionEnabled` set to `NO` in `Info.plist`, as [Meta](../vendors/meta.md#setup) shows |
+    | Meta | `FacebookAutoLogAppEventsEnabled`, `FacebookAdvertiserIDCollectionEnabled`, `FBSDKAutoLogMetaDataEnabled` and `FBSDKAutoLogProductImprovementEnabled` set to `NO` in `Info.plist`, as [Meta](../vendors/meta.md#setup) shows |
 
 === "Flutter"
 

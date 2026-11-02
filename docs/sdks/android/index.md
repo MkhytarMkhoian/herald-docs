@@ -20,7 +20,7 @@ Here is every module. Keep the lines you need.
 
     ```kotlin
     dependencies {
-        val herald = "1.4.0"
+        val herald = "1.5.0"
 
         // Always needed
         implementation("io.github.mkhytarmkhoian:herald-core:$herald")
@@ -48,7 +48,7 @@ Here is every module. Keep the lines you need.
 
     ```groovy
     dependencies {
-        def herald = '1.4.0'
+        def herald = '1.5.0'
 
         // Always needed
         implementation "io.github.mkhytarmkhoian:herald-core:$herald"
@@ -77,7 +77,7 @@ Here is every module. Keep the lines you need.
     ```toml
     # gradle/libs.versions.toml
     [versions]
-    herald = "1.4.0"
+    herald = "1.5.0"
 
     [libraries]
     herald-core = { module = "io.github.mkhytarmkhoian:herald-core", version.ref = "herald" }
@@ -133,7 +133,7 @@ a [factory](../../concepts/factory-chain.md) for. The app module, which
 
 | Requirement | Version |
 | --- | --- |
-| Android `minSdk` | 23 |
+| Android `minSdk` | 24 |
 | Android `compileSdk` | 36; 37 for `herald-compose` |
 | Kotlin | 2.3 or newer. Herald is built with Kotlin 2.4, and a compiler reads metadata one minor version ahead. |
 | Java bytecode | 17 |

@@ -7,7 +7,7 @@ differs is the language, how you install it, and the helpers around it.
 | --- | --- | --- | --- | --- | --- |
 | Language | Kotlin | Swift | Dart | TypeScript | Kotlin, shared |
 | Installed from | Maven Central | Swift Package Manager | pub.dev | npm | Maven Central |
-| Needs | Android 6 (API 23) | iOS 15 | Flutter 3.47 | React Native 0.78, React 19 | the Android and iOS SDKs |
+| Needs | Android 7 (API 24) | iOS 15 | Flutter 3.47 | React Native 0.78, React 19 | the Android and iOS SDKs |
 | Firebase, Adjust, Mixpanel, AppsFlyer, Amplitude, Meta | yes | yes | yes | yes | through the native SDKs |
 | Log, for debug builds | yes | yes | yes | yes | through the native SDKs |
 | Fake for tests | `herald-testing` | `HeraldTesting` | `herald_testing` | `@herald-analytics/testing` | — |

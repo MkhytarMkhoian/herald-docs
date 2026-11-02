@@ -1,7 +1,7 @@
 # Modular apps
 
-This page compares three common ways to organise analytics in an app split into feature modules.
-Then it shows how to set up the first one, where each feature owns its analytics.
+This page compares three common ways to organise analytics in an app split into feature modules,
+then shows how to set up each one.
 
 ## Choosing a layout
 
@@ -46,6 +46,8 @@ flowchart TB
     F --> HF["Herald Firebase package"]
 ```
 
+[Setting up the second layout](#setting-up-the-second-layout) shows how.
+
 - **Good:** features depend only on Herald's core package.
 - **Watch out:** adding a feature also means adding its rules to each vendor module that needs them.
 
@@ -54,6 +56,7 @@ flowchart TB
 Features don't use Herald at all. Each feature declares a small interface, with one method per
 thing that can happen, such as `paymentFailed(reason)`. The analytics module implements it, and
 holds all the events, their names and the vendor rules.
+[Setting up the third layout](#setting-up-the-third-layout) shows how.
 
 ```mermaid
 flowchart TB
@@ -227,3 +230,160 @@ A factory that takes a vendor object needs that object from DI too. If a vendor 
 some builds, such as Firebase without a `google-services.json`, provide the vendor object as a
 `single` that the app's setup code asks for only after checking the vendor exists. The feature's
 factory is then never created when the vendor is missing.
+
+## Setting up the second layout
+
+Features declare their events in their API modules, like any other event. Each vendor module
+writes the factories for that vendor, as in [the factory chain](../concepts/factory-chain.md), and
+builds the chain from a plain list. It knows every feature, so it needs nothing from DI, and the
+order is the one you write.
+
+=== "Android"
+
+    With Koin:
+
+    ```kotlin
+    --8<-- "samples/guides/ModularApps.kt:vendor-module"
+    ```
+
+=== "iOS"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:vendor-module"
+    ```
+
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:vendor-module"
+    ```
+
+=== "React Native"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/modular-apps.ts:vendor-module"
+    ```
+
+## Setting up the third layout
+
+### The feature side
+
+The feature's API module declares an interface, with one method for each thing that can happen.
+The feature calls it, and never sees Herald.
+
+=== "Android"
+
+    ```kotlin
+    --8<-- "samples/guides/ModularApps.kt:interface"
+    ```
+
+    ```kotlin
+    --8<-- "samples/guides/ModularApps.kt:feature"
+    ```
+
+=== "iOS"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:interface"
+    ```
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:feature"
+    ```
+
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:interface"
+    ```
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:feature"
+    ```
+
+=== "React Native"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/modular-apps.ts:interface"
+    ```
+
+    ```ts
+    --8<-- "docs-samples/src/guides/modular-apps.ts:feature"
+    ```
+
+### The analytics side
+
+The analytics module implements the interface. Each method sends an event through Herald, so the
+vendors, factories and failure handling work as in any other layout. Then the app hands each
+feature its interface.
+
+=== "Android"
+
+    ```kotlin
+    --8<-- "samples/guides/ModularApps.kt:implementation"
+    ```
+
+    With Koin:
+
+    ```kotlin
+    --8<-- "samples/guides/ModularApps.kt:binding"
+    ```
+
+=== "iOS"
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:implementation"
+    ```
+
+    ```swift
+    --8<-- "Samples/Sources/Samples/Guides/ModularApps.swift:binding"
+    ```
+
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:implementation"
+    ```
+
+    ```dart
+    --8<-- "docs_samples/lib/guides/modular_apps.dart:binding"
+    ```
+
+=== "React Native"
+
+    ```ts
+    --8<-- "docs-samples/src/guides/modular-apps.ts:implementation"
+    ```
+
+    ```ts
+    --8<-- "docs-samples/src/guides/modular-apps.ts:binding"
+    ```
+
+### Testing a feature
+
+A feature's test fakes its interface, and checks the calls. It needs no Herald and no
+[FakeAnalyticsProvider](testing.md).
+
+=== "Android"
+
+    ```kotlin
+    --8<-- "samples/guides/PaymentViewModelTest.kt:fake"
+    ```
+
+=== "iOS"
+
+    ```swift
+    --8<-- "Samples/Tests/SamplesTests/Guides/PaymentViewModelTests.swift:fake"
+    ```
+
+=== "Flutter"
+
+    ```dart
+    --8<-- "docs_samples/test/guides/payment_view_model_test.dart:fake"
+    ```
+
+=== "React Native"
+
+    ```ts
+    --8<-- "docs-samples/test/guides/payment-view-model.test.ts:fake"
+    ```
